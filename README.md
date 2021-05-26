@@ -1,0 +1,2 @@
+# FinalBDGANT-V
+La empresa de Ganadería Toros &amp; Vacas S.A.S –GANT&amp;V- quiere sistematizar su operación con un software que les permita gestionar una base de datos para reemplazar lo que vienen haciendo con formatos de papel que a pesar que les ha posibilitado la gestión les resta agilidad que el negocio en crecimiento necesita, sobre todo con información más expedita para la toma de acciones y futuras decisiones.
