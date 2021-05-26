@@ -1,0 +1,30 @@
+<!--Heredamos el diseño de todo lo que se haga en layout-->
+{% extends 'layout.html' %}
+
+{% block body %}
+    <!--Mostrar los mensaje flask -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+     <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+     <!--Para enumerar las consultas-->
+    <style>
+        li {
+            color: #fff;
+        }
+    </style>
+    <ol>
+        <li ><a style="text-shadow: 1px 1px 2px black;" href="http://localhost:3000/">Prueba</a></li>
+        <li><a style="text-shadow: 1px 1px 2px black;" href="http://localhost:3000/">Prueba</a></li>
+        <li>Consultas</li>
+        <ul>
+            <li><a style="text-shadow: 1px 1px 2px black;" href="http://localhost:3000/">Por ahora nada</a></li>
+        </ul>
+    </ol>
+{% endblock %}
