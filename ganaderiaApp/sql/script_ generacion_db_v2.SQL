@@ -60,7 +60,7 @@ CREATE TABLE registro_medico(
 	cod_medico INTEGER PRIMARY KEY,
 	estado VARCHAR(15),  ---enfermo, saludable, o cosas por el estilo
 	descripcion VARCHAR(40),
-	fecha DATETIME,
+	fecha DATE,
 	emitido_por INTEGER FOREIGN KEY REFERENCES veterinario(cod_vet)
 );
 
@@ -86,18 +86,8 @@ CREATE TABLE estuvo_enfermo (
   reg_enfermo INTEGER PRIMARY KEY,
   paciente INTEGER FOREIGN KEY REFERENCES  registro_medico(cod_medico),
 	duracion_enfermedad FLOAT,
-	fecha_de_diagnostico DATETIME,
+	fecha_de_diagnostico DATE,
 	enfermedad INTEGER FOREIGN KEY REFERENCES enfermedad(cod_enfermedad)
-
-);
-
-
-CREATE TABLE salida(
-	cod_registro INTEGER PRIMARY KEY,
-	razon VARCHAR(40),
-	fecha DATETIME,
-	venta INTEGER FOREIGN KEY REFERENCES registro_venta(factura),
-	sacrificio_enfermedad INTEGER FOREIGN KEY REFERENCES defuncion(reg_defuncion) UNIQUE
 
 );
 
@@ -109,22 +99,33 @@ CREATE TABLE aplicacion_vacunas(
 
 );
 
+
 CREATE TABLE reg_alimentacion(
 	cod_alimentacion INTEGER PRIMARY KEY,
 	proviene_de INTEGER FOREIGN KEY REFERENCES registro_medico(cod_medico),
 	peso_kg FLOAT,
 	liquido_lt FLOAT,
-	fecha DATETIME
+	fecha DATE
 );
+
+CREATE TABLE salida(
+	cod_registro INTEGER PRIMARY KEY,
+	razon VARCHAR(40),
+	fecha DATETIME,
+	venta INTEGER FOREIGN KEY REFERENCES registro_venta(factura),
+	sacrificio_enfermedad INTEGER UNIQUE FOREIGN KEY REFERENCES defuncion(reg_defuncion)
+
+);
+
+
 
 ---Nivel 4
 CREATE TABLE vaca (
 	cod_vaca INTEGER PRIMARY KEY,
 	nombre VARCHAR(20),
 	genetica_lechera VARCHAR(20),
-  inseminaciones INTEGER FOREIGN KEY REFERENCES  inseminacion(cod_inseminacion),
-	historial_medico INTEGER FOREIGN KEY REFERENCES  registro_medico(cod_medico) UNIQUE,
-	salida INTEGER FOREIGN KEY REFERENCES  salida(cod_registro) UNIQUE
+	historial_medico INTEGER UNIQUE FOREIGN KEY REFERENCES  registro_medico(cod_medico) ,
+	salida INTEGER UNIQUE FOREIGN KEY REFERENCES  salida(cod_registro)
 
 );
 
@@ -132,8 +133,8 @@ CREATE TABLE toro (
 	cod_toro INTEGER PRIMARY KEY,
 	nombre VARCHAR(20),
 	rating FLOAT, -- cuantos de las pajillas que fueron usados de el han dado embarazos exitosos
-	historial_medico INTEGER FOREIGN KEY REFERENCES  registro_medico(cod_medico) UNIQUE,
-	salida INTEGER FOREIGN KEY REFERENCES  salida(cod_registro) UNIQUE
+	historial_medico INTEGER UNIQUE FOREIGN KEY REFERENCES  registro_medico(cod_medico) ,
+	salida INTEGER UNIQUE FOREIGN KEY REFERENCES  salida(cod_registro)
 
 );
 
@@ -142,8 +143,8 @@ CREATE TABLE engorde (
 	nombre VARCHAR(20),
 	valor_estimado FLOAT,
 	categoria VARCHAR(20),
-	historial_medico INTEGER FOREIGN KEY REFERENCES  registro_medico(cod_medico) UNIQUE,
-	salida INTEGER FOREIGN KEY salida(cod_registro) UNIQUE
+	historial_medico INTEGER UNIQUE FOREIGN KEY REFERENCES  registro_medico(cod_medico) ,
+	salida INTEGER UNIQUE FOREIGN KEY REFERENCES salida(cod_registro)
 
 );
 
@@ -152,33 +153,32 @@ CREATE TABLE engorde (
 CREATE TABLE inseminacion(
 	cod_inseminacion INTEGER PRIMARY KEY,
 	fecha DATETIME,
-	exito BOOLEAN, -- se logro una inseminacion o no
-	veterinario INTEGER FOREIGN KEY REFERENCES veterinario(cod_veterinario) UNIQUE,
-	vaca INTEGER FOREIGN KEY REFRENCES vaca(cod_vaca)
+	exito VARCHAR(2), -- se logro una inseminacion o no ("si" o "no" )
+	veterinario INTEGER UNIQUE FOREIGN KEY REFERENCES veterinario(cod_vet),
+	vaca INTEGER FOREIGN KEY REFERENCES vaca(cod_vaca)
 
 );
 ---Nivel 6
 
 CREATE TABLE ternero (
-	cod  INTEGER PRIMARY KEY,
+	cod_ternero  INTEGER PRIMARY KEY,
 	nombre VARCHAR(20),
 	sexo  VARCHAR(15),
 	fecha_nacimiento DATETIME,
 	edad INTEGER,
 	peso_nacimiento FLOAT,
 	prospecto VARCHAR(20),
-	historial_medico INTEGER FOREIGN KEY REFERENCES  registro_medico(cod_medico) UNIQUE,
-	salida INTEGER FOREIGN KEY REFERENCES  salida(cod_registro) UNIQUE,
+	historial_medico INTEGER UNIQUE FOREIGN KEY REFERENCES  registro_medico(cod_medico) ,
+	salida INTEGER UNIQUE FOREIGN KEY REFERENCES  salida(cod_registro) ,
   nacido_de INTEGER FOREIGN KEY REFERENCES  inseminacion(cod_inseminacion)
 
 );
 
-
 CREATE TABLE pajilla(
 	id_pajilla INTEGER PRIMARY KEY,
-	fecha_embase DATETIME,
+	fecha_embase DATE,
 	toro INTEGER FOREIGN KEY REFERENCES toro(cod_toro),
-	empleado_en INTEGER FOREIGN KEY REFERENCES inseminacion(cod_inseminacion) UNIQUE,
+	empleado_en INTEGER UNIQUE FOREIGN KEY REFERENCES inseminacion(cod_inseminacion) ,
 	vendido_en INTEGER FOREIGN KEY REFERENCES registro_venta(factura)
 
 );
@@ -186,7 +186,7 @@ CREATE TABLE pajilla(
 CREATE TABLE estado_inseminacion(
 	cod_registro INTEGER PRIMARY KEY,
 	mes INTEGER, --,meses desde que empezo la inseminacion
-	fecha DATETIME,
+	fecha DATE,
 	estado VARCHAR(15), --descripcion de una palabra del estado de la concepcion "terminado","saludable","riesgoso"
 	cod_inseminacion INTEGER FOREIGN KEY REFERENCES inseminacion(cod_inseminacion),
 	peso_vaca FLOAT
@@ -198,18 +198,18 @@ CREATE TABLE estado_inseminacion(
 
 CREATE TABLE destete(
 	cod_destete INTEGER PRIMARY KEY,
-	fecha DATETIME,
-	vaca REFERENCES vaca(cod_vaca) UNIQUE,
-	toro INTEGER FOREIGN KEY REFERENCES toro(cod_toro) UNIQUE,
-	engorde INTEGER FOREIGN KEY REFERENCES engorde(cod_engorde) UNIQUE,
-	ternero INTEGER FOREIGN KEY REFERENCES ternero(cod_ternero) UNIQUE
+	fecha DATE,
+	vaca INTEGER UNIQUE FOREIGN KEY REFERENCES vaca(cod_vaca),
+	toro INTEGER UNIQUE FOREIGN KEY REFERENCES toro(cod_toro) ,
+	engorde INTEGER UNIQUE FOREIGN KEY REFERENCES engorde(cod_engorde) ,
+	ternero INTEGER UNIQUE FOREIGN KEY REFERENCES ternero(cod_ternero)
 
 )
 
 CREATE TABLE reg_lechero(
 	cod_lec INTEGER PRIMARY KEY,
 	pertenece_a INTEGER FOREIGN KEY REFERENCES vaca(cod_vaca),
-	inseminacion_asociada INTEGER FOREIGN KEY REFERENCES inseminacion(cod_inseminacion) UNIQUE,
-	fecha DATETIME,
+	inseminacion_asociada INTEGER UNIQUE FOREIGN KEY REFERENCES inseminacion(cod_inseminacion) ,
+	fecha DATE,
 	cantidad_lt FLOAT
 )
