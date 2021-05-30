@@ -91,7 +91,7 @@ INSERT INTO engorde VALUES(3, 'Pin', 300, 'cat 1', 14, 0 );
 --Nivel 5
 
 --Inseminación
-INSERT INTO inseminacion(cod_inseminacion,fecha,exito,veterinario,vaca) VALUES(0, '0001-01-01', 0, 0, 0 );
+INSERT INTO inseminacion(cod_inseminacion,fecha,exito,veterinario,vaca) VALUES(0, '0001-01-01', 'no', 0, 0 );
 INSERT INTO inseminacion  VALUES(1, '2020-02-03', 'si', 1, 1 );
 INSERT INTO inseminacion  VALUES(2, '2020-02-03', 'no', 1, 2 );
 INSERT INTO inseminacion  VALUES(3, '2020-02-03', 'si', 1, 3 );
