@@ -69,7 +69,7 @@ CREATE TABLE registro_venta(
 	factura INTEGER PRIMARY KEY,
 	cliente INTEGER FOREIGN KEY REFERENCES cliente(codigo),
 	precio FLOAT,
-	fecha DATETIME
+	fecha DATE
 
 );
 
@@ -95,7 +95,7 @@ CREATE TABLE aplicacion_vacunas(
 	cod_apva INTEGER PRIMARY KEY,
 	vacuna_aplicada INTEGER FOREIGN KEY REFERENCES vacuna(cod_vacuna),
 	paciente INTEGER FOREIGN KEY REFERENCES registro_medico(cod_medico),
-	fecha DATETIME
+	fecha DATE
 
 );
 
@@ -111,7 +111,7 @@ CREATE TABLE reg_alimentacion(
 CREATE TABLE salida(
 	cod_registro INTEGER PRIMARY KEY,
 	razon VARCHAR(40),
-	fecha DATETIME,
+	fecha DATE,
 	venta INTEGER FOREIGN KEY REFERENCES registro_venta(factura),
 	--sacrificio_enfermedad INTEGER UNIQUE FOREIGN KEY REFERENCES defuncion(reg_defuncion)
 	sacrificio_enfermedad INTEGER FOREIGN KEY REFERENCES defuncion(reg_defuncion)
@@ -159,7 +159,7 @@ CREATE TABLE engorde (
 
 CREATE TABLE inseminacion(
 	cod_inseminacion INTEGER PRIMARY KEY,
-	fecha DATETIME,
+	fecha DATE,
 	exito VARCHAR(2), -- se logro una inseminacion o no ("si" o "no" )
 	--	veterinario INTEGER UNIQUE FOREIGN KEY REFERENCES veterinario(cod_vet),
 	veterinario INTEGER FOREIGN KEY REFERENCES veterinario(cod_vet),
