@@ -1,4 +1,5 @@
 ﻿/*Inserción*/
+--NOTA: Siempre antes de correr este, deben correr el Script de generación porque o sino aparecerá error de que varios datos ya están
 
 --Nivel 1
 
@@ -22,8 +23,23 @@ INSERT INTO veterinario  VALUES(1,  'Diego',  '3748763425',  'diego123@hotmail.c
 --Nivel 2
 
 --Registro médico
+--Cada individuo tiene un solo registro médico
 INSERT INTO registro_medico(cod_medico,estado,descripcion,fecha,emitido_por) VALUES(0, 'Ninguno', 'Ninguna', '0001-01-01',  0 );
-INSERT INTO registro_medico VALUES(1, 'Saludable', 'No presenta patologías', '2020-02-03', 1 );
+INSERT INTO registro_medico VALUES(1,'Ninguno', 'Ninguna', '0001-01-01',  0 );
+INSERT INTO registro_medico VALUES(2,'Ninguno', 'Ninguna', '0001-01-01',  0 );
+INSERT INTO registro_medico VALUES(3, 'Ninguno', 'Ninguna', '0001-01-01',  0 );
+INSERT INTO registro_medico VALUES(4, 'Saludable', 'No presenta patologías', '2020-02-03', 1 );
+INSERT INTO registro_medico VALUES(5, 'Saludable', 'No presenta patologías', '2020-02-03', 1 );
+INSERT INTO registro_medico VALUES(6, 'Saludable', 'No presenta patologías', '2020-02-03', 1 );
+INSERT INTO registro_medico VALUES(7, 'Saludable', 'No presenta patologías', '2020-02-03', 1 );
+INSERT INTO registro_medico VALUES(8, 'Saludable', 'No presenta patologías', '2020-02-03', 1 );
+INSERT INTO registro_medico VALUES(9, 'Saludable', 'No presenta patologías', '2020-02-03', 1 );
+INSERT INTO registro_medico VALUES(10, 'Saludable', 'No presenta patologías', '2020-02-03', 1 );
+INSERT INTO registro_medico VALUES(11, 'Saludable', 'No presenta patologías', '2020-02-03', 1 );
+INSERT INTO registro_medico VALUES(12, 'Saludable', 'No presenta patologías', '2020-02-03', 1 );
+INSERT INTO registro_medico VALUES(13, 'Saludable', 'No presenta patologías', '2020-02-03', 1 );
+INSERT INTO registro_medico VALUES(14, 'Saludable', 'No presenta patologías', '2020-02-03', 1 );
+INSERT INTO registro_medico VALUES(15, 'Saludable', 'No presenta patologías', '2020-02-03', 1 );
 
 ----Registro venta
 INSERT INTO registro_venta(factura,cliente,precio,fecha) VALUES(0, 0, 0, '0001-01-01');
@@ -50,35 +66,59 @@ INSERT INTO salida(cod_registro, razon, fecha, venta, sacrificio_enfermedad) VAL
 --Nivel 4
 
 --Vaca
+--Recuerde que por cada individuo a insertar, debe crear un registro médico (Relación uno a uno)
 INSERT INTO vaca(cod_vaca,nombre,genetica_lechera,historial_medico,salida) VALUES(0, 'Nadie', 'Nada', 0, 0 );
-INSERT INTO vaca VALUES(1, 'Teresa', 'Sobresaliente', 1, 0 );
+INSERT INTO vaca VALUES(1, 'Teresa', 'Sobresaliente', 4, 0 );
+INSERT INTO vaca VALUES(2, 'Virginia', 'Sobresaliente', 5, 0 );
+INSERT INTO vaca VALUES(3, 'Anastacia', 'Sobresaliente', 6, 0 );
+INSERT INTO vaca VALUES(4, 'Petra', 'Normal', 7, 0 );
 
 --Toro
-INSERT INTO toro(cod_toro,nombre,rating,historial_medico,salida) VALUES(0, 'Nadie', 0, 0, 0 );
-INSERT INTO toro VALUES(1, 'Pepe', 5, 1, 0 );
+--Recuerde que por cada individuo a insertar, debe crear un registro médico (Relación uno a uno)
+INSERT INTO toro(cod_toro,nombre,rating,historial_medico,salida) VALUES(0, 'Nadie', 0, 1, 0 );
+INSERT INTO toro VALUES(1, 'Pepe', 5, 8, 0 );
+INSERT INTO toro VALUES(2, 'Thomy', 4, 9, 0 );
+INSERT INTO toro VALUES(3, 'Dylano', 2, 10, 0 );
+INSERT INTO toro VALUES(4, 'Sancho', 5, 11, 0 );
 
 --Engorde
-INSERT INTO engorde(cod_engorde,nombre,valor_estimado,categoria,historial_medico,salida) VALUES(0, 'Juancho', 100.0, 'cat 1', 1, 0 );
+--Recuerde que por cada individuo a insertar, debe crear un registro médico (Relación uno a uno)
+INSERT INTO engorde(cod_engorde,nombre,valor_estimado,categoria,historial_medico,salida) VALUES(0, 'Juancho', 100.0, 'cat 1', 2, 0 );
+INSERT INTO engorde VALUES(1, 'Nino', 200, 'cat 1' , 12, 0 );
+INSERT INTO engorde VALUES(2, 'Joty', 300, 'cat 1', 13, 0 );
+INSERT INTO engorde VALUES(3, 'Pin', 300, 'cat 1', 14, 0 );
 
 --Nivel 5
 
 --Inseminación
 INSERT INTO inseminacion(cod_inseminacion,fecha,exito,veterinario,vaca) VALUES(0, '0001-01-01', 0, 0, 0 );
 INSERT INTO inseminacion  VALUES(1, '2020-02-03', 'si', 1, 1 );
+INSERT INTO inseminacion  VALUES(2, '2020-02-03', 'no', 1, 2 );
+INSERT INTO inseminacion  VALUES(3, '2020-02-03', 'si', 1, 3 );
+INSERT INTO inseminacion  VALUES(4, '2020-02-03', 'si', 1, 4 );
 
 --Nivel 6
 
 --Ternero
-INSERT INTO ternero(cod_ternero,nombre,sexo,fecha_nacimiento,edad,peso_nacimiento,prospecto,historial_medico,salida,nacido_de) VALUES(0, 'Nadie', 'Ninguno',  '0001-01-01', 0, 0,  'Nada', 0, 0, 0);
-INSERT INTO ternero VALUES(1, 'Lily', 'F',  '2021-02-01', 0, 4,  'Nada', 1, 0, 1);
+--Recuerde que por cada individuo a insertar, debe crear un registro médico (Relación uno a uno)
+INSERT INTO ternero(cod_ternero,nombre,sexo,fecha_nacimiento,edad,peso_nacimiento,prospecto,historial_medico,salida,nacido_de) VALUES(0, 'Nadie', 'Ninguno',  '0001-01-01', 0, 0,  'Nada', 3, 0, 0);
+INSERT INTO ternero VALUES(1, 'Lily', 'F',  '2021-02-01', 0, 4,  'Nada', 15, 0, 1);
 
 --Pajilla
 INSERT INTO pajilla(id_pajilla,fecha_embase,toro,empleado_en,vendido_en)  VALUES(0, '0001-01-01', 0, 0, 0);
-INSERT INTO pajilla(id_pajilla,fecha_embase,toro,empleado_en,vendido_en)  VALUES(1, '2021-01-01', 1, 1, 1);
+INSERT INTO pajilla  VALUES(1, '2021-01-01', 1, 1, 0);
+INSERT INTO pajilla  VALUES(2, '2021-02-01', 1, 2, 0);
+INSERT INTO pajilla  VALUES(3, '2021-03-01', 2, 3, 0);
+INSERT INTO pajilla  VALUES(4, '2021-04-01', 3, 4, 0);
+INSERT INTO pajilla  VALUES(5, '2021-05-01', 4, 0, 0);
+
 
 --Estado inseminación
 INSERT INTO estado_inseminacion(cod_registro,mes,fecha,estado,cod_inseminacion,peso_vaca) VALUES(0, 0, '0001-01-01', 'nada', 0, 0 );
-INSERT INTO estado_inseminacion VALUES(1, 2, '2021-01-01', 'proceso', 1, 300 );
+INSERT INTO estado_inseminacion VALUES(1, 3, '2021-01-01', 'embarazo', 1, 300 );
+INSERT INTO estado_inseminacion VALUES(2, 2, '2021-01-01', 'iniciando', 2, 500 );
+INSERT INTO estado_inseminacion VALUES(3, 2, '2021-01-01', 'embarazo', 3, 400 );
+INSERT INTO estado_inseminacion VALUES(4, 5, '2021-01-01', 'finalizada', 4, 200 );
 
 --Nivel 7
 
