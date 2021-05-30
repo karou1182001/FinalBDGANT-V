@@ -1,6 +1,7 @@
 #Librerías
 from flask import Flask, render_template, request, redirect, url_for, flash
 import CUBRIDdb
+import numpy as np
 
 app = Flask(__name__)
 
@@ -40,6 +41,34 @@ def clientes():
 @app.route("/veterinarios")
 def veterinarios():
     return render_template("veterinarios.html")
+
+@app.route("/consulta_1")
+def consulta_1():
+    #Consulta para listar las pajillas y ver el  código de las
+    #vacas y toros asociados
+    cur.execute('SELECT pajilla.id_pajilla, pajilla.fecha_embase, pajilla.toro, pajilla.empleado_en, pajilla.vendido_en, inseminacion.vaca FROM pajilla CROSS JOIN inseminacion WHERE pajilla.empleado_en= inseminacion.cod_inseminacion')
+    datos = cur.fetchall()
+    
+    for dato in datos:
+        if dato[4]==0:
+            dato[4]= "No vendido"
+        if dato[5]==0:
+            dato[5]= "No aplica"
+    
+    #Eliminamos la fila 0 solo por cuestión de estética, ya que esta fila representa datos nulos
+    #En axis se especifica que se quiere eliminar una fila o columna
+    datos=np.delete(datos, 0 , axis=0)
+    return render_template('consulta_1.html', datos = datos)
+
+@app.route("/consulta_2")
+def consulta_2():
+    #Consulta de las vacas de las vacas que han sido inseminadas con información asociada,
+    #con una opción que permita ver cuáles quedaron embarazadas y opción para ver su estado
+    #de inseminación
+    cur.execute('SELECT * FROM inseminacion ORDER BY cod_inseminacion ASC')
+    datos = cur.fetchall()
+    return render_template('consulta_2.html', datos = datos)
+
 
 #----------PONER AQUÍ LAS CONSULTAS---------
 
