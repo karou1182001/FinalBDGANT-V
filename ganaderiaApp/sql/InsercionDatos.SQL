@@ -6,13 +6,13 @@
 --Cliente
 INSERT INTO cliente (codigo, nombre, telefono, credito, calificacion) VALUES(0, 'Nadie', '000',  0,  0);
 INSERT INTO cliente VALUES(1001, 'Juan Garcia', '3574587543',  1.2,  5);
-INSERT INTO cliente  VALUES(1002, 'Santiago Peña', '3574678754',  1.0,  5);
-INSERT INTO cliente  VALUES(1003, 'Juana Marquez', '3574678754',  1.2,  4.2);
-INSERT INTO cliente  VALUES(1004, 'Sandra Castro', '3574678754',  1.1,  4.6);
-INSERT INTO cliente  VALUES(1005, 'Asbel Fernandez', '3574678754',  1.9,  4.9);
-INSERT INTO cliente  VALUES(1006, 'Joe Regules', '3574678754',  1.2,  5);
-INSERT INTO cliente  VALUES(1007, 'Marc Mattos', '3574678754',  1.5,  3.5);
-INSERT INTO cliente  VALUES(1008, 'Jeny Haner', '3574678754',  1.5,  3);
+INSERT INTO cliente  VALUES(1002, 'Santiago Peña', '3351398751',  1.0,  5);
+INSERT INTO cliente  VALUES(1003, 'Juana Marquez', '3105698159',  1.2,  4.2);
+INSERT INTO cliente  VALUES(1004, 'Sandra Castro', '3028569874',  1.1,  4.6);
+INSERT INTO cliente  VALUES(1005, 'Asbel Fernandez', '3204678754',  1.9,  4.9);
+INSERT INTO cliente  VALUES(1006, 'Joe Regules', '3004678754',  1.2,  5);
+INSERT INTO cliente  VALUES(1007, 'Marc Mattos', '3982156432',  1.5,  3.5);
+INSERT INTO cliente  VALUES(1008, 'Jeny Haner', '3001000521',  1.5,  3);
 
 --Enfermedad
 INSERT INTO enfermedad (cod_enfermedad, nom_enfermedad, duracion_promedio, indice_letalidad, tratamiento_estandar) VALUES(0, 'Ninguna', 0,  0, 'Ninguno' );
