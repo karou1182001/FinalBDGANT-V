@@ -26,11 +26,23 @@ INSERT INTO enfermedad VALUES(3312, 'Infeccion', 64,  10, 'Cuidados' );
 
 --Vacuna
 INSERT INTO vacuna (cod_vacuna, nombre, duracion, descripcion) VALUES (0,  ' Ninguna', 0,  ' Nada' );
-INSERT INTO vacuna VALUES (401,  ' Brucelosis', 3,  'A partir de los 3 meses');
+INSERT INTO vacuna VALUES (401,  ' Brucelosis', 3,  'A partir de las horas');
+INSERT INTO vacuna VALUES (402,  ' Antianilosis', 24,  'Tratamiennto cada dia');
+INSERT INTO vacuna VALUES (403,  ' Heparina', 5,  'Cada 5 horas');
+INSERT INTO vacuna VALUES (404,  ' Dextrosina', 8,  'Tomar cada 8 horas');
+INSERT INTO vacuna VALUES (405,  ' Lipido emulsivo', 12,  'Dos veces cada dia');
+INSERT INTO vacuna VALUES (406,  ' Clindamicina', 48,  'A partir de cada dos dias');
 
 --Veterinario
 INSERT INTO veterinario(cod_vet,nombre,telefono,correo,empresa,telefono_emergencia) VALUES(0,  'Nadie',  '000',  'correo@nadie.com',  'Ninguna',  ' 000' );
-INSERT INTO veterinario  VALUES(501,  'Diego',  '3748763425',  'diego123@hotmail.com',  'Particular',  ' 000' );
+INSERT INTO veterinario  VALUES(501,  'Diego',  '3005420012',  'diego123@hotmail.com',  'Particular',  ' 812' );
+INSERT INTO veterinario  VALUES(502,  'Nath',  '3565426985',  'nathlch@hotmail.com',  'Particular',  ' 813' );
+INSERT INTO veterinario  VALUES(503,  'Miguel',  '3748763425',  'miguel@hotmail.com',  'Particular',  ' 814' );
+INSERT INTO veterinario  VALUES(504,  'Juan',  '3222226545',  'juandi@hotmail.com',  'Particular',  ' 815' );
+INSERT INTO veterinario  VALUES(505,  'Dwigth',  '3232357892',  'dw123@hotmail.com',  'Particular',  ' 816' );
+INSERT INTO veterinario  VALUES(506,  'Nicolas',  '3468952581',  'nicolasr@hotmail.com',  'Particular',  ' 817' );
+INSERT INTO veterinario  VALUES(507,  'Evelin',  '3995202598',  'evee01@hotmail.com',  'Particular',  ' 818' );
+
 
 --Nivel 2
 
