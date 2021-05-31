@@ -24,19 +24,40 @@ def index():
 
 @app.route("/vacas")
 def vacas(): 
-
-    return render_template("vacas.html")
+    cur.execute('SELECT cod_vaca,nombre,genetica_lechera,historial_medico,salida FROM Vaca')
+    tmpdatos = cur.fetchall()
+    return render_template("vacas.html",datos = tmpdatos)
 
 @app.route("/toros")
 def toros():
     cur.execute('SELECT cod_toro,nombre,rating,historial_medico,salida FROM Toro')
-
     datos = cur.fetchall()
     return render_template("toros.html",datos = datos)
 
+@app.route("/registro_medico/<string:id>")
+def historial_medico(id):
+    cur.execute("SELECT cod_medico,estado,descripcion,fecha,emitido_por FROM registro_medico WHERE cod_medico = {0}".format(id))
+    tmpdatos = cur.fetchall()
+    return render_template("registro_medico.html",datos = tmpdatos)
+
+@app.route("/registro_alimentacion/<string:id>")
+def registro_alimentacion(id):
+    cur.execute("SELECT cod_alimentacion,proviene_de,peso_kg,liquido_lt,fecha FROM reg_alimentacion WHERE proviene_de = {0}".format(id))
+    tmpdatos = cur.fetchall()
+    return render_template("registro_alimentacion.html",datos = tmpdatos)
+
+@app.route("/engordes")
+def engordes():
+    cur.execute('SELECT cod_engorde,nombre,valor_estimado,categoria,historial_medico,salida FROM Engorde')
+    tmpdatos = cur.fetchall()
+    return render_template("engorde.html",datos = tmpdatos)
+
+
 @app.route("/terneros")
 def terneros():
-    return render_template("terneros.html")
+    cur.execute('SELECT cod_ternero,nombre,sexo,fecha_nacimiento,edad,peso_nacimiento,prospecto,historial_medico,salida FROM Ternero')
+    tmpdatos = cur.fetchall()
+    return render_template("terneros.html",datos = tmpdatos)
 
 @app.route("/clientes")
 def clientes():
@@ -48,7 +69,7 @@ def clientes():
 
 @app.route("/registro_ventas")
 def registro_ventas():
-    cur.execute('SELECT * FROM registro_venta')
+    cur.execute('SELECT factura,cliente,precio,fecha FROM registro_venta')
     tmpdatos = cur.fetchall()
     return render_template("registro_ventas.html",datos = tmpdatos)
 

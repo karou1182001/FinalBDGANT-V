@@ -12,6 +12,7 @@
                         <td>Rating</td>
                         <td>Registro medico</td>
                         <td>motivo salida</td>
+                        <td>dieta</td>>
                     </tr>
                 </thead>
                 <tbody>
@@ -20,8 +21,15 @@
                         <td>{{data.0}}</td>
                         <td>{{data.1}}</td>
                         <td>{{data.2}}</td>
-                        <td>{{data.3}}</td>
-                        <td>{{data.4}}</td>
+                        <td>
+                            <a href = "/registro_medico/{{data.3}}"> {{data.3}} </a>
+                        </td>
+                        <td> 
+                            <a href = "/motivo_salida/{{data.4}}"> {{data.4}} </a>
+                        </td>
+                        <td>
+                            <a href = "/registro_alimentacion/{{data.4}}"> consultar </a>
+                        </td>
                     </tr>
                     {% endfor%}
                 </tbody>
