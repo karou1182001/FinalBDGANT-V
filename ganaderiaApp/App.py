@@ -24,11 +24,15 @@ def index():
 
 @app.route("/vacas")
 def vacas(): 
+
     return render_template("vacas.html")
 
 @app.route("/toros")
 def toros():
-    return render_template("toros.html")
+    cur.execute('SELECT cod_toro,nombre,rating,historial_medico,salida FROM Toro')
+
+    datos = cur.fetchall()
+    return render_template("toros.html",datos = datos)
 
 @app.route("/terneros")
 def terneros():
@@ -36,7 +40,17 @@ def terneros():
 
 @app.route("/clientes")
 def clientes():
-    return render_template("clientes.html")
+    #cur.execute('SELECT codigo,telefono,nombre,credito,calificacion FROM cliente')
+    cur.execute('SELECT * FROM cliente')
+    tmpdatos = cur.fetchall()
+    print(tmpdatos)
+    return render_template("clientes.html",datos = tmpdatos)
+
+@app.route("/registro_ventas")
+def registro_ventas():
+    cur.execute('SELECT * FROM registro_venta')
+    tmpdatos = cur.fetchall()
+    return render_template("registro_ventas.html",datos = tmpdatos)
 
 @app.route("/veterinarios")
 def veterinarios():
