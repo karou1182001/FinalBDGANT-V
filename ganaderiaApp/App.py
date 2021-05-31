@@ -60,14 +60,41 @@ def consulta_1():
     datos=np.delete(datos, 0 , axis=0)
     return render_template('consulta_1.html', datos = datos)
 
-@app.route("/consulta_2")
-def consulta_2():
-    #Consulta de las vacas de las vacas que han sido inseminadas con información asociada,
-    #con una opción que permita ver cuáles quedaron embarazadas y opción para ver su estado
-    #de inseminación
-    cur.execute('SELECT * FROM inseminacion ORDER BY cod_inseminacion ASC')
+@app.route("/consulta_2/<string:id>")
+def consulta_2(id):
+    datosVaca = []
+    if id=="1c":
+        #Consulta de las vacas que han sido inseminadas con información asociada,
+        #con una opción que permita ver cuáles quedaron embarazadas y opción para ver su estado
+        #de inseminación
+        cur.execute('SELECT * FROM inseminacion')
+        datos = cur.fetchall()
+        #Eliminamos la fila 0 solo por cuestión de estética, ya que esta fila representa datos nulos
+        #En axis se especifica que se quiere eliminar una fila o columna
+        datos=np.delete(datos, 0 , axis=0)
+    elif id=="2c":
+        cur.execute('SELECT * FROM inseminacion WHERE exito = ? VALUES(?)', 'si')
+        datos = cur.fetchall()
+    else:
+        cur.execute('SELECT * FROM inseminacion')
+        datos = cur.fetchall()
+        datos=np.delete(datos, 0 , axis=0)
+        cur.execute('SELECT vaca.cod_vaca, vaca.nombre, vaca.genetica_lechera, vaca.salida FROM vaca WHERE cod_vaca = ? VALUES(?)', id)
+        datosVaca = cur.fetchall()
+
+    #Ordenamos la lista por código
+    datos=sorted(datos, key=lambda cod : cod[0])
+    return render_template('consulta_2.html', datos = datos, datosVaca=datosVaca)
+
+
+@app.route("/estado_ins/<string:id>")
+def estado_ins(id):
+    cur.execute('SELECT * FROM estado_inseminacion WHERE cod_inseminacion = ? VALUES(?)', id)
     datos = cur.fetchall()
-    return render_template('consulta_2.html', datos = datos)
+    #Ordenamos la lista por código
+    datos=sorted(datos, key=lambda cod : cod[0])
+    return render_template('estado_ins.html', datos = datos)
+    
 
 
 #----------PONER AQUÍ LAS CONSULTAS---------
