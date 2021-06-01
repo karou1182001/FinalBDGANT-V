@@ -4,63 +4,65 @@
 
     <h1 style="color: black"><b>VACAS</b></h1>
     <h2>Ingresar Vacas</h2>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    {% for message in messages %}
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{message}}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}    
-    <div>
-        <form action="/añadir_vaca", method="POST">
-            <input type="text" name="cod", placeholder="Código">
-            <input type="text" name="nombre" placeholder="Nombre">
-            <input type="text" name="genetica" placeholder="Genética">
-            <button type="submit">
-                Añadir
-            </button>   
-            <p><b>Código:</b> indique el código de la vaca.</p>
-            <p><b>Nombre:</b> indique el nombre de la vaca.</p>
-            <p><b>Genética:</b> indique si la genética lechera de la vaca es mala, sobresaliente, excelente, etc.</p>
+    <div class="row">
+        <div class="col-md-4">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{message}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+            <div class="card card-body">
+                <form method= 'POST'>
+                    <div class="form-group">
+                        <input type="number" name = "cod" placeholder="Código de vaca" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name = "nombre" placeholder="Nombre de vaca" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="genetica" placeholder="Genética lechera (Mala, Excelente, Sobresaliente, etc)" class="form-control">  
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" formaction="/añadir_vaca" class="btn btn-primary">Insertar</button>
+                        <!--<button type="submit" formaction="/update_hijo" class="btn btn-primary">Actualizar</button>-->
+                    </div>
+                </form>
+            </div>
             <br>
-            <br>       
-        </form>  
+            <br>
+            <a class="btn btn-primary" href="http://localhost:3000/" role="button">Regresar</a>
+        </div>
+        <div class="col-md-7">
+            <table class="table table-striped table-bordered bg-white table-sm">
+                <thead>
+                    <tr>
+                        <td>Código</td>
+                        <td>Nombre</td>
+                        <td>Genética</td>
+                        <td>Registro Médico</td>
+                        <td>Salida</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in datos %}
+                    <tr>
+                        <td>{{data.0}}</td>
+                        <td>{{data.1}}</td>
+                        <td>{{data.2}}</td>
+                        <td>
+                            <a href = "/registro_medico/{{data.3}}"> {{data.3}} </a>
+                        </td>
+                        <td>{{data.4}}</td>
+                        <td><a href="" class="btn btn-danger btn-delete">Delete</a></td>
+                    </tr>
+                    {% endfor%}
+                </tbody>
+            </table>
+        </div>
     </div>
-    <h2>Vacas Ingresadas</h2>
-    <div class="col-md-7">
-        <table class="table table-striped table-bordered bg-white table-sm">
-            <thead>
-                <tr>
-                    <td>Código</td>
-                    <td>Nombre</td>
-                    <td>Genética</td>
-                    <td>Registro Médico</td>
-                    <td>Salida</td>
-                </tr>
-            </thead>
-            <tbody>
-                {% for data in datos %}
-                <tr>
-                    <td>{{data.0}}</td>
-                    <td>{{data.1}}</td>
-                    <td>{{data.2}}</td>
-                    <td>
-                        <a href = "/registro_medico/{{data.3}}"> {{data.3}} </a>
-                    </td>
-                    <td>{{data.4}}</td>
-                    <td><a href="" class="btn btn-danger btn-delete">Delete</a></td>
-                </tr>
-                {% endfor%}
-            </tbody>
-        </table>
-        <br>
-        <br>
-        <a class="btn btn-primary" href="http://localhost:3000/" role="button">Regresar</a>
-        </div> 
-    </div>  
-    
-
 {% endblock %}

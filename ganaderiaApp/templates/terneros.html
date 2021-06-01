@@ -1,85 +1,92 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-    
-
     <h1 style="color: black">TERNEROS</h1>  
-    <h2>Ingresar Terneros</h2>    
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    {% for message in messages %}
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{message}}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <h2>Ingresar Terneros</h2>
+    <div class="row">
+        <div class="col-md-4">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{message}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+            <div class="card card-body">
+                <form method= 'POST'>
+                    <div class="form-group">
+                        <input type="number" name = "cod" placeholder="Código de ternero" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name = "nombre" placeholder="Nombre de ternero" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="date" name="fecha_nacimiento" placeholder="Fecha de nacimiento" class="form-control">  
+                    </div>
+                    <div class="form-group">
+                        <label for="sex">Sexo:</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="radio" name="sex" value="M"> Macho
+                        <input type="radio" name="sex" value="F"> Hembra
+                    </div>
+                    <div class="form-group">
+                        <input type="number" name="peso" placeholder="Peso (Kg)" class="form-control"> 
+                        <input type="text" name="prospecto" placeholder="Prospecto" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="number" name="nacido_de" placeholder="Indique el código de la ins. asociada" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" formaction="/añadir_ternero" class="btn btn-primary">Insertar</button>
+                        <!--<button type="submit" formaction="/update_hijo" class="btn btn-primary">Actualizar</button>-->
+                    </div>
+                </form>
+            </div>
+            <br>
+            <br>
+            <a class="btn btn-primary" href="http://localhost:3000/" role="button">Regresar</a>
         </div>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}      
-    <div>
-        <form action="/añadir_ternero", method="POST">
-            <input type="text" name="cod", placeholder="Código">
-            <input type="text" name="nombre" placeholder="Nombre">
-            <input type="date" name="fecha_nacimiento">
-            <label for="sex">Sexo:</label>
-            <input type="radio" name="sex" value="M"> Macho
-            <input type="radio" name="sex" value="F"> Hembra
-            <br>    
-            <input type="number" name="peso" placeholder="Peso"> Kg
-            <input type="text" name="prospecto" placeholder="Prospecto">
-            <input type="number" name="nacido_de" placeholder="Nacido De">
-            <button type="submit">
-                Añadir
-            </button>  
-            <p><b>Código: </b> indique el código del ternero.</p>
-            <p><b>Nombre: </b> indique el nombre del ternero.</p>
-            <p><b>Fecha de Nacimiento: </b>indique la fecha de nacimiento del ternero.</p> 
-            <p><b>Sexo: </b>indique el género del ternero.</p> 
-            <p><b>Peso: </b>indique el peso del ternero.</p> 
-            <p><b>Prospecto: </b>indique el prospecto del ternero.</p>
-            <p><b>Nacido de: </b>indique el pariente del ternero.</p>  
-        </form>  
-    </div>
-    <h2>Terneros Ingresados</h2>
-    <div class="col-md-7">
-        <table class="table table-striped table-bordered bg-white table-sm">
-            <thead>
-                <tr>
-                    <td>Código</td>
-                    <td>Nombre</td>
-                    <td>Sexo</td>
-                    <td>Fecha de Nacimiento</td>
-                    <td>Edad</td>
-                    <td>Peso</td>
-                    <td>Prospecto</td>
-                    <td>Registro Médico</td>
-                    <td>Salida</td>
-                    <td>Nacido De</td>
-                </tr>
-            </thead>
-            <tbody>
-                {% for data in datos %}
-                <tr>
-                    <td>{{data.0}}</td>
-                    <td>{{data.1}}</td>
-                    <td>{{data.2}}</td>
-                    <td>{{data.3}}</td>
-                    <td>{{data.4}}</td>
-                    <td>{{data.5}}</td>
-                    <td>{{data.6}}</td>
-                    <td>
-                        <a href = "/registro_medico/{{data.7}}"> {{data.7}} </a>
-                    </td>
-                    <td>{{data.8}}</td>
-                    <td>{{data.9}}</td>
-                    <td><a href="" class="btn btn-danger btn-delete">Delete</a></td>
-                </tr>
-                {% endfor%}
-            </tbody>
-        </table>
-        <br>
-        <br>
-        <a class="btn btn-primary" href="http://localhost:3000/" role="button">Regresar</a>
+        <div class="col-md-7">
+            <table class="table table-striped table-bordered bg-white table-sm">
+                <thead>
+                    <tr>
+                        <td>Código</td>
+                        <td>Nombre</td>
+                        <td>Sexo</td>
+                        <td>Fecha de Nacimiento</td>
+                        <td>Edad</td>
+                        <td>Peso</td>
+                        <td>Prospecto</td>
+                        <td>Registro Médico</td>
+                        <td>Salida</td>
+                        <td>Nacido De</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in datos %}
+                    <tr>
+                        <td>{{data.0}}</td>
+                        <td>{{data.1}}</td>
+                        <td>{{data.2}}</td>
+                        <td>{{data.3}}</td>
+                        <td>{{data.4}}</td>
+                        <td>{{data.5}}</td>
+                        <td>{{data.6}}</td>
+                        <td>
+                            <a href = "/registro_medico/{{data.7}}"> {{data.7}} </a>
+                        </td>
+                        <td>{{data.8}}</td>
+                        <td>{{data.9}}</td>
+                        <td><a href="" class="btn btn-danger btn-delete">Delete</a></td>
+                    </tr>
+                    {% endfor%}
+                </tbody>
+            </table>
         </div> 
-    </div>  
+    </div>
     
 {% endblock %}
