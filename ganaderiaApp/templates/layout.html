@@ -11,14 +11,15 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">
 </head>
 <body>
-    <!--Esto es para que nos aparezca la barra de navegación arriba-->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="/">Ganadería Toros & Vacas S.A.S –GANT&V- </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-      </nav>
+      <!--Esto es para que nos aparezca la barra de navegación arriba-->
+    <!--#a48344-->
+    <nav class="navbar navbar-light" style="background-color: #33455c;">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <img src="{{ url_for('static', filename='assets/logoApp.png') }}" alt="" width="240" height="85"/>
+        </a>
+      </div>
+    </nav>
     <!--Ya aquí se acaba lo de la barra de navegación-->
     <!--Lo de pt-4 es para agregar un espaciado-->
     <div class="container pt-4">
