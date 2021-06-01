@@ -1,0 +1,66 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+    <h1 style="color: black">TOROS</h1>     
+    <h2>Ingresar Toros</h2> 
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}     
+    <div>
+        <form action="/añadir_toro", method="POST">
+            <input type="text" name="cod", placeholder="Código">
+            <input type="text" name="nombre" placeholder="Nombre">
+            <input type="text" name="ex_pajilla" placeholder="Éxitos">
+            <button type="submit">
+                Añadir
+            </button>   
+            <p><b>Código:</b> indique el código del toro.</p>
+            <p><b>Nombre:</b> indique el nombre del toro.</p>
+            <p><b>Éxitos:</b>indique cuántos embarazos exitosos ha ocasionado por medio de pajillas.</p>
+            <br>
+            <br>       
+        </form> 
+    </div> 
+    <h2>Toros Ingresados</h2>
+    <div class="col-md-7">
+        <table class="table table-striped table-bordered bg-white table-sm">
+            <thead>
+                <tr>
+                    <td>Código</td>
+                    <td>Nombre</td>
+                    <td>Rating</td>
+                    <td>Registro Médico</td>
+                    <td>Salida</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in datos %}
+                <tr>
+                    <td>{{data.0}}</td>
+                    <td>{{data.1}}</td>
+                    <td>{{data.2}}</td>
+                    <td>
+                        <a href = "/registro_medico/{{data.3}}"> {{data.3}} </a>
+                    </td>
+                    <td>{{data.4}}</td>
+                    <td><a href="" class="btn btn-danger btn-delete">Delete</a></td>
+                </tr>
+                {% endfor%}
+            </tbody>
+        </table>
+        <br>
+        <br>
+        <form action="http://localhost:3000/">
+            <input type="submit" value="Regresar">
+        </form>
+        </div> 
+    </div>   
+{% endblock %}
