@@ -48,6 +48,9 @@ def vacas():
     #Obtiene los datos
     cur.execute("SELECT * FROM vaca ORDER BY cod_vaca ASC")
     datos = cur.fetchall()
+    #Eliminamos la fila 0 solo por cuestión de estética, ya que esta fila representa datos nulos
+    #En axis se especifica que se quiere eliminar una fila o columna
+    datos=np.delete(datos, 0 , axis=0)
     #Los mandamos al HTML para imprimirlos
     return render_template("vacas.html", datos = datos)
 
@@ -80,6 +83,9 @@ def toros():
     #Obtiene los datos
     cur.execute("SELECT * FROM toro ORDER BY cod_toro ASC")
     datos = cur.fetchall()
+    #Eliminamos la fila 0 solo por cuestión de estética, ya que esta fila representa datos nulos
+    #En axis se especifica que se quiere eliminar una fila o columna
+    datos=np.delete(datos, 0 , axis=0)
     #Los mandamos al HTML para imprimirlos
     return render_template("toros.html", datos = datos)
 
@@ -112,6 +118,9 @@ def terneros():
     #Obtiene los datos
     cur.execute("SELECT * FROM ternero ORDER BY cod_ternero ASC")
     datos = cur.fetchall()
+    #Eliminamos la fila 0 solo por cuestión de estética, ya que esta fila representa datos nulos
+    #En axis se especifica que se quiere eliminar una fila o columna
+    datos=np.delete(datos, 0 , axis=0)
     #Los mandamos al HTML para imprimirlos
     return render_template("terneros.html", datos = datos)
 
@@ -170,6 +179,9 @@ def add_cliente():
 def veterinarios():
     cur.execute("SELECT * FROM veterinario ORDER BY cod_vet ASC")
     datos = cur.fetchall()
+    #Eliminamos la fila 0 solo por cuestión de estética, ya que esta fila representa datos nulos
+    #En axis se especifica que se quiere eliminar una fila o columna
+    datos=np.delete(datos, 0 , axis=0)
     return render_template("veterinarios.html", datos = datos)
 
 @app.route("/añadir_veterinario", methods=["POST"])
@@ -193,6 +205,9 @@ def add_veterinario():
 def engordes():
     cur.execute("SELECT * FROM engorde ORDER BY cod_engorde ASC")
     datos = cur.fetchall()
+    #Eliminamos la fila 0 solo por cuestión de estética, ya que esta fila representa datos nulos
+    #En axis se especifica que se quiere eliminar una fila o columna
+    datos=np.delete(datos, 0 , axis=0)
     return render_template("engorde.html", datos = datos)
 
 @app.route("/añadir_engorde", methods=["POST"])
@@ -230,6 +245,9 @@ def historial_medico(id):
 def registro_ventas():
     cur.execute('SELECT factura,cliente,precio,fecha FROM registro_venta')
     datos = cur.fetchall()
+    #Eliminamos la fila 0 solo por cuestión de estética, ya que esta fila representa datos nulos
+    #En axis se especifica que se quiere eliminar una fila o columna
+    datos=np.delete(datos, 0 , axis=0)
     return render_template("registro_ventas.html",datos = datos)
 
 #Consultas
