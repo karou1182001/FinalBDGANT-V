@@ -220,19 +220,6 @@ def add_engorde():
         flash("Engorde añadido correctamente")
     return redirect(url_for("engordes"))
 
-@app.route("/registro_medico/<string:id>")
-def historial_medico(id):
-    cur.execute("SELECT cod_medico,estado,descripcion,fecha,emitido_por FROM registro_medico WHERE cod_medico = {0}".format(id))
-    datos = cur.fetchmany()
-    return render_template("registro_medico.html",datos = datos)
-
-@app.route("/registro_ventas")
-def registro_ventas():
-    cur.execute('SELECT factura,cliente,precio,fecha FROM registro_venta')
-    datos = cur.fetchall()
-    return render_template("registro_ventas.html",datos = datos)
-
-#Consultas
 @app.route("/consulta_1")
 def consulta_1():
     #Consulta para listar las pajillas y ver el  código de las
