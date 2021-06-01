@@ -190,10 +190,10 @@ def add_veterinario():
         cod= request.form["cod"]
         nombre= request.form["nombre"]
         tel= request.form["tel"]
-        email= request.form["correo"]
+        correo= request.form["correo"]
         empresa= request.form["empresa"]
-        tel_emer = request.form["emer_tel"]
-        args=[cod, nombre, tel, email, empresa, tel_emer]
+        emer_tel = request.form["emer_tel"]
+        args=[int(cod), nombre, tel, correo, empresa, emer_tel]
         #Comando sql
         cur.execute("INSERT INTO veterinario (cod_vet, nombre, telefono, correo, empresa, telefono_emergencia) VALUES (?,?,?,?,?,?)", args)
         #Confirmar comando
