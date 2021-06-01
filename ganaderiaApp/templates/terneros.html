@@ -1,53 +1,86 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-<h1 style="color:rgb(0, 0, 0)"><b>TOROS</b></h1>
-    <div class="row">
-        <div class="col-md-6">
-            <table class="table table-striped table-bordered bg-white table-sm">
-                <thead>
-                    <tr>
-                        <td>Codigo ternero</td>
-                        <td>Nombre</td>
-                        <td>Sexo</td>
-                        <td>Fecha de nacimiento</td>
-                        <td>Edad</td>
-                        <td>Peso nacimiento</td>
-                        <td>Prospecto</td>
-                        <td>Registro medico</td>
-                        <td>Motivo salida</td>
-                        <td>Dieta</td>>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for data in datos %}
-                    <tr>
-                        <td>{{data.0}}</td>
-                        <td>{{data.1}}</td>
-                        <td>{{data.2}}</td>
-                        <td>{{data.3}}</td>
-                        <td>{{data.4}}</td>
-                        <td>{{data.5}}</td>
-                        <td>{{data.6}}</td>       
-                        <td>
-                            <a href = "/registro_medico/{{data.7}}"> {{data.7}} </a>
-                        </td>
-                        <td> 
-                            <a href = "/motivo_salida/{{data.8}}"> {{data.8}} </a>
-                        </td>
-                        <td>
-                            <a href = "/registro_alimentacion/{{data.7}}"> consultar </a>
-                        </td>
-                    </tr>
-                    {% endfor%}
-                </tbody>
-            </table>
+    
 
-            <br>
-            <br>
-            <form action="http://localhost:3000/">
-                <input type="submit" value="Regresar">
-            </form>
-            </div>
+    <h1 style="color: black">TERNEROS</h1>  
+    <h2>Ingresar Terneros</h2>    
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}      
+    <div>
+        <form action="/añadir_ternero", method="POST">
+            <input type="text" name="cod", placeholder="Código">
+            <input type="text" name="nombre" placeholder="Nombre">
+            <input type="date" name="fecha_nacimiento">
+            <label for="sex">Sexo:</label>
+            <input type="radio" name="sex" value="M"> Macho
+            <input type="radio" name="sex" value="F"> Hembra
+            <br>    
+            <input type="number" name="peso" placeholder="Peso"> Kg
+            <input type="text" name="prospecto" placeholder="Prospecto">
+            <input type="number" name="nacido_de" placeholder="Nacido De">
+            <button type="submit">
+                Añadir
+            </button>  
+            <p><b>Código: </b> indique el código del ternero.</p>
+            <p><b>Nombre: </b> indique el nombre del ternero.</p>
+            <p><b>Fecha de Nacimiento: </b>indique la fecha de nacimiento del ternero.</p> 
+            <p><b>Sexo: </b>indique el género del ternero.</p> 
+            <p><b>Peso: </b>indique el peso del ternero.</p> 
+            <p><b>Prospecto: </b>indique el prospecto del ternero.</p>
+            <p><b>Nacido de: </b>indique el pariente del ternero.</p>  
+        </form>  
     </div>
+    <h2>Terneros Ingresados</h2>
+    <div class="col-md-7">
+        <table class="table table-striped table-bordered bg-white table-sm">
+            <thead>
+                <tr>
+                    <td>Código</td>
+                    <td>Nombre</td>
+                    <td>Sexo</td>
+                    <td>Fecha de Nacimiento</td>
+                    <td>Edad</td>
+                    <td>Peso</td>
+                    <td>Prospecto</td>
+                    <td>Registro Médico</td>
+                    <td>Salida</td>
+                    <td>Nacido De</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in datos %}
+                <tr>
+                    <td>{{data.0}}</td>
+                    <td>{{data.1}}</td>
+                    <td>{{data.2}}</td>
+                    <td>{{data.3}}</td>
+                    <td>{{data.4}}</td>
+                    <td>{{data.5}}</td>
+                    <td>{{data.6}}</td>
+                    <td>{{data.7}}</td>
+                    <td>{{data.8}}</td>
+                    <td>{{data.9}}</td>
+                    <td>{{data.10}}</td>
+                    <td><a href="" class="btn btn-danger btn-delete">Delete</a></td>
+                </tr>
+                {% endfor%}
+            </tbody>
+        </table>
+        <br>
+        <br>
+        <form action="http://localhost:3000/">
+            <input type="submit" value="Regresar">
+        </form>
+        </div> 
+    </div>  
+    
 {% endblock %}
