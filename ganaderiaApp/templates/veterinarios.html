@@ -2,6 +2,70 @@
 
 {% block body %}
 
-    <h1 style="color: black">VETERINARIOS</h1>      
-      
+    <h1 style="color: black">VETERINARIOS</h1>    
+    <h2>Ingresar Veterinario</h2>  
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}    
+    <div>
+        <form action="/añadir_veterinario", method="POST">    
+            <input type="text" name="cod", placeholder="Código">
+            <input type="text" name="nombre" placeholder="Nombre">
+            <input type="number" name="tel" placeholder="Teléfono">
+            <input type="text" name= "correo" placeholder="E-mail">
+            <input type="text" name="empresa" placeholder="Empresa">
+            <input type="number" name="emer_tel" placeholder="Tel. de Emergencia">
+            <button type="submit">
+                Añadir
+            </button>   
+            <p><b>Código: </b> indique el código del veterinario.</p>
+            <p><b>Nombre: </b> indique el nombre del veterinario.</p>
+            <p><b>Teléfono: </b> indique el teléfono del veterinario.</p>
+            <p><b>E-mail: </b> indique el e-mail del veterinario.</p>
+            <p><b>Tel. de Emergencia: </b> indique un teléfono de emergencia.</p>
+            <br>
+            <br>       
+        </form>  
+    </div>  
+    <div class="col-md-7">
+        <table class="table table-striped table-bordered bg-white table-sm">
+            <thead>
+                <tr>
+                    <td>Código</td>
+                    <td>Nombre</td>
+                    <td>Teléfono</td>
+                    <td>Correo</td>
+                    <td>Empresa</td>
+                    <td>Teléfono Emergencia</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in datos %}
+                <tr>
+                    <td>{{data.0}}</td>
+                    <td>{{data.1}}</td>
+                    <td>{{data.2}}</td>
+                    <td>{{data.3}}</td>
+                    <td>{{data.4}}</td>
+                    <td>{{data.5}}</td>
+                    <td><a href="" class="btn btn-danger btn-delete">Delete</a></td>
+                </tr>
+                {% endfor%}
+            </tbody>
+        </table>
+        <br>
+        <br>
+        <form action="http://localhost:3000/">
+            <input type="submit" value="Regresar">
+        </form>
+        </div> 
+    </div>  
+    
 {% endblock %}
