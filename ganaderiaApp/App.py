@@ -1,7 +1,9 @@
 #Librerías
+import datetime
 from flask import Flask, render_template, request, redirect, url_for, flash
 import CUBRIDdb
 import numpy as np
+from numpy.lib.function_base import select
 
 app = Flask(__name__)
 
@@ -17,6 +19,25 @@ app.secret_key='mysecretkey'
 
 #cur.execute("") ejecuta operaciones SQL e.g. cur.execute("SELECT * FROM user WHERE id = 10") 
 #cur.execute("DELETE FROM user WHERE id = 10") 
+#Funciones útiles
+#Calcular edad a partir de la fecha de nacimiento
+def edad(naci):
+    hoy = datetime.datetime.today()
+    print(hoy)
+    if hoy < naci:
+        print('error en la fecha de nacimiento')
+    else:
+        ano = naci.year
+        mes = naci.month
+        dia = naci.day
+ 
+        fecha = naci
+        edad = 0
+        while fecha < hoy:
+            edad += 1
+            fecha = datetime.datetime(ano+edad, mes, dia)
+ 
+    return int(edad)
 
 @app.route('/') #Decorador que indica que cada vez que un user entre a la ruta principal de la app se le devolverá una respuesta.
 def index():
@@ -24,58 +45,180 @@ def index():
 
 @app.route("/vacas")
 def vacas(): 
-    cur.execute('SELECT cod_vaca,nombre,genetica_lechera,historial_medico,salida FROM Vaca')
-    tmpdatos = cur.fetchall()
-    return render_template("vacas.html",datos = tmpdatos)
+    #Obtiene los datos
+    cur.execute("SELECT * FROM vaca ORDER BY cod_vaca ASC")
+    datos = cur.fetchall()
+    #Los mandamos al HTML para imprimirlos
+    return render_template("vacas.html", datos = datos)
+
+@app.route("/añadir_vaca", methods=["POST"])
+def add_vaca():
+    if request.method == "POST":
+        #Determina el código del último registro médico
+        cur.execute('SELECT * FROM registro_medico ORDER BY cod_medico DESC LIMIT 1')
+        datos = cur.fetchone()
+        new_cod_medico = int(datos[0]) + 1 
+        #Añade el registro médico básico del nuevo animal
+        today = datetime.date.today()
+        args1 = [new_cod_medico, "Por llenar", "Por llenar", today, 0]
+        cur.execute("INSERT INTO registro_medico (cod_medico, estado, descripcion, fecha, emitido_por) VALUES (?, ?, ?, ?, ?)", args1)
+        conn.commit()
+        #Añade la vaca
+        cod = request.form["cod"]
+        nombre = request.form["nombre"]
+        genetica = request.form["genetica"]
+        args2 = [cod, nombre, genetica, new_cod_medico, 0]
+        #Operación SQL en cuestión
+        cur.execute("INSERT INTO vaca (cod_vaca, nombre, genetica_lechera, historial_medico, salida) VALUES(?, ?, ?, ?, ?)", args2)
+        #Se ejecuta la operación
+        conn.commit()
+        flash("Vaca añadida correctamente")
+        return redirect(url_for("vacas"))   
 
 @app.route("/toros")
 def toros():
-    cur.execute('SELECT cod_toro,nombre,rating,historial_medico,salida FROM Toro')
+    #Obtiene los datos
+    cur.execute("SELECT * FROM toro ORDER BY cod_toro ASC")
     datos = cur.fetchall()
-    return render_template("toros.html",datos = datos)
+    #Los mandamos al HTML para imprimirlos
+    return render_template("toros.html", datos = datos)
 
-@app.route("/registro_medico/<string:id>")
-def historial_medico(id):
-    cur.execute("SELECT cod_medico,estado,descripcion,fecha,emitido_por FROM registro_medico WHERE cod_medico = {0}".format(id))
-    tmpdatos = cur.fetchall()
-    return render_template("registro_medico.html",datos = tmpdatos)
-
-@app.route("/registro_alimentacion/<string:id>")
-def registro_alimentacion(id):
-    cur.execute("SELECT cod_alimentacion,proviene_de,peso_kg,liquido_lt,fecha FROM reg_alimentacion WHERE proviene_de = {0}".format(id))
-    tmpdatos = cur.fetchall()
-    return render_template("registro_alimentacion.html",datos = tmpdatos)
-
-@app.route("/engordes")
-def engordes():
-    cur.execute('SELECT cod_engorde,nombre,valor_estimado,categoria,historial_medico,salida FROM Engorde')
-    tmpdatos = cur.fetchall()
-    return render_template("engorde.html",datos = tmpdatos)
-
+@app.route("/añadir_toro", methods=["POST"])
+def add_toro():
+    if request.method == "POST":
+        #Determina el código del último registro médico
+        cur.execute('SELECT * FROM registro_medico ORDER BY cod_medico DESC LIMIT 1')
+        datos = cur.fetchone()
+        new_cod_medico = int(datos[0]) + 1 
+        #Añade el registro médico básico del nuevo animal
+        today = datetime.date.today()
+        args1 = [new_cod_medico, "Por llenar", "Por llenar", today, 0]
+        cur.execute("INSERT INTO registro_medico (cod_medico, estado, descripcion, fecha, emitido_por) VALUES (?, ?, ?, ?, ?)", args1)
+        conn.commit()
+        #Añade al toro
+        cod = request.form["cod"]
+        nombre = request.form["nombre"]
+        ex_pajilla = request.form["ex_pajilla"]
+        args2 = [cod, nombre, ex_pajilla, new_cod_medico, 0]
+        #Operación sql
+        cur.execute("INSERT INTO toro (cod_toro, nombre, rating, historial_medico, salida) VALUES(?, ?, ?, ?, ?)", args2)
+        #Confirmación de la operación
+        conn.commit()
+        flash("Toro añadido correctamente")
+    return redirect(url_for("toros"))
 
 @app.route("/terneros")
 def terneros():
-    cur.execute('SELECT cod_ternero,nombre,sexo,fecha_nacimiento,edad,peso_nacimiento,prospecto,historial_medico,salida FROM Ternero')
-    tmpdatos = cur.fetchall()
-    return render_template("terneros.html",datos = tmpdatos)
+    #Obtiene los datos
+    cur.execute("SELECT * FROM ternero ORDER BY cod_ternero ASC")
+    datos = cur.fetchall()
+    #Los mandamos al HTML para imprimirlos
+    return render_template("terneros.html", datos = datos)
+
+@app.route("/añadir_ternero", methods=["POST"])
+def add_ternero():
+    if request.method == "POST":
+        #Determina el código del último registro médico
+        cur.execute('SELECT * FROM registro_medico ORDER BY cod_medico DESC LIMIT 1')
+        datos = cur.fetchone()
+        new_cod_medico = int(datos[0]) + 1 
+        #Añade el registro médico básico del nuevo animal
+        today = datetime.date.today()
+        args1 = [new_cod_medico, "Por llenar", "Por llenar", today, 0]
+        cur.execute("INSERT INTO registro_medico (cod_medico, estado, descripcion, fecha, emitido_por) VALUES (?, ?, ?, ?, ?)", args1)
+        conn.commit()
+        #Añade al ternero
+        cod = request.form["cod"]
+        nombre = request.form["nombre"]
+        fecha_nacimiento = request.form["fecha_nacimiento"]
+        sex = request.form["sex"]
+        #Calcula la edad a partir de la fecha de nacimiento
+        temp_age = datetime.datetime.strptime(fecha_nacimiento, "%Y-%m-%d")
+        age = edad(temp_age)  
+        peso = request.form["peso"]
+        prospecto = request.form["prospecto"]
+        nacido_de = request.form["nacido_de"]
+        args2 = [cod, nombre, sex, fecha_nacimiento, age, peso, prospecto, new_cod_medico, 0, nacido_de]
+        #Comando sql
+        cur.execute("INSERT INTO ternero (cod_ternero, nombre, sexo, fecha_nacimiento, edad, peso_nacimiento, prospecto, historial_medico, salida, nacido_de) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", args2)
+        #Confirmamos comando
+        conn.commit()
+        flash("Ternero añadido correctamente")
+    return redirect(url_for("terneros"))
 
 @app.route("/clientes")
 def clientes():
-    #cur.execute('SELECT codigo,telefono,nombre,credito,calificacion FROM cliente')
-    cur.execute('SELECT * FROM cliente')
-    tmpdatos = cur.fetchall()
-    print(tmpdatos)
-    return render_template("clientes.html",datos = tmpdatos)
+    return render_template("clientes.html")
 
-@app.route("/registro_ventas")
-def registro_ventas():
-    cur.execute('SELECT factura,cliente,precio,fecha FROM registro_venta')
-    tmpdatos = cur.fetchall()
-    return render_template("registro_ventas.html",datos = tmpdatos)
+@app.route("/añadir_cliente", methods=["POST"])
+def add_cliente():
+    if request.method == "POST":
+        cod= request.form["cod"]
+        nombre= request.form["nombre"]
+        tel= request.form["tel"]
+        cre= request.form["cre"]
+        cal= request.form["cal"]
+        args=[cod, nombre, tel, cre, cal]
+        #Comando sql
+        cur.execute("INSERT INTO cliente (codigo, nombre, telefono, credito, calificacion) VALUES (?, ?, ?, ?, ?)", args)
+        #Confirmar comando
+        conn.commit()
+        flash("Cliente añadido correctamente")
+    return redirect(url_for("clientes"))
 
 @app.route("/veterinarios")
 def veterinarios():
-    return render_template("veterinarios.html")
+    cur.execute("SELECT * FROM veterinario ORDER BY cod_vet ASC")
+    datos = cur.fetchall()
+    return render_template("veterinarios.html", datos = datos)
+
+@app.route("/añadir_veterinario", methods=["POST"])
+def add_veterinario():
+    if request.method == "POST":
+        cod= request.form["cod"]
+        nombre= request.form["nombre"]
+        tel= request.form["tel"]
+        email= request.form["correo"]
+        empresa= request.form["empresa"]
+        tel_emer = request.form["emer_tel"]
+        args=[cod, nombre, tel, email, empresa, tel_emer]
+        #Comando sql
+        cur.execute("INSERT INTO veterinario (cod_vet, nombre, telefono, correo, empresa, telefono_emergencia) VALUES (?,?,?,?,?,?)", args)
+        #Confirmar comando
+        conn.commit()
+        flash("Veterinario añadido correctamente")
+    return redirect(url_for("veterinarios"))
+
+@app.route("/engordes")
+def engordes():
+    cur.execute("SELECT * FROM engorde ORDER BY cod_engorde ASC")
+    datos = cur.fetchall()
+    return render_template("engorde.html", datos = datos)
+
+@app.route("/añadir_engorde", methods=["POST"])
+def add_engorde():
+    if request.method == "POST":
+        #Determina el código del último registro médico
+        cur.execute('SELECT * FROM registro_medico ORDER BY cod_medico DESC LIMIT 1')
+        datos = cur.fetchone()
+        new_cod_medico = int(datos[0]) + 1 
+        #Añade el registro médico básico del nuevo animal
+        today = datetime.date.today()
+        args1 = [new_cod_medico, "Por llenar", "Por llenar", today, 0]
+        cur.execute("INSERT INTO registro_medico (cod_medico, estado, descripcion, fecha, emitido_por) VALUES (?, ?, ?, ?, ?)", args1)
+        conn.commit()
+        #Añadir el engorde
+        cod = request.form["cod"]
+        nombre = request.form["nombre"]
+        val = request.form["valor_estimado"]
+        cat = request.form["categoria"]
+        args = [cod, nombre, val, cat, new_cod_medico, 0]
+        #Comando sql 
+        cur.execute("INSERT INTO engorde (cod_engorde, nombre, valor_estimado, categoria, historial_medico, salida) VALUES(?,?,?,?,?,?)", args)
+        #Confirmación del comando
+        conn.commit()
+        flash("Engorde añadido correctamente")
+    return redirect(url_for("engordes"))
 
 @app.route("/consulta_1")
 def consulta_1():
