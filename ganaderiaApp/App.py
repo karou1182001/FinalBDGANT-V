@@ -53,7 +53,7 @@ def vacas():
     datos=np.delete(datos, 0 , axis=0)
     for dato in datos:
         if dato[4]=="0":
-            dato[4]= "Vigente"
+           dato[4]= "Vigente"
     #Los mandamos al HTML para imprimirlos
     return render_template("vacas.html", datos = datos)
 
@@ -425,6 +425,8 @@ def salidas(id):
         tmpdatos = cur.fetchall()
         return render_template('salida.html',datos = tmpdatos)
     else:
+        if id=="Vigente":
+            id=0
         cur.execute('SELECT cod_registro,razon,fecha,venta,sacrificio_enfermedad FROM Salida WHERE cod_registro = {0}'.format(id))
         tmpdatos = cur.fetchall()
         return render_template('salida.html',datos = tmpdatos)
