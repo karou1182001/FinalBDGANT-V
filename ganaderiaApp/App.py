@@ -238,11 +238,25 @@ def add_engorde():
 @app.route("/registro_medico/<string:id>")
 def historial_medico(id):
     if id=="1c":
-      print("Pon aquí la consulta general")
+        cur.execute("SELECT cod_medico,estado,descripcion,fecha,emitido_por FROM registro_medico")
+        datos = cur.fetchall()
+        return render_template("registro_medico.html",datos = datos)
     else:
         cur.execute("SELECT cod_medico,estado,descripcion,fecha,emitido_por FROM registro_medico WHERE cod_medico = {0}".format(id))
-        datos = cur.fetchmany()
+        datos = cur.fetchall()
         return render_template("registro_medico.html",datos = datos)
+
+@app.route("/estuvo_enfermo/<string:id>")
+def estuvo_enfermo(id):
+    if id=="1c":
+        cur.execute("SELECT ref_enfermo,paciente,duracion_enfermedad,fecha_de_diagnostico,enfemerdad FROM estuvo_enfermo")
+        datos = cur.fetchall()
+        return render_template("registro_medico.html",datos = datos)
+    else:
+        cur.execute("SELECT reg_enfermo,paciente,duracion_enfermedad,fecha_de_diagnostico,enfermedad FROM estuvo_enfermo WHERE paciente = {0}".format(id))
+        datos = cur.fetchall()
+        return render_template("estuvo_enfermo.html",datos = datos)
+
 
 @app.route("/registro_ventas")
 def registro_ventas():
@@ -307,6 +321,27 @@ def estado_ins(id):
     datos=sorted(datos, key=lambda cod : cod[0])
     return render_template('estado_ins.html', datos = datos)
     
+@app.route("/enfermedades/<string:id>")
+def enfermedad(id):
+    if(id == '1c'): #consulta general
+        cur.execute('SELECT cod_enfermedad,nom_enfermedad,duracion_promedio,indice_letalidad,tratamiento_estandar FROM Enfermedad')
+        tmpdatos = cur.fetchall()
+        return render_template('Enfermedad.html',datos = tmpdatos)
+    else:
+        cur.execute('SELECT cod_enfermedad,nom_enfermedad,duracion_promedio,indice_letalidad,tratamiento_estandar FROM Enfermedad WHERE cod_enfermedad = {0}'.format(id))
+        tmpdatos = cur.fetchall()
+        return render_template('Enfermedad.html',datos = tmpdatos)
+
+@app.route("/salidas/<string:id>")
+def salidas(id):
+    if(id == '1c'): #consulta general
+        cur.execute('SELECT cod_registro,razon,fecha,venta,sacrificio_enfermedad FROM Salida')
+        tmpdatos = cur.fetchall()
+        return render_template('salida.html',datos = tmpdatos)
+    else:
+        cur.execute('SELECT cod_registro,razon,fecha,venta,sacrificio_enfermedad FROM Salida WHERE cod_registro = {0}'.format(id))
+        tmpdatos = cur.fetchall()
+        return render_template('salida.html',datos = tmpdatos)
 
 
 #----------PONER AQUÍ LAS CONSULTAS---------
