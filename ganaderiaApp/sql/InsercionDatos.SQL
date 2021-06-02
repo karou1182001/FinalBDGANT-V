@@ -6,7 +6,7 @@
 --Cliente
 INSERT INTO cliente (codigo, nombre, telefono, credito, calificacion) VALUES(0, 'Nadie', '000',  0,  0);
 INSERT INTO cliente (codigo, nombre, telefono, credito, calificacion) VALUES(1, 'Juan Garcia', '3574587543',  1.2,  5);
-INSERT INTO cliente  VALUES(2, 'Santiago Peña', '3574678754',  1.5,  5);
+INSERT INTO cliente  VALUES(2, 'Santiago Pena', '3574678754',  1.5,  5);
 INSERT INTO cliente  VALUES(3, 'Juana Marquez', '3105698159',  1.2,  4.2);
 INSERT INTO cliente  VALUES(4, 'Sandra Castro', '3028569874',  1.1,  4.6);
 INSERT INTO cliente  VALUES(5, 'Asbel Fernandez', '3204678754',  1.9,  4.9);
@@ -51,20 +51,20 @@ INSERT INTO registro_medico(cod_medico,estado,descripcion,fecha,emitido_por) VAL
 INSERT INTO registro_medico VALUES(1,'Ninguno', 'Ninguna', '0001-01-01',  0 );
 INSERT INTO registro_medico VALUES(2,'Ninguno', 'Ninguna', '0001-01-01',  0 );
 INSERT INTO registro_medico VALUES(3, 'Ninguno', 'Ninguna', '0001-01-01',  0 );
-INSERT INTO registro_medico VALUES(4, 'Saludable', 'No presenta patologías', '2020-02-03', 1 );
-INSERT INTO registro_medico VALUES(5, 'Saludable', 'No presenta patologías', '2020-02-03', 2 );
-INSERT INTO registro_medico VALUES(6, 'Saludable', 'No presenta patologías', '2020-02-03', 3 );
-INSERT INTO registro_medico VALUES(7, 'Saludable', 'No presenta patologías', '2020-02-03', 4 );
-INSERT INTO registro_medico VALUES(8, 'Saludable', 'No presenta patologías', '2020-02-03', 5 );
-INSERT INTO registro_medico VALUES(9, 'Saludable', 'No presenta patologías', '2020-02-03', 6 );
-INSERT INTO registro_medico VALUES(10, 'Saludable', 'No presenta patologías', '2020-02-03',7 );
-INSERT INTO registro_medico VALUES(11, 'Saludable', 'No presenta patologías', '2020-05-03', 4 );
-INSERT INTO registro_medico VALUES(12, 'Saludable', 'No presenta patologías', '2020-04-03', 5 );
-INSERT INTO registro_medico VALUES(13, 'Saludable', 'No presenta patologías', '2020-03-03', 1 );
-INSERT INTO registro_medico VALUES(14, 'Saludable', 'No presenta patologías', '2020-07-03', 1 );
-INSERT INTO registro_medico VALUES(15, 'Saludable', 'No presenta patologías', '2020-08-03', 1 );
-INSERT INTO registro_medico VALUES(16, 'Saludable', 'No presenta patologías', '2020-09-03', 1 );
-INSERT INTO registro_medico VALUES(17, 'Saludable', 'No presenta patologías', '2020-10-03', 1 );
+INSERT INTO registro_medico VALUES(4, 'Saludable', 'No presenta patologias', '2020-02-03', 1 );
+INSERT INTO registro_medico VALUES(5, 'Saludable', 'No presenta patologias', '2020-02-03', 2 );
+INSERT INTO registro_medico VALUES(6, 'Saludable', 'No presenta patologias', '2020-02-03', 3 );
+INSERT INTO registro_medico VALUES(7, 'Saludable', 'No presenta patologias', '2020-02-03', 4 );
+INSERT INTO registro_medico VALUES(8, 'Saludable', 'No presenta patologias', '2020-02-03', 5 );
+INSERT INTO registro_medico VALUES(9, 'Saludable', 'No presenta patologias', '2020-02-03', 6 );
+INSERT INTO registro_medico VALUES(10, 'Saludable', 'No presenta patologias', '2020-02-03',7 );
+INSERT INTO registro_medico VALUES(11, 'Saludable', 'No presenta patologias', '2020-05-03', 4 );
+INSERT INTO registro_medico VALUES(12, 'Saludable', 'No presenta patologias', '2020-04-03', 5 );
+INSERT INTO registro_medico VALUES(13, 'Saludable', 'No presenta patologias', '2020-03-03', 1 );
+INSERT INTO registro_medico VALUES(14, 'Saludable', 'No presenta patologias', '2020-07-03', 1 );
+INSERT INTO registro_medico VALUES(15, 'Saludable', 'No presenta patologias', '2020-08-03', 1 );
+INSERT INTO registro_medico VALUES(16, 'Saludable', 'No presenta patologias', '2020-09-03', 1 );
+INSERT INTO registro_medico VALUES(17, 'Saludable', 'No presenta patologias', '2020-10-03', 1 );
 
 ----Registro venta
 INSERT INTO registro_venta(factura,cliente,precio,fecha) VALUES(0, 0, 0, '0001-01-01');
@@ -108,7 +108,7 @@ INSERT INTO reg_alimentacion VALUES(6, 6, 100, 50,  '0001-01-01');
 
 --Salida
 INSERT INTO salida(cod_registro, razon, fecha, venta, sacrificio_enfermedad) VALUES(0,  'No ha salido',  '0001-01-01', 0, 0);
-INSERT INTO salida VALUES(1,  'Llegó su hora',  '2021-05-11', 0, 2);
+INSERT INTO salida VALUES(1,  'Llego su hora',  '2021-05-11', 0, 2);
 
 --Nivel 4
 
