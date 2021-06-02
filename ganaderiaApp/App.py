@@ -237,9 +237,12 @@ def add_engorde():
 
 @app.route("/registro_medico/<string:id>")
 def historial_medico(id):
-    cur.execute("SELECT cod_medico,estado,descripcion,fecha,emitido_por FROM registro_medico WHERE cod_medico = {0}".format(id))
-    datos = cur.fetchmany()
-    return render_template("registro_medico.html",datos = datos)
+    if id=="1c":
+      print("Pon aquí la consulta general")
+    else:
+        cur.execute("SELECT cod_medico,estado,descripcion,fecha,emitido_por FROM registro_medico WHERE cod_medico = {0}".format(id))
+        datos = cur.fetchmany()
+        return render_template("registro_medico.html",datos = datos)
 
 @app.route("/registro_ventas")
 def registro_ventas():
