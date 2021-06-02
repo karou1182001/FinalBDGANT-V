@@ -268,8 +268,8 @@ def registro_ventas():
     return render_template("registro_ventas.html",datos = datos)
 
 #Consultas
-@app.route("/consulta_1")
-def consulta_1():
+@app.route("/pajillas")
+def pajillas():
     #Consulta para listar las pajillas y ver el  código de las
     #vacas y toros asociados
     cur.execute('SELECT pajilla.id_pajilla, pajilla.fecha_embase, pajilla.toro, pajilla.empleado_en, pajilla.vendido_en, inseminacion.vaca FROM pajilla CROSS JOIN inseminacion WHERE pajilla.empleado_en= inseminacion.cod_inseminacion')
@@ -285,6 +285,26 @@ def consulta_1():
     #En axis se especifica que se quiere eliminar una fila o columna
     datos=np.delete(datos, 0 , axis=0)
     return render_template('consulta_1.html', datos = datos)
+
+@app.route("/añadir_pajilla", methods=["POST"])
+def add_pajilla():
+    if request.method == "POST":
+        id_pajilla= request.form["id_pajilla"]
+        fecha_embase= request.form["fecha_embase"]
+        toro= request.form["toro"]
+        empleado_en= request.form["empleado_en"]
+        vendido_en= request.form["vendido_en"]
+        if empleado_en=="":
+            empleado_en=0
+        if vendido_en=="":
+            vendido_en=0
+        args=[int(id_pajilla), fecha_embase, int(toro), int(empleado_en), int(vendido_en)]
+        #Comando sql
+        cur.execute("INSERT INTO pajilla (id_pajilla, fecha_embase, toro, empleado_en, vendido_en) VALUES (?, ?, ?, ?, ?)", args)
+        #Confirmar comando
+        conn.commit()
+        flash("Pajilla añadida correctamente")
+    return redirect(url_for("pajillas"))
 
 @app.route("/consulta_2/<string:id>")
 def consulta_2(id):
