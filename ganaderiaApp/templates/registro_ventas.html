@@ -17,17 +17,20 @@
                     {% for data in datos %}
                     <tr>
                         <td>{{data.0}}</td>
-                        <td>{{data.1}}</td>
+                        <td>
+                            <a href = "/clientes/{{data.1}}" >{{data.1}}</a>    
+                        </td>
                         <td>{{data.2}}</td>
                         <td>{{data.3}}</td>
                     </tr>
                     {% endfor%}
                 </tbody>
             </table>
-
-            <br>
-            <br>
+        <br>
+        <br>
             <a class="btn btn-primary" href="http://localhost:3000/" role="button">Regresar</a>
-            </div>
     </div>
+    
+</div>
+
 {% endblock %}

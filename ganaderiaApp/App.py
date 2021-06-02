@@ -155,9 +155,16 @@ def add_ternero():
         flash("Ternero añadido correctamente")
     return redirect(url_for("terneros"))
 
-@app.route("/clientes")
-def clientes():
-    return render_template("clientes.html")
+@app.route("/clientes/<string:id>")
+def clientes(id):
+    if(id == '1c'):
+        cur.execute("SELECT codigo,telefono,nombre,credito,calificacion FROM Cliente")
+        tmpdatos = cur.fetchall()
+        return render_template("clientes.html",datos = tmpdatos)
+    else:
+        cur.execute("SELECT codigo,telefono,nombre,credito,calificacion FROM Cliente WHERE codigo =  {0}".format(id))
+        tmpdatos = cur.fetchall()
+        return render_template("clientes.html",datos = tmpdatos)
 
 @app.route("/añadir_cliente", methods=["POST"])
 def add_cliente():
