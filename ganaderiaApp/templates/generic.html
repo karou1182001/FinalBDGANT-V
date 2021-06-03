@@ -1,0 +1,44 @@
+<!--
+    
+    Dejemos este como algo generico para copiar y pegar el codigo.
+    El  que lo toque, se las vera conmigo.
+
+    Con todo el cariño del mundo:
+        Jairo   :)
+    
+-->
+
+
+{% extends 'layout.html' %}
+
+{% block body %}
+<h1 style="color:rgb(0, 0, 0)"><b>Registro de ventas</b></h1>
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table table-striped table-bordered bg-white table-sm">
+                <thead>
+                    <tr>
+                        <td>Codigo</td>
+                        <td>cliente</td>
+                        <td>precio</td>
+                        <td>fecha</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in datos %}
+                    <tr>
+                        <td>{{data.0}}</td>
+                        <td>{{data.1}}</td>
+                        <td>{{data.2}}</td>
+                        <td>{{data.3}}</td>
+                    </tr>
+                    {% endfor%}
+                </tbody>
+            </table>
+
+            <br>
+            <br>
+            <a class="btn btn-primary" href="http://localhost:3000/" role="button">Regresar</a>
+            </div>
+    </div>
+{% endblock %}

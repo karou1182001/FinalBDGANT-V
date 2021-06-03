@@ -1,0 +1,101 @@
+<!--Heredamos el diseño de todo lo que se haga en layout-->
+{% extends 'layout.html' %}
+
+{% block body %}
+<h1 style="color: white"><b>Información sobre inseminaciones</b></h1>
+    <br>
+    <a class="btn btn-primary" href="http://localhost:3000/consulta_2/2c" role="button">Ver solo vacas embarazadas</a>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-md-4">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{message}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+            <div class="card card-body">
+                <form method= 'POST'>
+                    <div class="form-group">
+                        <input type="date" name = "fecha" placeholder="Fecha" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="exito" placeholder="Exito" class="form-control">  
+                    </div>
+                    <div class="form-group">
+                        <input type="number" name="veterinario" placeholder="Código veterinario que la realizó" class="form-control">  
+                    </div>
+                    <div class="form-group">
+                        <input type="number" name="vaca" placeholder="Código de vaca" class="form-control">  
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" formaction="/añadir_inseminacion" class="btn btn-primary">Insertar</button>
+                        <!--<button type="submit" formaction="/update_hijo" class="btn btn-primary">Actualizar</button>-->
+                    </div>
+                </form>
+            </div>
+            <br>
+            <br>
+            <a class="btn btn-primary" href="http://localhost:3000/" role="button">Regresar</a>
+        </div>
+        <div class="col-md-7">
+            <table class="table table-striped table-bordered bg-white table-sm">
+                <thead>
+                    <tr>
+                        <td>Id inseminación</td>
+                        <td>Id vaca inseminada</td>
+                        <td>Fecha</td>
+                        <td>Éxito</td>
+                        <td>Id veterinario encargado</td>
+                        <td>Ver inf. vaca</td>
+                        <td>Ver estados inseminación</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in datos %}
+                    <tr>
+                        <td>{{data.0}}</td>
+                        <td>{{data.4}}</td>
+                        <td>{{data.1}}</td>
+                        <td>{{data.2}}</td>
+                        <td>{{data.3}}</td>
+                        <td><a href="/consulta_2/{{data.4}}">X</a></td>
+                        <td><a href="/estado_ins/{{data.0}}">X</a></td>
+                    </tr>
+                    {% endfor%}
+                </tbody>
+            </table>
+            {% if datosVaca %}
+            <p style="color:rgb(0, 0, 0)"><b>Información de vaca</b></p>
+            <br>
+            <div class="row">
+                <div class="col-md-4">
+                    <table class="table table-striped table-bordered bg-white table-sm">
+                        <thead>
+                            <tr>
+                                <td>Id vaca</td>
+                                <td>Nombre</td>
+                                <td>Genética lechera</td>
+                                <td>Salida</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for dato in datosVaca %}
+                            <tr>
+                                <td>{{dato.0}}</td>
+                                <td>{{dato.1}}</td>
+                                <td>{{dato.2}}</td>
+                                <td>{{dato.3}}</td>
+                            </tr>
+                            {% endfor%}
+                        </tbody>
+                    </table>
+            {% endif %}
+            </div>
+    </div>
+{% endblock %}

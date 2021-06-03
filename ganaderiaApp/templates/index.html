@@ -1,0 +1,48 @@
+<!--Heredamos el diseño de todo lo que se haga en layout-->
+{% extends 'layout.html' %}
+
+{% block body %}
+    <!--Mostrar los mensaje flask -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+     <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+     <!--Para enumerar las consultas-->
+    <style>
+        li {
+            color: #fff;
+        }
+    </style>
+  <!--DECORACIÓN-->
+  <!--FIN DECORACIÓN-->
+    <ol>
+        <li style="text-shadow: 1px 1px 2px black; color: rgb(255, 255, 255); font-family: Arial, Helvetica, sans-serif; font-size: large;">CRUDS</li>
+        <p></p>
+            <ul clas="list-group list-group-numbered">
+                <li class="list-group-item"><a href="http://localhost:3000/vacas">VACAS</a></li>
+                <li class="list-group-item"><a href="http://localhost:3000/toros">TOROS</a></li>
+                <li class="list-group-item"><a href="http://localhost:3000/terneros">TERNEROS</a></li>
+                <li class="list-group-item"><a href="http://localhost:3000/engordes">ENGORDE</a></li>
+                <li class="list-group-item"><a href="http://localhost:3000/veterinarios">VETERINARIOS</a></li>
+                <li class="list-group-item"><a href="http://localhost:3000/clientes">CLIENTES</a></li>
+                <li class="list-group-item"><a href="http://localhost:3000/registro_ventas">REGISTRO DE VENTAS</a></li>
+                <li class="list-group-item"><a href="http://localhost:3000/registro_medico/1c">REGISTROS MEDICOS</a></li>
+                <li class="list-group-item"><a href="http://localhost:3000/salidas/1c">SALIDAS</a></li>
+                <li class="list-group-item"><a href="http://localhost:3000/enfermedades/1c">ENFERMEDADES</a></li>
+                <li class="list-group-item"><a href="http://localhost:3000/pajillas">PAJILLAS</a></li>
+            </ul>
+            <br>
+        <li style="text-shadow: 1px 1px 2px black; color: rgb(255, 255, 255); font-family: Arial, Helvetica, sans-serif; font-size: large;">CONSULTAS</li>
+        <p></p>
+        <ul clas="list-group list-group-numbered">   
+            <li class="list-group-item"><a href="http://localhost:3000/consulta_2/1c">INFORMACIÓN SOBRE INSEMINACIONES</a></li>
+        </ul>
+    </ol>
+    
+{% endblock %}
