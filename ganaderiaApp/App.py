@@ -81,8 +81,9 @@ def add_vaca():
         flash("Vaca añadida correctamente")
         return redirect(url_for("vacas"))   
 
-@app.route("/delete_vaca/<string:id>")
-def delete_vaca(id):
+@app.route("/delete_vaca", methods=["GET"])
+def delete_vaca():
+    id=request.args.get('id')
     iden = id
     cur.execute("DELETE FROM vaca WHERE cod_vaca = ? VALUES(?)", iden)
     conn.commit()
@@ -127,8 +128,9 @@ def add_toro():
         flash("Toro añadido correctamente")
     return redirect(url_for("toros"))
 
-@app.route("/delete_toro/<string:id>")
-def delete_toro(id):
+@app.route("/delete_toro", methods=["GET"])
+def delete_toro():
+    id=request.args.get('id')
     iden = id
     cur.execute("DELETE FROM toro WHERE cod_toro = ? VALUES(?)", iden)
     conn.commit()
@@ -181,8 +183,9 @@ def add_ternero():
         flash("Ternero añadido correctamente")
     return redirect(url_for("terneros"))
 
-@app.route("/clientes/<string:id>")
-def clientes(id):
+@app.route("/clientes", methods=['GET'])
+def clientes():
+    id=request.args.get('id')
     if(id == '1c'):
         cur.execute("SELECT codigo,telefono,nombre,credito,calificacion FROM Cliente")
         tmpdatos = cur.fetchall()
@@ -191,8 +194,10 @@ def clientes(id):
         cur.execute("SELECT codigo,telefono,nombre,credito,calificacion FROM Cliente WHERE codigo =  {0}".format(id))
         tmpdatos = cur.fetchall()
         return render_template("clientes.html",datos = tmpdatos)
-@app.route("/delete_ternero/<string:id>")
-def delete_ternero(id):
+
+@app.route("/delete_ternero", methods=["GET"])
+def delete_ternero():
+    id=request.args.get('id')
     iden = id
     cur.execute("DELETE FROM ternero WHERE cod_ternero = ? VALUES(?)", iden)
     conn.commit()
@@ -215,8 +220,9 @@ def add_cliente():
         flash("Cliente añadido correctamente")
     return redirect(url_for("clientes"))
 
-@app.route("/delete_cliente/<string:id>")
-def delete_cliente(id):
+@app.route("/delete_cliente", methods=["GET"])
+def delete_cliente():
+    id=request.args.get('id')
     iden = id
     cur.execute("DELETE FROM cliente WHERE codigo = ? VALUES(?)", iden)
     conn.commit()
@@ -249,8 +255,9 @@ def add_veterinario():
         flash("Veterinario añadido correctamente")
     return redirect(url_for("veterinarios"))
 
-@app.route("/delete_veterinario/<string:id>")
-def delete_vet(id):
+@app.route("/delete_veterinario", methods=["GET"])
+def delete_vet():
+    id=request.args.get('id')
     iden = id
     cur.execute("DELETE FROM veterinario WHERE cod_vet = ? VALUES(?)", iden)
     conn.commit()
@@ -294,16 +301,18 @@ def add_engorde():
         flash("Engorde añadido correctamente")
     return redirect(url_for("engordes"))
 
-@app.route("/delete_engorde/<string:id>")
-def delete_engorde(id):
+@app.route("/delete_engorde", methods=["GET"])
+def delete_engorde():
+    id=request.args.get('id')
     iden = id
     cur.execute("DELETE FROM engorde WHERE cod_engorde = ? VALUES(?)", iden)
     conn.commit()
     flash("El engorde ha sido eliminado correctamente")
     return redirect(url_for("engordes")) 
 
-@app.route("/registro_medico/<string:id>")
-def historial_medico(id):
+@app.route("/registro_medico", methods=["GET"])
+def historial_medico():
+    id=request.args.get('id')
     if id=="1c":
         cur.execute("SELECT cod_medico,estado,descripcion,fecha,emitido_por FROM registro_medico")
         datos = cur.fetchall()
@@ -313,8 +322,9 @@ def historial_medico(id):
         datos = cur.fetchall()
         return render_template("registro_medico.html",datos = datos)
 
-@app.route("/estuvo_enfermo/<string:id>")
-def estuvo_enfermo(id):
+@app.route("/estuvo_enfermo", methods=["GET"])
+def estuvo_enfermo():
+    id=request.args.get('id')
     if id=="1c":
         cur.execute("SELECT ref_enfermo,paciente,duracion_enfermedad,fecha_de_diagnostico,enfemerdad FROM estuvo_enfermo")
         datos = cur.fetchall()
@@ -402,8 +412,9 @@ def add_inseminacion():
         datos=sorted(datos, key=lambda cod : cod[0])
     return render_template('consulta_2.html', datos = datos, datosVaca=[])
 
-@app.route("/consulta_2/<string:id>")
-def consulta_2(id):
+@app.route("/consulta_2", methods=["GET"])
+def consulta_2():
+    id=request.args.get('id')
     datosVaca = []
     if id=="1c":
         #Consulta de las vacas que han sido inseminadas con información asociada,
@@ -428,9 +439,10 @@ def consulta_2(id):
     datos=sorted(datos, key=lambda cod : cod[0])
     return render_template('consulta_2.html', datos = datos, datosVaca=datosVaca)
 
-@app.route("/añadir_estado_inseminacion/<string:id>", methods=["POST"])
-def add_estado_inseminacion(id):
+@app.route("/añadir_estado_inseminacion", methods=["POST", "GET"])
+def add_estado_inseminacion():
     if request.method == "POST":
+        id=request.args.get('id')
         #Determina el código del último registro médico
         cur.execute('SELECT * FROM estado_inseminacion ORDER BY cod_registro DESC LIMIT 1')
         datos = cur.fetchone()
@@ -453,16 +465,18 @@ def add_estado_inseminacion(id):
         datos=sorted(datos, key=lambda cod : cod[0])
     return render_template('estado_ins.html', datos = datos, id=id)
 
-@app.route("/estado_ins/<string:id>")
-def estado_ins(id):
+@app.route("/estado_ins", methods=["GET"])
+def estado_ins():
+    id=request.args.get('id')
     cur.execute('SELECT * FROM estado_inseminacion WHERE cod_inseminacion = ? VALUES(?)', id)
     datos = cur.fetchall()
     #Ordenamos la lista por código
     datos=sorted(datos, key=lambda cod : cod[0])
     return render_template('estado_ins.html', datos = datos, id=id)
     
-@app.route("/enfermedades/<string:id>")
-def enfermedad(id):
+@app.route("/enfermedades", methods=['GET'])
+def enfermedad():
+    id=request.args.get('id')
     if(id == '1c'): #consulta general
         cur.execute('SELECT cod_enfermedad,nom_enfermedad,duracion_promedio,indice_letalidad,tratamiento_estandar FROM Enfermedad')
         tmpdatos = cur.fetchall()
@@ -472,8 +486,9 @@ def enfermedad(id):
         tmpdatos = cur.fetchall()
         return render_template('Enfermedad.html',datos = tmpdatos)
 
-@app.route("/salidas/<string:id>")
-def salidas(id):
+@app.route("/salidas", methods=["GET"])
+def salidas():
+    id=request.args.get('id')
     if(id == '1c'): #consulta general
         cur.execute('SELECT cod_registro,razon,fecha,venta,sacrificio_enfermedad FROM Salida')
         tmpdatos = cur.fetchall()

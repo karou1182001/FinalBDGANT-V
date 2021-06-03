@@ -1,7 +1,9 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-<h1 style="color: white"><b>Registro Médico</b></h1>
+    <div class="sectiontitle">
+        <p class="heading underline font-x2">REGISTRO MÉDICO</p>
+    </div> 
     <div class="row">
         <div class="col-md-6">
             <table class="table table-striped table-bordered bg-white table-sm">
@@ -24,7 +26,7 @@
                         <td>{{data.3}}</td>
                         <td>{{data.4}}</td>
                         <td>
-                            <a href="/estuvo_enfermo/{{data.0}}">Consultar</a>    
+                            <a href="/estuvo_enfermo?id={{data.0}}">Consultar</a>    
                         </td>
                     </tr>
                     {% endfor%}

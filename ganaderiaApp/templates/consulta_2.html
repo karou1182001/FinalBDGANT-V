@@ -2,9 +2,11 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-<h1 style="color: white"><b>Información sobre inseminaciones</b></h1>
+    <div class="sectiontitle">
+        <p class="heading underline font-x2">INFORMACION SOBRE INSEMINACIONES</p>
+    </div> 
     <br>
-    <a class="btn btn-primary" href="http://localhost:3000/consulta_2/2c" role="button">Ver solo vacas embarazadas</a>
+    <a class="btn btn-primary" href="http://localhost:3000/consulta_2?id=2c" role="button">Ver solo vacas embarazadas</a>
     <br>
     <br>
     <div class="row">
@@ -64,8 +66,8 @@
                         <td>{{data.1}}</td>
                         <td>{{data.2}}</td>
                         <td>{{data.3}}</td>
-                        <td><a href="/consulta_2/{{data.4}}">X</a></td>
-                        <td><a href="/estado_ins/{{data.0}}">X</a></td>
+                        <td><a href="/consulta_2?id={{data.4}}">X</a></td>
+                        <td><a href="/estado_ins?id={{data.0}}">X</a></td>
                     </tr>
                     {% endfor%}
                 </tbody>
