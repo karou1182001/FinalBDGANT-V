@@ -307,16 +307,16 @@ td{border-width:0 1px;}
 
 /* Colours
 --------------------------------------------------------------------------------------------------------------- */
-body{color:#A5A6AA; background-color:#161C21;}
+body{color:#363A59; background-color:#161C21;}
 a{color:#529444;}
 a:active, a:focus{background:transparent !important;}/* IE10 + 11 Bugfix - prevents grey background */
 hr, .borderedbox{border-color:#D7D7D7;}
-label span{color:#FF0000; background-color:inherit;}
+label span{color:#363A59; background-color:inherit;}
 input:focus, textarea:focus, *:required:focus{border-color:#529444 !important;}
 
 .overlay{color:#FFFFFF; background-color:inherit;}
 .overlay::after{color:inherit; background-color:rgba(0,0,0,.55);}
-.overlay.light{color:#474747;}
+.overlay.light{color:#363A59;}
 .overlay.light::after{background-color:rgba(255,255,255,.7);}
 
 .coloured{color:#FFFFFF; background-color:#46803A;}
