@@ -51,6 +51,9 @@ def vacas():
     #Eliminamos la fila 0 solo por cuestión de estética, ya que esta fila representa datos nulos
     #En axis se especifica que se quiere eliminar una fila o columna
     datos=np.delete(datos, 0 , axis=0)
+    for dato in datos:
+        if dato[4]=="0":
+           dato[4]= "Vigente"
     #Los mandamos al HTML para imprimirlos
     return render_template("vacas.html", datos = datos)
 
@@ -86,6 +89,9 @@ def toros():
     #Eliminamos la fila 0 solo por cuestión de estética, ya que esta fila representa datos nulos
     #En axis se especifica que se quiere eliminar una fila o columna
     datos=np.delete(datos, 0 , axis=0)
+    for dato in datos:
+        if dato[4]=="0":
+            dato[4]= "Vigente"
     #Los mandamos al HTML para imprimirlos
     return render_template("toros.html", datos = datos)
 
@@ -121,6 +127,10 @@ def terneros():
     #Eliminamos la fila 0 solo por cuestión de estética, ya que esta fila representa datos nulos
     #En axis se especifica que se quiere eliminar una fila o columna
     datos=np.delete(datos, 0 , axis=0)
+    for dato in datos:
+        print(dato)
+        if dato[8]==0:
+            dato[8]= "Vigente"
     #Los mandamos al HTML para imprimirlos
     return render_template("terneros.html", datos = datos)
 
@@ -215,6 +225,9 @@ def engordes():
     #Eliminamos la fila 0 solo por cuestión de estética, ya que esta fila representa datos nulos
     #En axis se especifica que se quiere eliminar una fila o columna
     datos=np.delete(datos, 0 , axis=0)
+    for dato in datos:
+        if dato[5]=="0":
+            dato[5]= "Vigente"
     return render_template("engorde.html", datos = datos)
 
 @app.route("/añadir_engorde", methods=["POST"])
@@ -296,7 +309,10 @@ def pajillas():
 @app.route("/añadir_pajilla", methods=["POST"])
 def add_pajilla():
     if request.method == "POST":
-        id_pajilla= request.form["id_pajilla"]
+        #Determina el código del último 
+        cur.execute('SELECT * FROM pajilla ORDER BY id_pajilla DESC LIMIT 1')
+        datos = cur.fetchone()
+        id_pajilla = int(datos[0]) + 1 
         fecha_embase= request.form["fecha_embase"]
         toro= request.form["toro"]
         empleado_en= request.form["empleado_en"]
@@ -310,8 +326,34 @@ def add_pajilla():
         cur.execute("INSERT INTO pajilla (id_pajilla, fecha_embase, toro, empleado_en, vendido_en) VALUES (?, ?, ?, ?, ?)", args)
         #Confirmar comando
         conn.commit()
-        flash("Pajilla añadida correctamente")
+        cad="Pajilla añadida correctamente con cod "+ str(id_pajilla)
+        flash(cad)
     return redirect(url_for("pajillas"))
+
+@app.route("/añadir_inseminacion", methods=["POST"])
+def add_inseminacion():
+    if request.method == "POST":
+        #Determina el código del último 
+        cur.execute('SELECT * FROM inseminacion ORDER BY cod_inseminacion DESC LIMIT 1')
+        datos = cur.fetchone()
+        cod_inseminacion = int(datos[0]) + 1 
+        fecha= request.form["fecha"]
+        exito= request.form["exito"]
+        veterinario= request.form["veterinario"]
+        vaca= request.form["vaca"]
+        args=[int(cod_inseminacion), fecha, exito, int(veterinario), int(vaca)]
+        #Comando sql
+        cur.execute("INSERT INTO inseminacion (cod_inseminacion, fecha, exito, veterinario, vaca) VALUES (?, ?, ?, ?, ?)", args)
+        #Confirmar comando
+        conn.commit()
+        cad="Inseminación añadida correctamente con código "+ str(cod_inseminacion)
+        flash(cad)
+        cur.execute('SELECT * FROM inseminacion')
+        datos = cur.fetchall()
+        if datos[0][0]==0:
+           datos=np.delete(datos, 0 , axis=0)
+        datos=sorted(datos, key=lambda cod : cod[0])
+    return render_template('consulta_2.html', datos = datos, datosVaca=[])
 
 @app.route("/consulta_2/<string:id>")
 def consulta_2(id):
@@ -339,6 +381,30 @@ def consulta_2(id):
     datos=sorted(datos, key=lambda cod : cod[0])
     return render_template('consulta_2.html', datos = datos, datosVaca=datosVaca)
 
+@app.route("/añadir_estado_inseminacion/<string:id>", methods=["POST"])
+def add_estado_inseminacion(id):
+    if request.method == "POST":
+        #Determina el código del último registro médico
+        cur.execute('SELECT * FROM estado_inseminacion ORDER BY cod_registro DESC LIMIT 1')
+        datos = cur.fetchone()
+        cod_registro = int(datos[0]) + 1 
+        mes= request.form["mes"]
+        fecha= request.form["fecha"]
+        estado= request.form["estado"]
+        peso_vaca= request.form["peso_vaca"]
+        args=[int(cod_registro), int(mes), fecha, estado, int(id), float(peso_vaca)]
+        #Comando sql
+        cur.execute("INSERT INTO estado_inseminacion (cod_registro, mes, fecha, estado, cod_inseminacion, peso_vaca) VALUES (?, ?, ?, ?, ?, ?)", args)
+        #Confirmar comando
+        conn.commit()
+        cad="Estado de inseminación añadido correctamente con cod "+ str(cod_registro)
+        flash(cad)
+        cur.execute('SELECT * FROM estado_inseminacion WHERE cod_inseminacion = ? VALUES(?)', id)
+        datos = cur.fetchall()
+        if datos[0][0]==0:
+           datos=np.delete(datos, 0 , axis=0)
+        datos=sorted(datos, key=lambda cod : cod[0])
+    return render_template('estado_ins.html', datos = datos, id=id)
 
 @app.route("/estado_ins/<string:id>")
 def estado_ins(id):
@@ -346,7 +412,7 @@ def estado_ins(id):
     datos = cur.fetchall()
     #Ordenamos la lista por código
     datos=sorted(datos, key=lambda cod : cod[0])
-    return render_template('estado_ins.html', datos = datos)
+    return render_template('estado_ins.html', datos = datos, id=id)
     
 @app.route("/enfermedades/<string:id>")
 def enfermedad(id):
@@ -366,6 +432,8 @@ def salidas(id):
         tmpdatos = cur.fetchall()
         return render_template('salida.html',datos = tmpdatos)
     else:
+        if id=="Vigente":
+            id=0
         cur.execute('SELECT cod_registro,razon,fecha,venta,sacrificio_enfermedad FROM Salida WHERE cod_registro = {0}'.format(id))
         tmpdatos = cur.fetchall()
         return render_template('salida.html',datos = tmpdatos)
