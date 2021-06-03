@@ -10,7 +10,7 @@ app = Flask(__name__)
 #Establecer conexión con Cubrid 
 #El nombre de la base de datos debe ser GANTV
 #La contraseña inazuma11
-conn = CUBRIDdb.connect('CUBRID:localhost:30000:GANTV:::', 'dba', 'inazuma11')
+conn = CUBRIDdb.connect('CUBRID:54.227.229.70:30000:prueba:::', 'dba', 'inazuma11')
 #Init cursor
 cur = conn.cursor()
 
