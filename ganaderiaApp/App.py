@@ -81,6 +81,14 @@ def add_vaca():
         flash("Vaca añadida correctamente")
         return redirect(url_for("vacas"))   
 
+@app.route("/delete_vaca/<string:id>")
+def delete_vaca(id):
+    iden = id
+    cur.execute("DELETE FROM vaca WHERE cod_vaca = ? VALUES(?)", iden)
+    conn.commit()
+    flash("La vaca ha sido eliminada correctamente")
+    return redirect(url_for("vacas")) 
+
 @app.route("/toros")
 def toros():
     #Obtiene los datos
@@ -118,6 +126,14 @@ def add_toro():
         conn.commit()
         flash("Toro añadido correctamente")
     return redirect(url_for("toros"))
+
+@app.route("/delete_toro/<string:id>")
+def delete_toro(id):
+    iden = id
+    cur.execute("DELETE FROM toro WHERE cod_toro = ? VALUES(?)", iden)
+    conn.commit()
+    flash("El toro ha sido eliminado correctamente")
+    return redirect(url_for("toros")) 
 
 @app.route("/terneros")
 def terneros():
@@ -175,6 +191,13 @@ def clientes(id):
         cur.execute("SELECT codigo,telefono,nombre,credito,calificacion FROM Cliente WHERE codigo =  {0}".format(id))
         tmpdatos = cur.fetchall()
         return render_template("clientes.html",datos = tmpdatos)
+@app.route("/delete_ternero/<string:id>")
+def delete_ternero(id):
+    iden = id
+    cur.execute("DELETE FROM ternero WHERE cod_ternero = ? VALUES(?)", iden)
+    conn.commit()
+    flash("El ternero ha sido eliminado correctamente")
+    return redirect(url_for("terneros")) 
 
 @app.route("/añadir_cliente", methods=["POST"])
 def add_cliente():
@@ -190,6 +213,14 @@ def add_cliente():
         #Confirmar comando
         conn.commit()
         flash("Cliente añadido correctamente")
+    return redirect(url_for("clientes"))
+
+@app.route("/delete_cliente/<string:id>")
+def delete_cliente(id):
+    iden = id
+    cur.execute("DELETE FROM cliente WHERE codigo = ? VALUES(?)", iden)
+    conn.commit()
+    flash("El cliente ha sido eliminado correctamente")
     return redirect(url_for("clientes"))
 
 @app.route("/veterinarios")
@@ -217,6 +248,14 @@ def add_veterinario():
         conn.commit()
         flash("Veterinario añadido correctamente")
     return redirect(url_for("veterinarios"))
+
+@app.route("/delete_veterinario/<string:id>")
+def delete_vet(id):
+    iden = id
+    cur.execute("DELETE FROM veterinario WHERE cod_vet = ? VALUES(?)", iden)
+    conn.commit()
+    flash("El veterinario ha sido eliminado correctamente")
+    return redirect(url_for("veterinarios")) 
 
 @app.route("/engordes")
 def engordes():
@@ -254,6 +293,14 @@ def add_engorde():
         conn.commit()
         flash("Engorde añadido correctamente")
     return redirect(url_for("engordes"))
+
+@app.route("/delete_engorde/<string:id>")
+def delete_engorde(id):
+    iden = id
+    cur.execute("DELETE FROM engorde WHERE cod_engorde = ? VALUES(?)", iden)
+    conn.commit()
+    flash("El engorde ha sido eliminado correctamente")
+    return redirect(url_for("engordes")) 
 
 @app.route("/registro_medico/<string:id>")
 def historial_medico(id):

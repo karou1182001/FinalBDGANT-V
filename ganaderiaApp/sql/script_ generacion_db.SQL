@@ -61,13 +61,13 @@ CREATE TABLE registro_medico(
 	estado VARCHAR(15),  ---enfermo, saludable, o cosas por el estilo
 	descripcion VARCHAR(40),
 	fecha DATE,
-	emitido_por INTEGER FOREIGN KEY REFERENCES veterinario(cod_vet)
+	emitido_por INTEGER FOREIGN KEY REFERENCES veterinario(cod_vet) ON DELETE SET NULL	
 );
 
 CREATE TABLE registro_venta(
 
 	factura INTEGER PRIMARY KEY,
-	cliente INTEGER FOREIGN KEY REFERENCES cliente(codigo),
+	cliente INTEGER FOREIGN KEY REFERENCES cliente(codigo) ON DELETE SET NULL	,
 	precio FLOAT,
 	fecha DATE
 
@@ -76,7 +76,7 @@ CREATE TABLE registro_venta(
 CREATE TABLE defuncion(
 	reg_defuncion INTEGER PRIMARY KEY,
 	causa INTEGER FOREIGN KEY REFERENCES enfermedad(cod_enfermedad),
-	veterinario_certifica INTEGER FOREIGN KEY REFERENCES veterinario(cod_vet)
+	veterinario_certifica INTEGER FOREIGN KEY REFERENCES veterinario(cod_vet) ON DELETE SET NULL	
 
 );
 
@@ -126,7 +126,7 @@ CREATE TABLE vaca (
 	nombre VARCHAR(20),
 	genetica_lechera VARCHAR(20),
 	--historial_medico INTEGER UNIQUE FOREIGN KEY REFERENCES  registro_medico(cod_medico) ,
-	historial_medico INTEGER UNIQUE FOREIGN KEY REFERENCES  registro_medico(cod_medico) ,
+	historial_medico INTEGER UNIQUE FOREIGN KEY REFERENCES  registro_medico(cod_medico),
 	--salida INTEGER UNIQUE FOREIGN KEY REFERENCES  salida(cod_registro)
 	salida INTEGER FOREIGN KEY REFERENCES  salida(cod_registro)
 
@@ -162,8 +162,8 @@ CREATE TABLE inseminacion(
 	fecha DATE,
 	exito VARCHAR(2), -- se logro una inseminacion o no ("si" o "no" )
 	--	veterinario INTEGER UNIQUE FOREIGN KEY REFERENCES veterinario(cod_vet),
-	veterinario INTEGER FOREIGN KEY REFERENCES veterinario(cod_vet),
-	vaca INTEGER FOREIGN KEY REFERENCES vaca(cod_vaca)
+	veterinario INTEGER FOREIGN KEY REFERENCES veterinario(cod_vet) ON DELETE SET NULL	,
+	vaca INTEGER FOREIGN KEY REFERENCES vaca(cod_vaca) ON DELETE CASCADE
 
 );
 ---Nivel 6
@@ -180,16 +180,16 @@ CREATE TABLE ternero (
 	historial_medico INTEGER UNIQUE FOREIGN KEY REFERENCES  registro_medico(cod_medico) ,
 	--salida INTEGER UNIQUE FOREIGN KEY REFERENCES  salida(cod_registro)
 	salida INTEGER FOREIGN KEY REFERENCES  salida(cod_registro),
-  nacido_de INTEGER FOREIGN KEY REFERENCES  inseminacion(cod_inseminacion)
+  nacido_de INTEGER FOREIGN KEY REFERENCES  inseminacion(cod_inseminacion) ON DELETE SET NULL	
 
 );
 
 CREATE TABLE pajilla(
 	id_pajilla INTEGER PRIMARY KEY,
 	fecha_embase DATE,
-	toro INTEGER FOREIGN KEY REFERENCES toro(cod_toro),
+	toro INTEGER FOREIGN KEY REFERENCES toro(cod_toro) ON DELETE SET NULL	,
 	--empleado_en INTEGER UNIQUE FOREIGN KEY REFERENCES inseminacion(cod_inseminacion) ,
-	empleado_en INTEGER FOREIGN KEY REFERENCES inseminacion(cod_inseminacion) ,
+	empleado_en INTEGER FOREIGN KEY REFERENCES inseminacion(cod_inseminacion) ON DELETE CASCADE,
 	vendido_en INTEGER FOREIGN KEY REFERENCES registro_venta(factura)
 
 );
@@ -199,7 +199,7 @@ CREATE TABLE estado_inseminacion(
 	mes INTEGER, --,meses desde que empezo la inseminacion
 	fecha DATE,
 	estado VARCHAR(15), --descripcion de una palabra del estado de la concepcion "terminado","saludable","riesgoso"
-	cod_inseminacion INTEGER FOREIGN KEY REFERENCES inseminacion(cod_inseminacion),
+	cod_inseminacion INTEGER FOREIGN KEY REFERENCES inseminacion(cod_inseminacion) ON DELETE CASCADE,
 	peso_vaca FLOAT
 
 );
@@ -210,17 +210,17 @@ CREATE TABLE estado_inseminacion(
 CREATE TABLE destete(
 	cod_destete INTEGER PRIMARY KEY,
 	fecha DATE,
-	vaca INTEGER UNIQUE FOREIGN KEY REFERENCES vaca(cod_vaca),
-	toro INTEGER UNIQUE FOREIGN KEY REFERENCES toro(cod_toro) ,
-	engorde INTEGER UNIQUE FOREIGN KEY REFERENCES engorde(cod_engorde) ,
-	ternero INTEGER UNIQUE FOREIGN KEY REFERENCES ternero(cod_ternero)
+	vaca INTEGER UNIQUE FOREIGN KEY REFERENCES vaca(cod_vaca) ON DELETE CASCADE	,
+	toro INTEGER UNIQUE FOREIGN KEY REFERENCES toro(cod_toro) ON DELETE CASCADE	,
+	engorde INTEGER UNIQUE FOREIGN KEY REFERENCES engorde(cod_engorde) ON DELETE CASCADE	,
+	ternero INTEGER UNIQUE FOREIGN KEY REFERENCES ternero(cod_ternero) ON DELETE CASCADE
 
 )
 
 CREATE TABLE reg_lechero(
 	cod_lec INTEGER PRIMARY KEY,
-	pertenece_a INTEGER FOREIGN KEY REFERENCES vaca(cod_vaca),
-	inseminacion_asociada INTEGER UNIQUE FOREIGN KEY REFERENCES inseminacion(cod_inseminacion) ,
+	pertenece_a INTEGER FOREIGN KEY REFERENCES vaca(cod_vaca) ON DELETE CASCADE	,
+	inseminacion_asociada INTEGER UNIQUE FOREIGN KEY REFERENCES inseminacion(cod_inseminacion) ON DELETE CASCADE,
 	fecha DATE,
 	cantidad_lt FLOAT
 )

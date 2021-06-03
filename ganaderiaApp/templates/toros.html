@@ -2,7 +2,7 @@
 
 {% block body %}
 
-    <h1 style="color: black">TOROS</h1>     
+    <h1 style="color: white">TOROS</h1>     
     <h2>Ingresar Toros</h2> 
     <div class="row">
         <div class="col-md-4">
@@ -61,7 +61,7 @@
                             <a href = "/salidas/{{data.4}}" >{{data.4}} </a>
                         </td>
                         <td>
-                            <a href="" class="btn btn-danger btn-delete">Delete</a>
+                            <a href="/delete_toro/{{data.0}}" class="btn btn-danger btn-delete">Delete</a>
                         </td>
                     </tr>
                     {% endfor%}

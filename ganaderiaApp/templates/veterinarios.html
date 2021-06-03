@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-    <h1 style="color: black">VETERINARIOS</h1>    
+    <h1 style="color: white">VETERINARIOS</h1>    
     <h2>Ingresar Veterinario</h2>  
     <div class="row">
         <div class="col-md-4">
@@ -67,7 +67,7 @@
                         <td>{{data.3}}</td>
                         <td>{{data.4}}</td>
                         <td>{{data.5}}</td>
-                        <td><a href="" class="btn btn-danger btn-delete">Delete</a></td>
+                        <td><a href="delete_veterinario/{{data.0}}" class="btn btn-danger btn-delete">Delete</a></td>
                     </tr>
                     {% endfor%}
                 </tbody>
