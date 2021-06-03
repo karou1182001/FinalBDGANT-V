@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <!--Accedemos a la página de bototsswatch para poder usar sus etilos css-->
 <link rel="stylesheet" href="https://bootswatch.com/4/materia/bootstrap.min.css">
-<link rel="stylesheet" href="{{ url_for('static', filename='styles/layout.css')}}">
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/layout6.css')}}">
 </head>
 <body id="top">
 <!-- ################################################################################################ -->
@@ -44,13 +44,13 @@
 <!-- ################################################################################################ -->
 <!-- ################################################################################################ -->
 <!-- Top Background Image Wrapper -->
-<div class="bgded" style="background-image:url('static/assets/fondo.png');"> 
+<div class="bgded" style="background-image:url('static/assets/fondo2.png');"> 
   <!-- ################################################################################################ -->
   <div class="wrapper row1">
     <header id="header" class="hoc clear">
       <div id="logo" class="fl_left"> 
         <!-- ################################################################################################ -->
-        <h1><a href="http://localhost:3000/">GANT&V</a></h1>
+       <a class="navbar-brand" href="http://localhost:3000/"><img src="static/assets/logo.png"></a>
         <!-- ################################################################################################ -->
       </div>
       <nav id="mainav" class="fl_right"> 
@@ -86,34 +86,35 @@
       </nav>
     </header>
   </div>
-</div> 
-<!-- ################################################################################################ -->
+  <!-- ################################################################################################ -->
 <!-- ################################################################################################ -->
 <!-- ################################################################################################ -->
  <!--Ya aquí se acaba lo de la barra de navegación-->
  <!--Lo de pt-4 es para agregar un espaciado-->
-<div class="container pt-4">
-    {% block body %}
-    {% endblock %}
-</div>
+    <div class="container pt-4">
+        {% block body %}
+        {% endblock %}
+    </div>
+</div> 
+
 <!-- ################################################################################################ -->
-<!-- ################################################################################################ -->
+<!-- FOOTER -->
 <!-- ################################################################################################ -->
 <div class="wrapper coloured">
     <section id="ctdetails" class="hoc clear"> 
       <!-- ################################################################################################ -->
       <ul class="nospace clear">
         <li class="one_quarter first">
-          <div class="block clear"><a href="#"><i class="fas fa-phone"></i></a> <span><strong>Give us a call:</strong> +00 (123) 456 7890</span></div>
+          <div class="block clear"><a href="#"><i class="fas fa-phone"></i></a> <span><strong>Give us a call:</strong> +57 (318) 5743641</span></div>
         </li>
         <li class="one_quarter">
-          <div class="block clear"><a href="#"><i class="fas fa-envelope"></i></a> <span><strong>Send us a mail:</strong> support@domain.com</span></div>
+          <div class="block clear"><a href="#"><i class="fas fa-envelope"></i></a> <span><strong>Send us a mail:</strong> support@GANT&V-.com</span></div>
         </li>
         <li class="one_quarter">
           <div class="block clear"><a href="#"><i class="fas fa-clock"></i></a> <span><strong> Monday - Saturday:</strong> 08.00am - 18.00pm</span></div>
         </li>
         <li class="one_quarter">
-          <div class="block clear"><a href="#"><i class="fas fa-map-marker-alt"></i></a> <span><strong>Come visit us:</strong> Directions to <a href="#">our location</a></span></div>
+          <div class="block clear"><a href="#"><i class="fas fa-map-marker-alt"></i></a> <span><strong>Come visit us:</strong> Directions to <a href="#">Ganadería Toros & Vacas S.A.S</a></span></div>
         </li>
       </ul>
       <!-- ################################################################################################ -->
@@ -122,22 +123,22 @@
   <!-- ################################################################################################ -->
   <!-- ################################################################################################ -->
   <!-- ################################################################################################ -->
-  <div class="bgded overlay row4" style="background-image:url('images/demo/backgrounds/01.png');">
+  <div class="bgded overlay row4" style="background-image:url('static/assets/fondo.png');">
     <footer id="footer" class="hoc clear"> 
       <!-- ################################################################################################ -->
       <div class="one_quarter first">
-        <h6 class="heading">Pellentesque dictum</h6>
+        <h6 class="heading">Estudiantes</h6>
         <ul class="nospace linklist">
-          <li><a href="#">Ultricies in molestie sed</a></li>
-          <li><a href="#">Consectetuer nam sodales</a></li>
-          <li><a href="#">Euismod tellus sed non</a></li>
-          <li><a href="#">Est etiam in eros curabitur</a></li>
-          <li><a href="#">Viverra dui nec arcu sed</a></li>
+          <li><a href="#">Jairo Gonzalez Hernández</a></li>
+          <li><a href="#">Anyelo Tilano Algarin</a></li>
+          <li><a href="#">Jhimi Vargas Guzman</a></li>
+          <li><a href="#">Alejandro Vertel Villegas</a></li>
+          <li><a href="#">María Zapata Montaño</a></li>
         </ul>
       </div>
       <div class="one_quarter">
-        <h6 class="heading">Fermentum pellentesque</h6>
-        <p class="nospace btmspace-15">Pede ullamcorper facilisis bibendum nulla elit gravida elit vel suscipit urna.</p>
+        <h6 class="heading">Envíanos un e-mail si surge algún problema</h6>
+        <p class="nospace btmspace-15">Te contestaremos lo antes posible</p>
         <form action="#" method="post">
           <fieldset>
             <legend>Newsletter:</legend>
@@ -148,34 +149,19 @@
         </form>
       </div>
       <div class="one_quarter">
-        <h6 class="heading">Nisi nunc velit aliquam</h6>
+        <h6 class="heading">Agradecimientos a:</h6>
         <ul class="nospace linklist">
           <li>
             <article>
-              <p class="nospace btmspace-10"><a href="#">Sapien sit amet tortor nulla vulputate odio in varius tristique nisi urna.</a></p>
-              <time class="block font-xs" datetime="2045-04-06">Friday, 6<sup>th</sup> April 2045</time>
+              <p class="nospace btmspace-10"><a href="#">Profesor: Luis Alejandro Llach Lopez.</a></p>
             </article>
           </li>
           <li>
             <article>
-              <p class="nospace btmspace-10"><a href="#">Consequat erat id rutrum nisi magna vel tellus phasellus malesuada bibendum.</a></p>
-              <time class="block font-xs" datetime="2045-04-05">Thursday, 5<sup>th</sup> April 2045</time>
+              <p class="nospace btmspace-10"><a href="#">Monitor: Luis Alberto Potte Herrera. </a></p>
+              <time class="block font-xs" datetime="2045-04-06">Friday, 6<sup>th</sup> June 2021</time>
             </article>
           </li>
-        </ul>
-      </div>
-      <div class="one_quarter">
-        <h6 class="heading">Lacinia iaculis nunc</h6>
-        <ul class="nospace clear latestimg">
-          <li><a class="imgover" href="#"><img src="images/demo/100x100.png" alt=""></a></li>
-          <li><a class="imgover" href="#"><img src="images/demo/100x100.png" alt=""></a></li>
-          <li><a class="imgover" href="#"><img src="images/demo/100x100.png" alt=""></a></li>
-          <li><a class="imgover" href="#"><img src="images/demo/100x100.png" alt=""></a></li>
-          <li><a class="imgover" href="#"><img src="images/demo/100x100.png" alt=""></a></li>
-          <li><a class="imgover" href="#"><img src="images/demo/100x100.png" alt=""></a></li>
-          <li><a class="imgover" href="#"><img src="images/demo/100x100.png" alt=""></a></li>
-          <li><a class="imgover" href="#"><img src="images/demo/100x100.png" alt=""></a></li>
-          <li><a class="imgover" href="#"><img src="images/demo/100x100.png" alt=""></a></li>
         </ul>
       </div>
       <!-- ################################################################################################ -->
@@ -187,7 +173,7 @@
   <div class="wrapper row5">
     <div id="copyright" class="hoc clear"> 
       <!-- ################################################################################################ -->
-      <p class="fl_left">Copyright &copy; 2018 - All Rights Reserved - <a href="#">Domain Name</a></p>
+      <p class="fl_left">Copyright &copy; 2018 - All Rights Reserved - <a href="#">www.GANT&V.com</a></p>
       <p class="fl_right">Template by <a target="_blank" href="https://www.os-templates.com/" title="Free Website Templates">OS Templates</a></p>
       <!-- ################################################################################################ -->
     </div>
