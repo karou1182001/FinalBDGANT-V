@@ -2,8 +2,9 @@
 
 {% block body %}
 
-    <h1 style="color: white"><b>VACAS</b></h1>
-    <h2>Ingresar Vacas</h2>
+    <div class="sectiontitle">
+        <p class="heading underline font-x2">VACAS</p>
+    </div>
     <div class="row">
         <div class="col-md-4">
             {% with messages = get_flashed_messages() %}
@@ -18,6 +19,7 @@
             {% endwith %}
             <div class="card card-body">
                 <form method= 'POST'>
+                    <p>Ingresar Vacas</p>
                     <div class="form-group">
                         <input type="number" name = "cod" placeholder="Código de vaca" class="form-control">
                     </div>
@@ -56,15 +58,15 @@
                         <td>{{data.1}}</td>
                         <td>{{data.2}}</td>
                         <td>
-                            <a href = "/registro_medico/{{data.3}}"> {{data.3}} </a>
+                            <a href = "/registro_medico?id={{data.3}}"> {{data.3}} </a>
                         </td>
                         <td>
-                            <a href = "/consulta_2/{{data.0}}">Consultar </a>
+                            <a href = "/consulta_2?id={{data.0}}">Consultar </a>
                         </td>
                         <td>
-                            <a href = "/salidas/{{data.4}}" >{{data.4}} </a>
+                            <a href = "/salidas?id={{data.4}}" >{{data.4}} </a>
                         </td>
-                        <td><a href="/delete_vaca/{{data.0}}" class="btn btn-danger btn-delete">Delete</a></td>
+                        <td><a href="/delete_vaca?id={{data.0}}" class="btn btn-danger btn-delete">Delete</a></td>
                     </tr>
                     {% endfor%}
                 </tbody>
