@@ -13,7 +13,6 @@ INSERT INTO cliente  VALUES(5, 'Asbel Fernandez', '3204678754',  1.9,  4.9);
 INSERT INTO cliente  VALUES(6, 'Joe Regules', '3004678754',  1.2,  5);
 INSERT INTO cliente  VALUES(7, 'Marc Mattos', '3982156432',  1.5,  3.5);
 INSERT INTO cliente  VALUES(8, 'Jeny Haner', '3001000521',  1.5,  3);
-INSERT INTO cliente  VALUES(8, 'Jeny Haner', '3001000650',  1.5,  3);
 INSERT INTO cliente  VALUES(9, 'Juan Miguel', '3968452020',  0.9,  3.5);
 INSERT INTO cliente  VALUES(10, 'Carlos Zuniga', '3458955555',  2,  3);
 INSERT INTO cliente  VALUES(11, 'Aliz Contreras', '3559806545',  1.5,  3.5);
@@ -62,7 +61,7 @@ INSERT INTO veterinario  VALUES(4,  'Juan',  '3222226545',  'juandi@hotmail.com'
 INSERT INTO veterinario  VALUES(5,  'Dwigth',  '3232357892',  'dw123@hotmail.com',  'VeterinariaSA',  '000' );
 INSERT INTO veterinario  VALUES(6,  'Nicolas',  '3468952581',  'nicolasr@hotmail.com',  'Particular',  '3748763425' );
 INSERT INTO veterinario  VALUES(7,  'Evelin',  '3995202598',  'evee01@hotmail.com',  'Particular',  '3748763425' );
-INSERT INTO veterinario  VALUES(8,  'Charles',  '3995200598',  'charlie23@hotmail.com',  'Particular',  '3748763425' );
+INSERT INTO veterinario  VALUES(8,  'Charles',  '3995200598',  'charlie@hotmail.com',  'Particular',  '3748763425' );
 INSERT INTO veterinario  VALUES(9,  'Eva',  '3995120598',  'eva05@outlook.com',  'Particular',  '3748763425' );
 INSERT INTO veterinario  VALUES(10,  'Jean',  '3995202565',  'jeanb@hotmail.com',  'AnimanSA',  '3748763425' );
 INSERT INTO veterinario  VALUES(11,  'Nicole',  '3995202756',  'nicol@hotmail.com',  'Particular',  '3748763425' );
@@ -91,43 +90,36 @@ INSERT INTO registro_medico VALUES(7, 'Saludable', 'No presenta patologias', '20
 INSERT INTO registro_medico VALUES(8, 'Enfermo', 'Presenta cansansio', '2020-02-03', 5 );
 INSERT INTO registro_medico VALUES(9, 'Enfermo', 'Presencia Mareos', '2020-02-03', 6 );
 INSERT INTO registro_medico VALUES(10, 'Saludable', 'No presenta patologias', '2020-02-03',7 );
-INSERT INTO registro_medico VALUES(11, 'Saludable', 'No presenta patologias', '2020-05-03', 4 );
-INSERT INTO registro_medico VALUES(12, 'Saludable', 'No presenta patologias', '2020-04-03', 5 );
+INSERT INTO registro_medico VALUES(11, 'Saludable', 'No presenta patologias', '2020-03-03', 4 );
+INSERT INTO registro_medico VALUES(12, 'Saludable', 'No presenta patologias', '2020-03-03', 5 );
 INSERT INTO registro_medico VALUES(13, 'Saludable', 'No presenta patologias', '2020-03-03', 1 );
-INSERT INTO registro_medico VALUES(14, 'Saludable', 'No presenta patologias', '2020-07-03', 1 );
-INSERT INTO registro_medico VALUES(15, 'Saludable', 'No presenta patologias', '2020-08-03', 1 );
-INSERT INTO registro_medico VALUES(16, 'Saludable', 'No presenta patologias', '2020-09-03', 1 );
-INSERT INTO registro_medico VALUES(17, 'Saludable', 'No presenta patologias', '2020-10-03', 1 );
-INSERT INTO registro_medico VALUES(11, 'Saludable', 'No presenta patologias', '2020-05-03', 8 );
-INSERT INTO registro_medico VALUES(12, 'Saludable', 'No presenta patologias', '2020-06-03', 18 );
-INSERT INTO registro_medico VALUES(13, 'Saludable', 'No presenta patologias', '2020-07-03', 9 );
-INSERT INTO registro_medico VALUES(14, 'Saludable', 'No presenta patologias', '2020-08-03', 9 );
-INSERT INTO registro_medico VALUES(15, 'Saludable', 'No presenta patologias', '2020-09-03', 10 );
-INSERT INTO registro_medico VALUES(16, 'Saludable', 'No presenta patologias', '2020-10-03', 20 );
-INSERT INTO registro_medico VALUES(17, 'Saludable', 'No presenta patologias', '2020-11-03', 10 );
-INSERT INTO registro_medico VALUES(18, 'Enfermo', 'Presenta goteo de nariz y calentura', '2020-12-03', 11 );
-INSERT INTO registro_medico VALUES(19, 'Saludable', 'No presenta patologias', '2020-13-03', 19 );
-INSERT INTO registro_medico VALUES(20, 'Enfermo', 'Presenta sangrado al toser', '2020-14-03', 11 );
-INSERT INTO registro_medico VALUES(21, 'Saludable', 'No presenta patologias', '2020-15-03', 11 );
-INSERT INTO registro_medico VALUES(22, 'Saludable', 'No presenta patologias', '2020-16-03', 12 );
-INSERT INTO registro_medico VALUES(23, 'Saludable', 'No presenta patologias', '2020-17-03', 12 );
-INSERT INTO registro_medico VALUES(24, 'Saludable', 'No presenta patologias', '2020-18-03', 12 );
-INSERT INTO registro_medico VALUES(25, 'Saludable', 'No presenta patologias', '2020-18-03', 9 );
-INSERT INTO registro_medico VALUES(26, 'Saludable', 'No presenta patologias', '2020-18-03', 10 );
-INSERT INTO registro_medico VALUES(27, 'Enfermo', 'Presenta vomitos', '2020-19-03', 20 );
-INSERT INTO registro_medico VALUES(28, 'Saludable', 'No presenta patologias', '2020-20-03', 10 );
-INSERT INTO registro_medico VALUES(29, 'Enfermo', 'Presenta goteo de nariz y calentura', '2020-21-03', 11 );
-INSERT INTO registro_medico VALUES(30, 'Saludable', 'No presenta patologias', '2020-22-03', 19 );
-INSERT INTO registro_medico VALUES(31, 'Enfermo', 'Presenta sangrado al toser', '2020-23-03', 11 );
-INSERT INTO registro_medico VALUES(32, 'Saludable', 'No presenta patologias', '2020-24-03', 11 );
-INSERT INTO registro_medico VALUES(33, 'Saludable', 'No presenta patologias', '2020-24-03', 18 );
-INSERT INTO registro_medico VALUES(34, 'Saludable', 'No presenta patologias', '2020-26-03', 15 );
-INSERT INTO registro_medico VALUES(35, 'Saludable', 'No presenta patologias', '2020-26-03', 20 );
-INSERT INTO registro_medico VALUES(36, 'Saludable', 'No presenta patologias', '2020-26-03', 15 );
-INSERT INTO registro_medico VALUES(37, 'Saludable', 'No presenta patologias', '2020-26-03', 20 );
-INSERT INTO registro_medico VALUES(38, 'Saludable', 'No presenta patologias', '2020-26-03', 20 );
-INSERT INTO registro_medico VALUES(39, 'Saludable', 'No presenta patologias', '2020-26-03', 18 );
-INSERT INTO registro_medico VALUES(40, 'Saludable', 'No presenta patologias', '2020-26-03', 20 );
+INSERT INTO registro_medico VALUES(14, 'Saludable', 'No presenta patologias', '2020-03-03', 1 );
+INSERT INTO registro_medico VALUES(15, 'Saludable', 'No presenta patologias', '2020-03-03', 1 );
+INSERT INTO registro_medico VALUES(16, 'Saludable', 'No presenta patologias', '2020-03-03', 1 );
+INSERT INTO registro_medico VALUES(17, 'Saludable', 'No presenta patologias', '2020-03-03', 1 );
+INSERT INTO registro_medico VALUES(18, 'Enfermo', 'Presenta goteo de nariz y calentura', '2020-04-03', 11 );
+INSERT INTO registro_medico VALUES(19, 'Saludable', 'No presenta patologias', '2020-04-03', 19 );
+INSERT INTO registro_medico VALUES(20, 'Enfermo', 'Presenta sangrado al toser', '2020-04-03', 11 );
+INSERT INTO registro_medico VALUES(21, 'Saludable', 'No presenta patologias', '2020-04-03', 11 );
+INSERT INTO registro_medico VALUES(22, 'Saludable', 'No presenta patologias', '2020-04-03', 12 );
+INSERT INTO registro_medico VALUES(23, 'Saludable', 'No presenta patologias', '2020-04-03', 12 );
+INSERT INTO registro_medico VALUES(24, 'Saludable', 'No presenta patologias', '2020-04-03', 12 );
+INSERT INTO registro_medico VALUES(25, 'Saludable', 'No presenta patologias', '2020-04-03', 9 );
+INSERT INTO registro_medico VALUES(26, 'Saludable', 'No presenta patologias', '2020-04-03', 10 );
+INSERT INTO registro_medico VALUES(27, 'Enfermo', 'Presenta vomitos', '2020-05-03', 20 );
+INSERT INTO registro_medico VALUES(28, 'Saludable', 'No presenta patologias', '2020-05-03', 10 );
+INSERT INTO registro_medico VALUES(29, 'Enfermo', 'Presenta goteo de nariz y calentura', '2020-05-03', 11 );
+INSERT INTO registro_medico VALUES(30, 'Saludable', 'No presenta patologias', '2020-05-03', 19 );
+INSERT INTO registro_medico VALUES(31, 'Enfermo', 'Presenta sangrado al toser', '2020-05-03', 11 );
+INSERT INTO registro_medico VALUES(32, 'Saludable', 'No presenta patologias', '2020-05-03', 11 );
+INSERT INTO registro_medico VALUES(33, 'Saludable', 'No presenta patologias', '2020-05-03', 18 );
+INSERT INTO registro_medico VALUES(34, 'Saludable', 'No presenta patologias', '2020-06-03', 15 );
+INSERT INTO registro_medico VALUES(35, 'Saludable', 'No presenta patologias', '2020-06-03', 20 );
+INSERT INTO registro_medico VALUES(36, 'Saludable', 'No presenta patologias', '2020-06-03', 15 );
+INSERT INTO registro_medico VALUES(37, 'Saludable', 'No presenta patologias', '2020-06-03', 20 );
+INSERT INTO registro_medico VALUES(38, 'Saludable', 'No presenta patologias', '2020-07-03', 20 );
+INSERT INTO registro_medico VALUES(39, 'Saludable', 'No presenta patologias', '2020-07-03', 18 );
+INSERT INTO registro_medico VALUES(40, 'Saludable', 'No presenta patologias', '2020-07-03', 20 );
 
 
 ----Registro venta
@@ -135,15 +127,15 @@ INSERT INTO registro_venta(factura,cliente,precio,fecha) VALUES(0, 0, 0, '0001-0
 INSERT INTO registro_venta(factura,cliente,precio,fecha) VALUES(1, 2, 1000000, '2021-02-01');
 INSERT INTO registro_venta VALUES(2, 5, 1000000, '2021-02-01');
 INSERT INTO registro_venta VALUES(3, 6, 1600000, '2021-02-01');
-INSERT INTO registro_venta VALUES(4, 7, 1005000, '2021-13-01');
-INSERT INTO registro_venta VALUES(5, 8, 2000000, '2021-16-01');
-INSERT INTO registro_venta VALUES(6, 4, 760000, '2021-01-02');
+INSERT INTO registro_venta VALUES(4, 7, 1005000, '2021-01-13');
+INSERT INTO registro_venta VALUES(5, 8, 2000000, '2021-01-16');
+INSERT INTO registro_venta VALUES(6, 4, 760000, '2021-02-01');
 INSERT INTO registro_venta VALUES(7, 4, 460000, '2021-02-02');
-INSERT INTO registro_venta VALUES(8, 9, 160000, '2021-03-02');
-INSERT INTO registro_venta VALUES(9, 11, 180000, '2021-06-02');
-INSERT INTO registro_venta VALUES(10, 12, 450000, '2021-08-02');
-INSERT INTO registro_venta VALUES(11, 13, 120000, '2021-09-02');
-INSERT INTO registro_venta VALUES(12, 11, 450000, '2021-10-02');
+INSERT INTO registro_venta VALUES(8, 9, 160000, '2021-02-03');
+INSERT INTO registro_venta VALUES(9, 11, 180000, '2021-02-06');
+INSERT INTO registro_venta VALUES(10, 12, 450000, '2021-02-08');
+INSERT INTO registro_venta VALUES(11, 13, 120000, '2021-02-09');
+INSERT INTO registro_venta VALUES(12, 11, 450000, '2021-02-10');
 
 
 --Defunción
@@ -157,36 +149,35 @@ INSERT INTO defuncion VALUES(3, 4, 5 );*/
 
 --Estuvo_ enfermo
 INSERT INTO estuvo_enfermo(reg_enfermo,paciente,duracion_enfermedad,fecha_de_diagnostico,enfermedad) VALUES(0, 0, 0, '0001-01-01',  0 );
-INSERT INTO estuvo_enfermo VALUES(1, 5, 500000 , '2020-01-12',  2 );
-INSERT INTO estuvo_enfermo VALUES(2, 6, 500000 , '2020-06-12',  5 );
-INSERT INTO estuvo_enfermo VALUES(3, 7, 500000 , '2020-20-12',  3 );
+INSERT INTO estuvo_enfermo VALUES(1, 5, 500000 , '2020-12-01',  2 );
+INSERT INTO estuvo_enfermo VALUES(2, 6, 500000 , '2020-12-06',  5 );
+INSERT INTO estuvo_enfermo VALUES(3, 7, 500000 , '2020-12-20',  3 );
 
 --Aplicación vacunas
 INSERT INTO aplicacion_vacunas(cod_apva,vacuna_aplicada,paciente,fecha) VALUES(0, 0, 0, '0001-01-01');
-INSERT INTO aplicacion_vacunas VALUES(1, 5, 6, '2020-02-11');
-INSERT INTO aplicacion_vacunas VALUES(2, 6, 5, '2020-01-11');
-INSERT INTO aplicacion_vacunas VALUES(3, 4, 7, '2020-26-11');
+INSERT INTO aplicacion_vacunas VALUES(1, 5, 6, '2020-11-02');
+INSERT INTO aplicacion_vacunas VALUES(2, 6, 5, '2020-11-01');
+INSERT INTO aplicacion_vacunas VALUES(3, 4, 7, '2020-11-26');
 
 
 --Registro alimentación
 INSERT INTO reg_alimentacion(cod_alimentacion	, proviene_de , peso_kg, liquido_lt, fecha) VALUES(0, 0, 0, 0,  '0001-01-01');
 INSERT INTO reg_alimentacion VALUES(1, 1, 100, 50,  '2020-01-01');
-INSERT INTO reg_alimentacion VALUES(2, 2, 150, 50,  '2021-02-01');
-INSERT INTO reg_alimentacion VALUES(3, 3, 100, 50,  '2021-03-01');
-INSERT INTO reg_alimentacion VALUES(4, 4, 120, 50,  '2021-04-01');
-INSERT INTO reg_alimentacion VALUES(5, 5, 120, 50,  '2021-05-01');
-INSERT INTO reg_alimentacion VALUES(6, 6, 150, 50,  '2021-06-01');
-INSERT INTO reg_alimentacion VALUES(7, 7, 100, 50,  '2021-08-01');
-INSERT INTO reg_alimentacion VALUES(8, 8, 100, 50,  '2021-09-01');
-INSERT INTO reg_alimentacion VALUES(9, 9, 150, 50,  '2021-11-01');
-INSERT INTO reg_alimentacion VALUES(10, 10, 120, 50,  '2021-11-01');
-INSERT INTO reg_alimentacion VALUES(11, 11, 120, 50,  '2021-11-01');
-INSERT INTO reg_alimentacion VALUES(12, 12, 110, 50,  '2021-12-01');
-INSERT INTO reg_alimentacion VALUES(13, 13, 90, 50,  '2021-13-01');
-INSERT INTO reg_alimentacion VALUES(14, 14, 100, 50,  '2021-16-01');
-INSERT INTO reg_alimentacion VALUES(15, 15, 110, 50,  '2021-17-01');
-INSERT INTO reg_alimentacion VALUES(16, 16, 150, 50,  '2021-19-01');
-INSERT INTO reg_alimentacion VALUES(17, 17, 110, 50,  '2021-20-01');
+INSERT INTO reg_alimentacion VALUES(2, 2, 150, 50,  '2021-01-02');
+INSERT INTO reg_alimentacion VALUES(3, 3, 100, 50,  '2021-01-03');
+INSERT INTO reg_alimentacion VALUES(4, 4, 120, 50,  '2021-01-04');
+INSERT INTO reg_alimentacion VALUES(5, 5, 120, 50,  '2021-01-05');
+INSERT INTO reg_alimentacion VALUES(6, 6, 150, 50,  '2021-01-06');
+INSERT INTO reg_alimentacion VALUES(7, 7, 100, 50,  '2021-01-07');
+INSERT INTO reg_alimentacion VALUES(8, 8, 100, 50,  '2021-01-08');
+INSERT INTO reg_alimentacion VALUES(9, 9, 150, 50,  '2021-01-09');
+INSERT INTO reg_alimentacion VALUES(10, 10, 120, 50,  '2021-01-10');
+INSERT INTO reg_alimentacion VALUES(12, 12, 110, 50,  '2021-01-11');
+INSERT INTO reg_alimentacion VALUES(13, 13, 90, 50,  '2021-01-12');
+INSERT INTO reg_alimentacion VALUES(14, 14, 100, 50,  '2021-01-12');
+INSERT INTO reg_alimentacion VALUES(15, 15, 110, 50,  '2021-01-13');
+INSERT INTO reg_alimentacion VALUES(16, 16, 150, 50,  '2021-01-13');
+INSERT INTO reg_alimentacion VALUES(17, 17, 110, 50,  '2021-01-13');
 
 
 --Salida
@@ -215,7 +206,6 @@ INSERT INTO vaca VALUES(12, 'Pezuña', 'Regular', 33, 0 );
 --Recuerde que por cada individuo a insertar, debe crear un registro médico (Relación uno a uno)
 INSERT INTO toro(cod_toro,nombre,rating,historial_medico,salida) VALUES(0, 'Nadie', 0, 1, 0 );
 INSERT INTO toro VALUES(1, 'Pepe', 5, 9, 0 );
-INSERT INTO toro VALUES(2, 'Thomy', 4, 11, 0 );
 INSERT INTO toro VALUES(3, 'Dylano', 2, 13, 0 );
 INSERT INTO toro VALUES(4, 'Sancho', 5, 15, 0 );
 INSERT INTO toro VALUES(5, 'Tango', 5, 17, 0 );
@@ -229,7 +219,7 @@ INSERT INTO toro VALUES(12, 'Zuvero', 5, 25, 0 );
 --Engorde
 --Recuerde que por cada individuo a insertar, debe crear un registro médico (Relación uno a uno)
 INSERT INTO engorde(cod_engorde,nombre,valor_estimado,categoria,historial_medico,salida) VALUES(0, 'Nadie', 0.0, 'Nada', 0, 0 );
-NSERT INTO engorde VALUES(1, 'Nino', 200, 'cat 1' , 38, 0 );
+INSERT INTO engorde VALUES(1, 'Nino', 200, 'cat 1' , 38, 0 );
 INSERT INTO engorde VALUES(2, 'Joty', 300, 'cat 1', 39, 0 );
 INSERT INTO engorde VALUES(3, 'Pin', 300, 'cat 1', 40, 0 );
 
@@ -247,16 +237,16 @@ INSERT INTO inseminacion  VALUES(4, '2020-02-03', 'si', 1, 4 );
 --Ternero
 --Recuerde que por cada individuo a insertar, debe crear un registro médico (Relación uno a uno)
 INSERT INTO ternero(cod_ternero,nombre,sexo,fecha_nacimiento,edad,peso_nacimiento,prospecto,historial_medico,salida,nacido_de) VALUES(0, 'Nadie', 'Ninguno',  '0001-01-01', 0, 0,  'Nada', 3, 0, 0);
-INSERT INTO ternero VALUES(1, 'Lily', 'F',  '2021-02-04', 0, 4,  'Nada', 26, 0, 1);
-INSERT INTO ternero VALUES(2, 'Leny', 'F',  '2021-02-04', 0, 4,  'Nada', 27, 0, 1);
-INSERT INTO ternero VALUES(3, 'Auri', 'F',  '2021-02-05', 0, 4,  'Nada', 28, 0, 2);
-INSERT INTO ternero VALUES(4, 'Calos', 'M',  '2021-02-05', 0, 4,  'Nada', 29, 0, 3);
-INSERT INTO ternero VALUES(5, 'Milk', 'F',  '2021-02-06', 0, 4,  'Nada', 30, 0, 4);
-INSERT INTO ternero VALUES(6, 'Peti', 'F',  '2021-05-06', 0, 4,  'Nada', 32, 0, 6);
-INSERT INTO ternero VALUES(7, 'Cams', 'M',  '2021-08-06', 0, 4,  'Nada', 34, 0, 7);
-INSERT INTO ternero VALUES(8, 'Jeny', 'F',  '2021-01-07', 1, 5,  'Nada', 35, 0, 8);
-INSERT INTO ternero VALUES(9, 'Jony', 'M',  '2020-12-07', 2, 8,  'Nada', 36, 0, 9);
-INSERT INTO ternero VALUES(10, 'Pili', 'M',  '2020-16-08', 2, 8,  'Nada', 37, 0, 11);
+INSERT INTO ternero VALUES(1, 'Lily', 'F',  '2021-04-02', 0, 4,  'Nada', 26, 0, 1);
+INSERT INTO ternero VALUES(2, 'Leny', 'F',  '2021-04-02', 0, 4,  'Nada', 27, 0, 1);
+INSERT INTO ternero VALUES(3, 'Auri', 'F',  '2021-05-02', 0, 4,  'Nada', 28, 0, 2);
+INSERT INTO ternero VALUES(4, 'Calos', 'M',  '2021-05-02', 0, 4,  'Nada', 29, 0, 3);
+INSERT INTO ternero VALUES(5, 'Milk', 'F',  '2021-06-02', 0, 4,  'Nada', 30, 0, 4);
+INSERT INTO ternero VALUES(6, 'Peti', 'F',  '2021-06-05', 0, 4,  'Nada', 32, 0, 1);
+INSERT INTO ternero VALUES(7, 'Cams', 'M',  '2021-06-08', 0, 4,  'Nada', 34, 0, 2);
+INSERT INTO ternero VALUES(8, 'Jeny', 'F',  '2021-07-01', 1, 5,  'Nada', 35, 0, 3);
+INSERT INTO ternero VALUES(9, 'Jony', 'M',  '2020-07-12', 2, 8,  'Nada', 36, 0, 4);
+INSERT INTO ternero VALUES(10, 'Pili', 'M',  '2020-08-16', 2, 8,  'Nada', 37, 0, 4);
 
 --Pajilla
 INSERT INTO pajilla(id_pajilla,fecha_embase,toro,empleado_en,vendido_en)  VALUES(0, '0001-01-01', 0, 0, 0);
