@@ -383,6 +383,23 @@ def delete_engorde():
     flash("El engorde ha sido eliminado correctamente")
     return redirect(url_for("engordes")) 
 
+@app.route("/update_engorde", methods = ["POST"])
+def update_engorde():
+    if request.method == "POST":    
+        cod = request.form["cod"]
+        nombre = request.form["nombre"]
+        valor_estimado = request.form["valor_estimado"]
+        categoria = request.form["categoria"]
+        args = [nombre, valor_estimado, categoria, cod]
+        cur.execute("SELECT * FROM engorde WHERE cod_engorde = ?", cod)
+        dato = cur.fetchone()
+        if dato:
+            cur.execute("UPDATE engorde SET nombre = ?, valor_estimado = ?, categoria = ? WHERE cod_engorde = ?", args)
+            flash("Engorde actualizado correctamente")
+        else: 
+            flash("El código ingresado no se encuentra registrado")
+        return redirect(url_for("engordes"))
+
 @app.route("/registro_medico", methods=["GET"])
 def historial_medico():
     id=request.args.get('id')
