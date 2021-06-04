@@ -226,7 +226,7 @@ def delete_registro_de_venta():
 @app.route("/terneros")
 def terneros():
     #Obtiene los datos
-    cur.execute("SELECT cod_ternero, nombre, sexo, fecha_nacimiento, edad, peso_nacimiento, prospecto, historial_medico, salida, COALESCE(nacido_de, 0) FROM ternero ORDER BY cod_ternero ASC")
+    cur.execute("SELECT cod_ternero, nombre, sexo, fecha_nacimiento, edad, peso_nacimiento, prospecto, COALESCE(historial_medico, 0), COALESCE(salida, 0), COALESCE(nacido_de, 0) FROM ternero ORDER BY cod_ternero ASC")
     datos = cur.fetchall()
     #Eliminamos la fila 0 solo por cuestión de estética, ya que esta fila representa datos nulos
     #En axis se especifica que se quiere eliminar una fila o columna
@@ -389,7 +389,7 @@ def delete_vet():
 
 @app.route("/engordes")
 def engordes():
-    cur.execute("SELECT * FROM engorde ORDER BY cod_engorde ASC")
+    cur.execute("SELECT cod_engorde, nombre, valor_estimado, categoria, COALESCE(historial_medico, 0), COALESCE(salida, 0) FROM engorde ORDER BY cod_engorde ASC")
     datos = cur.fetchall()
     #Eliminamos la fila 0 solo por cuestión de estética, ya que esta fila representa datos nulos
     #En axis se especifica que se quiere eliminar una fila o columna
