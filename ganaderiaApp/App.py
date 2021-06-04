@@ -416,7 +416,14 @@ def add_engorde():
         nombre = request.form["nombre"]
         val = request.form["valor_estimado"]
         cat = request.form["categoria"]
-        args = [cod, nombre, val, cat, new_cod_medico, 0]
+        salida = request.form["salida"]
+        args = [cod, nombre, val, cat, new_cod_medico, salida]
+        if not salida: 
+            salida = 0
+        if int(salida) != 0:
+            sal_arr = [salida, "Por llenar", today, 0, 0]
+            cur.execute("INSERT INTO salida (cod_registro, razon, fecha, venta, sacrificio_enfermedad) VALUES(?,?,?,?,?)", sal_arr)
+            conn.commit()
         #Comando sql 
         cur.execute("INSERT INTO engorde (cod_engorde, nombre, valor_estimado, categoria, historial_medico, salida) VALUES(?,?,?,?,?,?)", args)
         #Confirmación del comando
@@ -440,11 +447,19 @@ def update_engorde():
         nombre = request.form["nombre"]
         valor_estimado = request.form["valor_estimado"]
         categoria = request.form["categoria"]
-        args = [nombre, valor_estimado, categoria, cod]
+        salida = request.form["salida"]
+        args = [nombre, valor_estimado, categoria, salida, cod]
         cur.execute("SELECT * FROM engorde WHERE cod_engorde = ?", cod)
         dato = cur.fetchone()
         if dato:
-            cur.execute("UPDATE engorde SET nombre = ?, valor_estimado = ?, categoria = ? WHERE cod_engorde = ?", args)
+            if not salida: 
+                salida = 0
+            if int(salida) != 0:
+                today = datetime.date.today()
+                sal_arr = [salida, "Por llenar", today, 0, 0]
+                cur.execute("INSERT INTO salida (cod_registro, razon, fecha, venta, sacrificio_enfermedad) VALUES(?,?,?,?,?)", sal_arr)
+                conn.commit()
+            cur.execute("UPDATE engorde SET nombre = ?, valor_estimado = ?, categoria = ?, salida = ? WHERE cod_engorde = ?", args)
             flash("Engorde actualizado correctamente")
         else: 
             flash("El código ingresado no se encuentra registrado")
