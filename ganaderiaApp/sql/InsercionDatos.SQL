@@ -77,10 +77,10 @@ INSERT INTO registro_venta VALUES(6, 4, 160000, '2021-02-02');
 
 
 --Defunción
-INSERT INTO defuncion(reg_defuncion,causa,veterinario_certifica) VALUES(0, 0, 0 );
+/*--INSERT INTO (reg_defuncion,causa,veterinario_certifica) VALUES(0, 0, 0 );
 INSERT INTO defuncion VALUES(1, 2, 3 );
 INSERT INTO defuncion VALUES(2, 3, 5 );
-INSERT INTO defuncion VALUES(3, 4, 5 );
+INSERT INTO defuncion VALUES(3, 4, 5 );*/
 
 
 --Nivel 3

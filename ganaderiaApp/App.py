@@ -486,19 +486,73 @@ def enfermedad():
         tmpdatos = cur.fetchall()
         return render_template('Enfermedad.html',datos = tmpdatos)
 
+
+#SALIDA
 @app.route("/salidas", methods=["GET"])
 def salidas():
     id=request.args.get('id')
     if(id == '1c'): #consulta general
         cur.execute('SELECT cod_registro,razon,fecha,venta,sacrificio_enfermedad FROM Salida')
-        tmpdatos = cur.fetchall()
-        return render_template('salida.html',datos = tmpdatos)
+        datos = cur.fetchall()
+        datos=np.delete(datos, 0 , axis=0)
+        for dato in datos:
+            if dato[3]==0:
+                dato[3]="No aplica"
+            if dato[4]==0:
+                dato[4]="No aplica"
+        return render_template('salida.html',datos = datos)
     else:
         if id=="Vigente":
             id=0
         cur.execute('SELECT cod_registro,razon,fecha,venta,sacrificio_enfermedad FROM Salida WHERE cod_registro = {0}'.format(id))
-        tmpdatos = cur.fetchall()
-        return render_template('salida.html',datos = tmpdatos)
+        datos = cur.fetchall()
+        return render_template('salida.html',datos = datos)
+
+@app.route("/añadir_salida", methods=["POST"])
+def add_salida():
+    if request.method == "POST":
+        #Determina el código del último registro médico
+        cur.execute('SELECT * FROM salida ORDER BY cod_registro DESC LIMIT 1')
+        datos = cur.fetchone()
+        cod_registro = int(datos[0]) + 1 
+        razon= request.form["razon"]
+        fecha= request.form["fecha"]
+        venta= request.form["venta"]
+        sacrificio_enfermedad= request.form["sacrificio_enfermedad"]
+        if venta=="":
+            venta=0
+        if sacrificio_enfermedad=="":
+            sacrificio_enfermedad=0
+        args=[int(cod_registro), razon, fecha, int(venta), int(sacrificio_enfermedad)]
+        #Comando sql
+        cur.execute("INSERT INTO salida (cod_registro, razon, fecha, venta, sacrificio_enfermedad) VALUES (?, ?, ?, ?, ?)", args)
+        #Confirmar comando
+        conn.commit()
+        cad="Salida añadida correctamente con cod "+ str(cod_registro)
+        flash(cad)
+        cur.execute('SELECT * FROM salida ORDER BY cod_registro')
+        datos = cur.fetchall()
+        if datos[0][0]==0:
+           datos=np.delete(datos, 0 , axis=0)
+        datos=sorted(datos, key=lambda cod : cod[0])
+    return render_template('salida.html', datos = datos)
+
+@app.route("/delete_salida", methods=["GET"])
+def delete_salida():
+    id=request.args.get('id')
+    cur.execute("DELETE FROM salida WHERE cod_registro = ? VALUES(?)", id)
+    conn.commit()
+    flash("La salida ha sido eliminado correctamente")
+    #Mostrar tabla
+    cur.execute('SELECT cod_registro,razon,fecha,venta,sacrificio_enfermedad FROM Salida')
+    datos = cur.fetchall()
+    datos=np.delete(datos, 0 , axis=0)
+    for dato in datos:
+        if dato[3]==0:
+            dato[3]="No aplica"
+        if dato[4]==0:
+            dato[4]="No aplica"
+    return render_template('salida.html',datos = datos)
 
 
 #----------PONER AQUÍ LAS CONSULTAS---------

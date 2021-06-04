@@ -61,7 +61,7 @@ CREATE TABLE registro_medico(
 	estado VARCHAR(15),  ---enfermo, saludable, o cosas por el estilo
 	descripcion VARCHAR(40),
 	fecha DATE,
-	emitido_por INTEGER FOREIGN KEY REFERENCES veterinario(cod_vet) ON DELETE SET NULL	
+	emitido_por INTEGER FOREIGN KEY REFERENCES veterinario(cod_vet) ON DELETE SET NULL
 );
 
 CREATE TABLE registro_venta(
@@ -73,12 +73,12 @@ CREATE TABLE registro_venta(
 
 );
 
-CREATE TABLE defuncion(
+/*CREATE TABLE defuncion(
 	reg_defuncion INTEGER PRIMARY KEY,
 	causa INTEGER FOREIGN KEY REFERENCES enfermedad(cod_enfermedad),
-	veterinario_certifica INTEGER FOREIGN KEY REFERENCES veterinario(cod_vet) ON DELETE SET NULL	
+	veterinario_certifica INTEGER FOREIGN KEY REFERENCES veterinario(cod_vet) ON DELETE SET NULL
 
-);
+);*/
 
 ---Nivel 3
 
@@ -114,7 +114,7 @@ CREATE TABLE salida(
 	fecha DATE,
 	venta INTEGER FOREIGN KEY REFERENCES registro_venta(factura),
 	--sacrificio_enfermedad INTEGER UNIQUE FOREIGN KEY REFERENCES defuncion(reg_defuncion)
-	sacrificio_enfermedad INTEGER FOREIGN KEY REFERENCES defuncion(reg_defuncion)
+	sacrificio_enfermedad INTEGER FOREIGN KEY REFERENCES enfermedad(cod_enfermedad)
 
 );
 
@@ -180,7 +180,7 @@ CREATE TABLE ternero (
 	historial_medico INTEGER UNIQUE FOREIGN KEY REFERENCES  registro_medico(cod_medico) ,
 	--salida INTEGER UNIQUE FOREIGN KEY REFERENCES  salida(cod_registro)
 	salida INTEGER FOREIGN KEY REFERENCES  salida(cod_registro),
-  nacido_de INTEGER FOREIGN KEY REFERENCES  inseminacion(cod_inseminacion) ON DELETE SET NULL	
+  nacido_de INTEGER FOREIGN KEY REFERENCES  inseminacion(cod_inseminacion) ON DELETE SET NULL
 
 );
 
