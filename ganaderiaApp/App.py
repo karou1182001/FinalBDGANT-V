@@ -141,7 +141,6 @@ def toros():
             dato[4]= "Vigente"
     #Los mandamos al HTML para imprimirlos
     return render_template("toros.html", datos = datos)
-
 @app.route("/añadir_toro", methods=["POST"])
 def add_toro():
     if request.method == "POST":
@@ -158,7 +157,14 @@ def add_toro():
         cod = request.form["cod"]
         nombre = request.form["nombre"]
         ex_pajilla = request.form["ex_pajilla"]
-        args2 = [cod, nombre, ex_pajilla, new_cod_medico, 0]
+        salida = request.form["salida"]
+        args2 = [cod, nombre, ex_pajilla, new_cod_medico, salida]
+        if not salida: 
+            salida = 0
+        if int(salida) != 0:
+            sal_arr = [salida, "Por llenar", today, 0, 0]
+            cur.execute("INSERT INTO salida (cod_registro, razon, fecha, venta, sacrificio_enfermedad) VALUES(?,?,?,?,?)", sal_arr)
+            conn.commit()
         #Operación sql
         cur.execute("INSERT INTO toro (cod_toro, nombre, rating, historial_medico, salida) VALUES(?, ?, ?, ?, ?)", args2)
         #Confirmación de la operación
