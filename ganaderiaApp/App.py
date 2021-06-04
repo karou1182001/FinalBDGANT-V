@@ -47,7 +47,7 @@ def index():
 @app.route("/vacas")
 def vacas(): 
     #Obtiene los datos
-    cur.execute("SELECT * FROM vaca ORDER BY cod_vaca ASC")
+    cur.execute("SELECT cod_vaca, nombre, genetica_lechera, COALESCE(historial_medico, 0), COALESCE(salida, 0) FROM vaca ORDER BY cod_vaca ASC")
     datos = cur.fetchall()
     #Eliminamos la fila 0 solo por cuestión de estética, ya que esta fila representa datos nulos
     #En axis se especifica que se quiere eliminar una fila o columna
