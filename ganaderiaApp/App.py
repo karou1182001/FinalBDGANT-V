@@ -137,6 +137,24 @@ def delete_toro():
     flash("El toro ha sido eliminado correctamente")
     return redirect(url_for("toros")) 
 
+@app.route("/delete_registro_medico", methods=["GET"])
+def delete_registro_medico():
+    id=request.args.get('id')
+    iden = id
+    cur.execute("DELETE FROM registro_medico WHERE cod_medico = ? VALUES(?)", iden)
+    conn.commit()
+    flash("El registro medico ha sido eliminado correctamente")
+    return redirect(url_for("index")) 
+
+@app.route("/delete_registro_de_venta", methods=["GET"])
+def delete_registro_de_venta():
+    id=request.args.get('id')
+    iden = id
+    cur.execute("DELETE FROM registro_venta WHERE factura = ? VALUES(?)", iden)
+    conn.commit()
+    flash("El registro de venta ha sido eliminado correctamente")
+    return redirect(url_for("index")) 
+
 @app.route("/terneros")
 def terneros():
     #Obtiene los datos
