@@ -234,6 +234,28 @@ def add_ternero():
         flash("Ternero añadido correctamente")
     return redirect(url_for("terneros"))
 
+@app.route("/update_ternero", methods = ["POST"])
+def update_ternero():
+    if request.method == "POST":    
+        cod = request.form["cod"]
+        nombre = request.form["nombre"]
+        fecha_nacimiento = request.form["fecha_nacimiento"]
+        sex = request.form["sex"]
+        temp_age = datetime.datetime.strptime(fecha_nacimiento, "%Y-%m-%d")
+        age = edad(temp_age)  
+        peso = request.form["peso"]
+        prospecto = request.form["prospecto"]
+        nacido_de = request.form["nacido_de"]
+        args = [nombre, sex, fecha_nacimiento, age, peso, prospecto, nacido_de, cod]
+        cur.execute("SELECT * FROM ternero WHERE cod_ternero = ?", cod)
+        dato = cur.fetchone()
+        if dato:
+            cur.execute("UPDATE ternero SET nombre = ?, sexo = ?, fecha_nacimiento = ?, edad = ?, peso_nacimiento = ?, prospecto = ?, nacido_de = ? WHERE cod_ternero = ?", args)
+            flash("Ternero actualizado correctamente")
+        else: 
+            flash("El código ingresado no se encuentra registrado")
+        return redirect(url_for("terneros"))
+
 @app.route("/clientes", methods=['GET'])
 def clientes():
     id=request.args.get('id')
