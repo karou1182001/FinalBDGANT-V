@@ -87,7 +87,7 @@ CREATE TABLE estuvo_enfermo (
   paciente INTEGER FOREIGN KEY REFERENCES  registro_medico(cod_medico),
 	duracion_enfermedad FLOAT,
 	fecha_de_diagnostico DATE,
-	enfermedad INTEGER FOREIGN KEY REFERENCES enfermedad(cod_enfermedad)
+	enfermedad INTEGER FOREIGN KEY REFERENCES enfermedad(cod_enfermedad) ON DELETE RESTRICT
 
 );
 
@@ -114,7 +114,7 @@ CREATE TABLE salida(
 	fecha DATE,
 	venta INTEGER FOREIGN KEY REFERENCES registro_venta(factura),
 	--sacrificio_enfermedad INTEGER UNIQUE FOREIGN KEY REFERENCES defuncion(reg_defuncion)
-	sacrificio_enfermedad INTEGER FOREIGN KEY REFERENCES enfermedad(cod_enfermedad)
+	sacrificio_enfermedad INTEGER FOREIGN KEY REFERENCES enfermedad(cod_enfermedad) ON DELETE RESTRICT
 
 );
 
@@ -128,7 +128,7 @@ CREATE TABLE vaca (
 	--historial_medico INTEGER UNIQUE FOREIGN KEY REFERENCES  registro_medico(cod_medico) ,
 	historial_medico INTEGER UNIQUE FOREIGN KEY REFERENCES  registro_medico(cod_medico),
 	--salida INTEGER UNIQUE FOREIGN KEY REFERENCES  salida(cod_registro)
-	salida INTEGER FOREIGN KEY REFERENCES  salida(cod_registro)
+	salida INTEGER FOREIGN KEY REFERENCES  salida(cod_registro) ON DELETE RESTRICT
 
 );
 
@@ -139,7 +139,7 @@ CREATE TABLE toro (
 	--historial_medico INTEGER UNIQUE FOREIGN KEY REFERENCES  registro_medico(cod_medico) ,
 	historial_medico INTEGER UNIQUE FOREIGN KEY REFERENCES  registro_medico(cod_medico) ,
 	--salida INTEGER UNIQUE FOREIGN KEY REFERENCES  salida(cod_registro)
-	salida INTEGER FOREIGN KEY REFERENCES  salida(cod_registro)
+	salida INTEGER FOREIGN KEY REFERENCES  salida(cod_registro) ON DELETE RESTRICT
 
 );
 
@@ -151,7 +151,7 @@ CREATE TABLE engorde (
 	--historial_medico INTEGER UNIQUE FOREIGN KEY REFERENCES  registro_medico(cod_medico) ,
 	historial_medico INTEGER UNIQUE FOREIGN KEY REFERENCES  registro_medico(cod_medico) ,
 	--salida INTEGER UNIQUE FOREIGN KEY REFERENCES  salida(cod_registro)
-	salida INTEGER FOREIGN KEY REFERENCES  salida(cod_registro)
+	salida INTEGER FOREIGN KEY REFERENCES  salida(cod_registro) ON DELETE RESTRICT
 
 );
 
@@ -179,7 +179,7 @@ CREATE TABLE ternero (
 	--historial_medico INTEGER UNIQUE FOREIGN KEY REFERENCES  registro_medico(cod_medico) ,
 	historial_medico INTEGER UNIQUE FOREIGN KEY REFERENCES  registro_medico(cod_medico) ,
 	--salida INTEGER UNIQUE FOREIGN KEY REFERENCES  salida(cod_registro)
-	salida INTEGER FOREIGN KEY REFERENCES  salida(cod_registro),
+	salida INTEGER FOREIGN KEY REFERENCES  salida(cod_registro) ON DELETE RESTRICT,
   nacido_de INTEGER FOREIGN KEY REFERENCES  inseminacion(cod_inseminacion) ON DELETE SET NULL
 
 );
@@ -189,7 +189,7 @@ CREATE TABLE pajilla(
 	fecha_embase DATE,
 	toro INTEGER FOREIGN KEY REFERENCES toro(cod_toro) ON DELETE SET NULL	,
 	--empleado_en INTEGER UNIQUE FOREIGN KEY REFERENCES inseminacion(cod_inseminacion) ,
-	empleado_en INTEGER FOREIGN KEY REFERENCES inseminacion(cod_inseminacion) ON DELETE CASCADE,
+	empleado_en INTEGER FOREIGN KEY REFERENCES inseminacion(cod_inseminacion) ON DELETE SET NULL,
 	vendido_en INTEGER FOREIGN KEY REFERENCES registro_venta(factura)
 
 );
@@ -220,7 +220,7 @@ CREATE TABLE destete(
 CREATE TABLE reg_lechero(
 	cod_lec INTEGER PRIMARY KEY,
 	pertenece_a INTEGER FOREIGN KEY REFERENCES vaca(cod_vaca) ON DELETE CASCADE	,
-	inseminacion_asociada INTEGER UNIQUE FOREIGN KEY REFERENCES inseminacion(cod_inseminacion) ON DELETE CASCADE,
+	inseminacion_asociada INTEGER UNIQUE FOREIGN KEY REFERENCES inseminacion(cod_inseminacion) ON DELETE SET NULL,
 	fecha DATE,
 	cantidad_lt FLOAT
 )

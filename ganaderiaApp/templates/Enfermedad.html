@@ -5,15 +5,54 @@
         <p class="heading underline font-x2">ENFERMEDAD</p>
     </div> 
     <div class="row">
+        <div class="col-md-4">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{message}}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %} 
+            <div class="card card-body">
+                <form method= 'POST'>
+                    <p>Ingresar enfermedad</p> 
+                    <div class="form-group">
+                        <input type="number" name = "cod_enfermedad" placeholder="Código de enfermedad" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name = "nom_enfermedad" placeholder="Nombre de la enfermedad" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="number" step="0.1" name="duracion_promedio" placeholder="Duración promedio en semanas" class="form-control">  
+                    </div>
+                    <div class="form-group">
+                        <input type="number" name="indice_letalidad" placeholder="Índice de letalidad" class="form-control">  
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="tratamiento_estandar" placeholder="Tratamiento estándar" class="form-control">  
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" formaction="/añadir_enfermedad" class="btn btn-primary">Insertar</button>
+                        <!--<button type="submit" formaction="/update_hijo" class="btn btn-primary">Actualizar</button>-->
+                    </div>
+                </form>
+            </div>
+            <br>
+            <br>
+            <a class="btn btn-primary" href="http://localhost:3000/" role="button">Regresar</a>
+        </div>
         <div class="col-md-6">
             <table class="table table-striped table-bordered bg-white table-sm">
                 <thead>
                     <tr>
-                        <td>codigo de enfermedad</td>
-                        <td>nombre de la enfermedad</td>
-                        <td>duracion promedio (dias)</td>
-                        <td>indice letalidad</td>
-                        <td>tratamiento estandar</tr>
+                        <td>Código de enfermedad</td>
+                        <td>Nombre de la enfermedad</td>
+                        <td>Duración promedio (semanas)</td>
+                        <td>Índice letalidad</td>
+                        <td>Tratamiento estandar</tr>
                     </tr>
                 </thead>
                 <tbody>
@@ -24,14 +63,13 @@
                         <td>{{data.2}}</td>
                         <td>{{data.3}}</td>
                         <td>{{data.4}}</td>
+                        <td>
+                            <a href="/delete_enfermedad?id={{data.0}}" class="btn btn-danger btn-delete">Delete</a>
+                        </td>
                     </tr>
                     {% endfor%}
                 </tbody>
             </table>
-
-            <br>
-            <br>
-            <a class="btn btn-primary" href="http://localhost:3000/" role="button">Regresar</a>
       </div>
   </div>
 {% endblock %}

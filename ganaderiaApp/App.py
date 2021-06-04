@@ -2,6 +2,7 @@
 import datetime
 from flask import Flask, render_template, request, redirect, url_for, flash
 import CUBRIDdb
+import flask
 import numpy as np
 from numpy.lib.function_base import select
 
@@ -387,6 +388,30 @@ def add_pajilla():
         flash(cad)
     return redirect(url_for("pajillas"))
 
+@app.route("/delete_pajilla", methods=["GET"])
+def delete_pajilla():
+    try:
+        id=request.args.get('id')
+        cur.execute("DELETE FROM pajilla WHERE id_pajilla= ? VALUES(?)", id)
+        conn.commit()
+        flash("La pajilla ha sido eliminada correctamente")
+    except:
+        flash("No se puede eliminar la pajilla")
+    #Mostrar tabla
+    #Consulta para listar las pajillas y ver el  código de las
+    #vacas y toros asociados
+    cur.execute('SELECT pajilla.id_pajilla, pajilla.fecha_embase, pajilla.toro, pajilla.empleado_en, pajilla.vendido_en, inseminacion.vaca FROM pajilla CROSS JOIN inseminacion WHERE pajilla.empleado_en= inseminacion.cod_inseminacion')
+    datos = cur.fetchall()
+    for dato in datos:
+        if dato[4]==0:
+            dato[4]= "No vendido"
+        if dato[5]==0:
+            dato[5]= "No aplica"
+    if datos[0][0]==0:
+        datos=np.delete(datos, 0 , axis=0)
+    return render_template('consulta_1.html',datos = datos)
+
+#INSEMINACIONES
 @app.route("/añadir_inseminacion", methods=["POST"])
 def add_inseminacion():
     if request.method == "POST":
@@ -439,6 +464,25 @@ def consulta_2():
     datos=sorted(datos, key=lambda cod : cod[0])
     return render_template('consulta_2.html', datos = datos, datosVaca=datosVaca)
 
+@app.route("/delete_inseminacion", methods=["GET"])
+def delete_inseminacion():
+    try:
+        id=request.args.get('id')
+        cur.execute("DELETE FROM inseminacion WHERE cod_inseminacion= ? VALUES(?)", id)
+        conn.commit()
+        flash("El registro de inseminación ha sido eliminado correctamente")
+    except:
+        flash("No se puede eliminar el registro")
+    #Mostrar tabla
+    #Consulta para listar las pajillas y ver el  código de las
+    #vacas y toros asociados
+    cur.execute('SELECT * FROM inseminacion')
+    datos = cur.fetchall()
+    if datos[0][0]==0:
+        datos=np.delete(datos, 0 , axis=0)
+    return render_template('consulta_2.html',datos = datos)
+
+
 @app.route("/añadir_estado_inseminacion", methods=["POST", "GET"])
 def add_estado_inseminacion():
     if request.method == "POST":
@@ -473,7 +517,8 @@ def estado_ins():
     #Ordenamos la lista por código
     datos=sorted(datos, key=lambda cod : cod[0])
     return render_template('estado_ins.html', datos = datos, id=id)
-    
+
+#ENFERMEDAD
 @app.route("/enfermedades", methods=['GET'])
 def enfermedad():
     id=request.args.get('id')
@@ -485,6 +530,48 @@ def enfermedad():
         cur.execute('SELECT cod_enfermedad,nom_enfermedad,duracion_promedio,indice_letalidad,tratamiento_estandar FROM Enfermedad WHERE cod_enfermedad = {0}'.format(id))
         tmpdatos = cur.fetchall()
         return render_template('Enfermedad.html',datos = tmpdatos)
+
+@app.route("/añadir_enfermedad", methods=["POST"])
+def add_enfermedad():
+    if request.method == "POST":
+        #Determina el código del último registro médico
+        cur.execute('SELECT * FROM enfermedad ORDER BY cod_enfermedad DESC LIMIT 1')
+        datos = cur.fetchone()
+        cod_enfermedad = int(datos[0]) + 1 
+        nom_enfermedad= request.form["nom_enfermedad"]
+        duracion_promedio= request.form["duracion_promedio"]
+        indice_letalidad= request.form["indice_letalidad"]
+        tratamiento_estandar= request.form["tratamiento_estandar"]
+        args=[int(cod_enfermedad), nom_enfermedad, float(duracion_promedio), int(indice_letalidad), tratamiento_estandar]
+        #Comando sql
+        cur.execute("INSERT INTO enfermedad (cod_enfermedad, nom_enfermedad, duracion_promedio, indice_letalidad, tratamiento_estandar) VALUES (?, ?, ?, ?, ?)", args)
+        #Confirmar comando
+        conn.commit()
+        cad="Enfermedad añadida correctamente con cod "+ str(cod_enfermedad)
+        flash(cad)
+        cur.execute('SELECT * FROM enfermedad ORDER BY cod_enfermedad')
+        datos = cur.fetchall()
+        if datos[0][0]==0:
+           datos=np.delete(datos, 0 , axis=0)
+        datos=sorted(datos, key=lambda cod : cod[0])
+    return render_template('enfermedad.html', datos = datos)
+
+@app.route("/delete_enfermedad", methods=["GET"])
+def delete_enfermedad():
+    try:
+        id=request.args.get('id')
+        cur.execute("DELETE FROM enfermedad WHERE cod_enfermedad= ? VALUES(?)", id)
+        conn.commit()
+        flash("La enfermedad ha sido eliminada correctamente")
+    except:
+        flash("No se puede eliminar porque hay animales asociados")
+    #Mostrar tabla
+    cur.execute('SELECT * FROM enfermedad ORDER BY cod_enfermedad')
+    datos = cur.fetchall()
+    if datos[0][0]==0:
+        datos=np.delete(datos, 0 , axis=0)
+    return render_template('enfermedad.html',datos = datos)
+
 
 
 #SALIDA
@@ -534,17 +621,25 @@ def add_salida():
         datos = cur.fetchall()
         if datos[0][0]==0:
            datos=np.delete(datos, 0 , axis=0)
+        for dato in datos:
+            if dato[3]==0:
+                dato[3]="No aplica"
+            if dato[4]==0:
+                dato[4]="No aplica"
         datos=sorted(datos, key=lambda cod : cod[0])
     return render_template('salida.html', datos = datos)
 
 @app.route("/delete_salida", methods=["GET"])
 def delete_salida():
-    id=request.args.get('id')
-    cur.execute("DELETE FROM salida WHERE cod_registro = ? VALUES(?)", id)
-    conn.commit()
-    flash("La salida ha sido eliminado correctamente")
+    try:
+        id=request.args.get('id')
+        cur.execute("DELETE FROM salida WHERE cod_registro = ? VALUES(?)", id)
+        conn.commit()
+        flash("La salida ha sido eliminada correctamente")
+    except:
+        flash("No se puede eliminar porque hay animales asociados")
     #Mostrar tabla
-    cur.execute('SELECT cod_registro,razon,fecha,venta,sacrificio_enfermedad FROM Salida')
+    cur.execute('SELECT cod_registro,razon,fecha,venta,sacrificio_enfermedad FROM salida')
     datos = cur.fetchall()
     datos=np.delete(datos, 0 , axis=0)
     for dato in datos:
