@@ -30,7 +30,12 @@
                         <input type="date" name = "fecha" placeholder="Fecha" class="form-control">
                     </div>
                     <div class="form-group">
-                        <input type="text" name="exito" placeholder="Exito" class="form-control">  
+                        <!--<input type="text" name="exito" placeholder="Exito" class="form-control">-->
+                        <label for="exito">Hubo embarazo?:</label>
+                        <select name="exito" id="exitoid">
+                          <option value="si">si</option>
+                          <option value="no">no</option>
+                        </select>    
                     </div>
                     <div class="form-group">
                         <input type="number" name="veterinario" placeholder="Código veterinario que la realizó" class="form-control">  
