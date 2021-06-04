@@ -187,11 +187,19 @@ def update_toro():
         cod = request.form["cod"]
         nombre = request.form["nombre"]
         rating = request.form["ex_pajilla"]
-        args = [nombre, rating, cod]
+        salida = request.form["salida"]
+        args = [nombre, rating, salida, cod]
         cur.execute("SELECT * FROM toro WHERE cod_toro = ?", cod)
         dato = cur.fetchone()
         if dato:
-            cur.execute("UPDATE toro SET nombre = ?, rating = ? WHERE cod_toro = ?", args)
+            if not salida: 
+                salida = 0
+            if int(salida) != 0:
+                today = datetime.date.today()
+                sal_arr = [salida, "Por llenar", today, 0, 0]
+                cur.execute("INSERT INTO salida (cod_registro, razon, fecha, venta, sacrificio_enfermedad) VALUES(?,?,?,?,?)", sal_arr)
+                conn.commit()
+            cur.execute("UPDATE toro SET nombre = ?, rating = ?, salida = ? WHERE cod_toro = ?", args)
             flash("Toro actualizado correctamente")
         else: 
             flash("El código ingresado no se encuentra registrado")
