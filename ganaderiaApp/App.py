@@ -101,11 +101,19 @@ def update_vaca():
         cod = request.form["cod"]
         nombre = request.form["nombre"]
         genetica = request.form["genetica"]
-        args = [nombre, genetica, cod]
+        salida = request.form["salida"]
+        args = [nombre, genetica, salida, cod]
         cur.execute("SELECT * FROM vaca WHERE cod_vaca = ?", cod)
         dato = cur.fetchone()
         if dato:
-            cur.execute("UPDATE vaca SET nombre = ?, genetica_lechera = ? WHERE cod_vaca = ?", args)
+            if not salida: 
+                salida = 0
+            if int(salida) != 0:
+                today = datetime.date.today()
+                sal_arr = [salida, "Por llenar", today, 0, 0]
+                cur.execute("INSERT INTO salida (cod_registro, razon, fecha, venta, sacrificio_enfermedad) VALUES(?,?,?,?,?)", sal_arr)
+                conn.commit()
+            cur.execute("UPDATE vaca SET nombre = ?, genetica_lechera = ?, salida = ? WHERE cod_vaca = ?", args)
             flash("Vaca actualizada correctamente")
         else: 
             flash("El código ingresado no se encuentra registrado")
