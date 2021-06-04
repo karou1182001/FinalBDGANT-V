@@ -159,7 +159,7 @@ def delete_registro_de_venta():
 @app.route("/terneros")
 def terneros():
     #Obtiene los datos
-    cur.execute("SELECT * FROM ternero ORDER BY cod_ternero ASC")
+    cur.execute("SELECT cod_ternero, nombre, sexo, fecha_nacimiento, edad, peso_nacimiento, prospecto, historial_medico, salida, COALESCE(nacido_de, 0) FROM ternero ORDER BY cod_ternero ASC")
     datos = cur.fetchall()
     #Eliminamos la fila 0 solo por cuestión de estética, ya que esta fila representa datos nulos
     #En axis se especifica que se quiere eliminar una fila o columna
@@ -333,11 +333,11 @@ def delete_engorde():
 def historial_medico():
     id=request.args.get('id')
     if id=="1c":
-        cur.execute("SELECT cod_medico,estado,descripcion,fecha,emitido_por FROM registro_medico")
+        cur.execute("SELECT cod_medico,estado,descripcion,fecha,COALESCE(emitido_por, 0) FROM registro_medico")
         datos = cur.fetchall()
         return render_template("registro_medico.html",datos = datos)
     else:
-        cur.execute("SELECT cod_medico,estado,descripcion,fecha,emitido_por FROM registro_medico WHERE cod_medico = {0}".format(id))
+        cur.execute("SELECT cod_medico,estado,descripcion,fecha,COALESCE(emitido_por, 0) FROM registro_medico WHERE cod_medico = {0}".format(id))
         datos = cur.fetchall()
         return render_template("registro_medico.html",datos = datos)
 
@@ -356,7 +356,7 @@ def estuvo_enfermo():
 
 @app.route("/registro_ventas")
 def registro_ventas():
-    cur.execute('SELECT factura,cliente,precio,fecha FROM registro_venta')
+    cur.execute('SELECT factura, COALESCE(cliente, 0),precio,fecha FROM registro_venta')
     datos = cur.fetchall()
     #Eliminamos la fila 0 solo por cuestión de estética, ya que esta fila representa datos nulos
     #En axis se especifica que se quiere eliminar una fila o columna
