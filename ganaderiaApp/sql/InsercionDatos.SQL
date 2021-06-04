@@ -157,9 +157,8 @@ INSERT INTO ternero VALUES(3, 'Jony', 'M',  '2020-12-12', 2, 8,  'Nada', 17, 0, 
 INSERT INTO pajilla(id_pajilla,fecha_embase,toro,empleado_en,vendido_en)  VALUES(0, '0001-01-01', 0, 0, 0);
 INSERT INTO pajilla  VALUES(1, '2021-01-01', 1, 1, 0);
 INSERT INTO pajilla  VALUES(2, '2021-02-01', 1, 2, 0);
-INSERT INTO pajilla  VALUES(3, '2021-03-01', 2, 3, 0);
-INSERT INTO pajilla  VALUES(4, '2021-04-01', 3, 4, 0);
-INSERT INTO pajilla  VALUES(5, '2021-05-01', 4, 0, 0);
+INSERT INTO pajilla  VALUES(3, '2021-04-01', 3, 4, 0);
+INSERT INTO pajilla  VALUES(4, '2021-05-01', 4, 0, 0);
 
 
 --Estado inseminación
