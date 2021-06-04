@@ -75,6 +75,7 @@ def add_vaca():
         nombre = request.form["nombre"]
         genetica = request.form["genetica"]
         salida = request.form["salida"]
+        cad="Vaca añadida correctamente"
         if not salida:
             salida = 0
         if int(salida) == 0: 
@@ -84,15 +85,22 @@ def add_vaca():
             #Se ejecuta la operación
             conn.commit()
         else: 
-            sal_arr = [salida, "Por llenar", today, 0, 0]
-            cur.execute("INSERT INTO salida (cod_registro, razon, fecha, venta, sacrificio_enfermedad) VALUES(?,?,?,?,?)", sal_arr)
-            conn.commit()
-            args2 = [cod, nombre, genetica, new_cod_medico, salida]
+            #Buscamos primero si el código de la salida ya existe
+            cur.execute("SELECT cod_registro FROM salida WHERE cod_registro = ? VALUES(?)", int(salida))
+            datos = cur.fetchall()
+            #Si la salida aún no existe se agrega
+            #Viendo si datos está vacío
+            if not(datos):
+                sal_arr = [salida, "Por llenar", today, 0, 0]
+                cur.execute("INSERT INTO salida (cod_registro, razon, fecha, venta, sacrificio_enfermedad) VALUES(?,?,?,?,?)", sal_arr)
+                conn.commit()
+                cad="Vaca añadida correctamente. No olvide registrar los datos de la salida"
+            args2 = [cod, nombre, genetica, new_cod_medico, int(salida)]
             #Operación SQL en cuestión
             cur.execute("INSERT INTO vaca (cod_vaca, nombre, genetica_lechera, historial_medico, salida) VALUES(?, ?, ?, ?, ?)", args2)
             #Se ejecuta la operación
             conn.commit()
-        flash("Vaca añadida correctamente")
+        flash(cad)
         return redirect(url_for("vacas"))   
 
 @app.route("/update_vaca", methods = ["POST"])
@@ -103,18 +111,26 @@ def update_vaca():
         genetica = request.form["genetica"]
         salida = request.form["salida"]
         args = [nombre, genetica, salida, cod]
+        cad="Vaca actualizada correctamente"
         cur.execute("SELECT * FROM vaca WHERE cod_vaca = ?", cod)
         dato = cur.fetchone()
         if dato:
             if not salida: 
                 salida = 0
             if int(salida) != 0:
-                today = datetime.date.today()
-                sal_arr = [salida, "Por llenar", today, 0, 0]
-                cur.execute("INSERT INTO salida (cod_registro, razon, fecha, venta, sacrificio_enfermedad) VALUES(?,?,?,?,?)", sal_arr)
-                conn.commit()
+                #Buscamos primero si el código de la salida ya existe
+                cur.execute("SELECT cod_registro FROM salida WHERE cod_registro = ? VALUES(?)", int(salida))
+                datos = cur.fetchall()
+                #Si la salida aún no existe se agrega
+                #Viendo si datos está vacío
+                if not(datos):
+                    today = datetime.date.today()
+                    sal_arr = [salida, "Por llenar", today, 0, 0]
+                    cur.execute("INSERT INTO salida (cod_registro, razon, fecha, venta, sacrificio_enfermedad) VALUES(?,?,?,?,?)", sal_arr)
+                    conn.commit()
+                    cad="Vaca actualizada correctamente. Recuerde registrar los datos de la salida"
             cur.execute("UPDATE vaca SET nombre = ?, genetica_lechera = ?, salida = ? WHERE cod_vaca = ?", args)
-            flash("Vaca actualizada correctamente")
+            flash(cad)
         else: 
             flash("El código ingresado no se encuentra registrado")
         return redirect(url_for("vacas"))
@@ -159,17 +175,25 @@ def add_toro():
         ex_pajilla = request.form["ex_pajilla"]
         salida = request.form["salida"]
         args2 = [cod, nombre, ex_pajilla, new_cod_medico, salida]
+        cad="Toro añadido correctamente."
         if not salida: 
             salida = 0
         if int(salida) != 0:
-            sal_arr = [salida, "Por llenar", today, 0, 0]
-            cur.execute("INSERT INTO salida (cod_registro, razon, fecha, venta, sacrificio_enfermedad) VALUES(?,?,?,?,?)", sal_arr)
-            conn.commit()
+            #Buscamos primero si el código de la salida ya existe
+            cur.execute("SELECT cod_registro FROM salida WHERE cod_registro = ? VALUES(?)", int(salida))
+            datos = cur.fetchall()
+            #Si la salida aún no existe se agrega
+            #Viendo si datos está vacío
+            if not(datos):
+                sal_arr = [salida, "Por llenar", today, 0, 0]
+                cur.execute("INSERT INTO salida (cod_registro, razon, fecha, venta, sacrificio_enfermedad) VALUES(?,?,?,?,?)", sal_arr)
+                conn.commit()
+                cad="Toro añadido correctamente. No olvide registrar los datos de la salida"
         #Operación sql
         cur.execute("INSERT INTO toro (cod_toro, nombre, rating, historial_medico, salida) VALUES(?, ?, ?, ?, ?)", args2)
         #Confirmación de la operación
         conn.commit()
-        flash("Toro añadido correctamente")
+        flash(cad)
     return redirect(url_for("toros"))
 
 @app.route("/delete_toro", methods=["GET"])
@@ -189,18 +213,26 @@ def update_toro():
         rating = request.form["ex_pajilla"]
         salida = request.form["salida"]
         args = [nombre, rating, salida, cod]
+        cad="Toro actualizado correctamente"
         cur.execute("SELECT * FROM toro WHERE cod_toro = ?", cod)
         dato = cur.fetchone()
         if dato:
             if not salida: 
                 salida = 0
             if int(salida) != 0:
-                today = datetime.date.today()
-                sal_arr = [salida, "Por llenar", today, 0, 0]
-                cur.execute("INSERT INTO salida (cod_registro, razon, fecha, venta, sacrificio_enfermedad) VALUES(?,?,?,?,?)", sal_arr)
-                conn.commit()
+                 #Buscamos primero si el código de la salida ya existe
+                cur.execute("SELECT cod_registro FROM salida WHERE cod_registro = ? VALUES(?)", int(salida))
+                datos = cur.fetchall()
+                #Si la salida aún no existe se agrega
+                #Viendo si datos está vacío
+                if not(datos):
+                    today = datetime.date.today()
+                    sal_arr = [salida, "Por llenar", today, 0, 0]
+                    cur.execute("INSERT INTO salida (cod_registro, razon, fecha, venta, sacrificio_enfermedad) VALUES(?,?,?,?,?)", sal_arr)
+                    conn.commit()
+                    cad="Toro actualizado correctamente. Recuerde registrar los datos de la salida"
             cur.execute("UPDATE toro SET nombre = ?, rating = ?, salida = ? WHERE cod_toro = ?", args)
-            flash("Toro actualizado correctamente")
+            flash(cad)
         else: 
             flash("El código ingresado no se encuentra registrado")
         return redirect(url_for("toros"))
@@ -263,17 +295,25 @@ def add_ternero():
         salida = request.form["salida"]
         nacido_de = request.form["nacido_de"]
         args2 = [cod, nombre, sex, fecha_nacimiento, age, peso, prospecto, new_cod_medico, salida, nacido_de]
+        cad="Ternero añadido correctamente."
         if not salida: 
             salida = 0
         if int(salida) != 0:
-            sal_arr = [salida, "Por llenar", today, 0, 0]
-            cur.execute("INSERT INTO salida (cod_registro, razon, fecha, venta, sacrificio_enfermedad) VALUES(?,?,?,?,?)", sal_arr)
-            conn.commit()
+            #Buscamos primero si el código de la salida ya existe
+            cur.execute("SELECT cod_registro FROM salida WHERE cod_registro = ? VALUES(?)", int(salida))
+            datos = cur.fetchall()
+            #Si la salida aún no existe se agrega
+            #Viendo si datos está vacío
+            if not(datos):
+                sal_arr = [salida, "Por llenar", today, 0, 0]
+                cur.execute("INSERT INTO salida (cod_registro, razon, fecha, venta, sacrificio_enfermedad) VALUES(?,?,?,?,?)", sal_arr)
+                conn.commit()
+                cad="Ternero añadido correctamente. No olvide registrar los datos de la salida"
         #Comando sql
         cur.execute("INSERT INTO ternero (cod_ternero, nombre, sexo, fecha_nacimiento, edad, peso_nacimiento, prospecto, historial_medico, salida, nacido_de) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", args2)
         #Confirmamos comando
         conn.commit()
-        flash("Ternero añadido correctamente")
+        flash(cad)
     return redirect(url_for("terneros"))
 
 @app.route("/update_ternero", methods = ["POST"])
@@ -290,18 +330,26 @@ def update_ternero():
         nacido_de = request.form["nacido_de"]
         salida = request.form["salida"]
         args = [nombre, sex, fecha_nacimiento, age, peso, prospecto, salida, nacido_de, cod]
+        cad="Ternero actualizado correctamente."
         cur.execute("SELECT * FROM ternero WHERE cod_ternero = ?", cod)
         dato = cur.fetchone()
         if dato:
             if not salida: 
                 salida = 0
             if int(salida) != 0:
-                today = datetime.date.today()
-                sal_arr = [salida, "Por llenar", today, 0, 0]
-                cur.execute("INSERT INTO salida (cod_registro, razon, fecha, venta, sacrificio_enfermedad) VALUES(?,?,?,?,?)", sal_arr)
-                conn.commit()
+                #Buscamos primero si el código de la salida ya existe
+                cur.execute("SELECT cod_registro FROM salida WHERE cod_registro = ? VALUES(?)", int(salida))
+                datos = cur.fetchall()
+                #Si la salida aún no existe se agrega
+                #Viendo si datos está vacío
+                if not(datos):
+                    today = datetime.date.today()
+                    sal_arr = [salida, "Por llenar", today, 0, 0]
+                    cur.execute("INSERT INTO salida (cod_registro, razon, fecha, venta, sacrificio_enfermedad) VALUES(?,?,?,?,?)", sal_arr)
+                    conn.commit()
+                    cad="Ternero actualizado correctamente. Recuerde registrar los datos de la salida."
             cur.execute("UPDATE ternero SET nombre = ?, sexo = ?, fecha_nacimiento = ?, edad = ?, peso_nacimiento = ?, prospecto = ?, salida = ?, nacido_de = ? WHERE cod_ternero = ?", args)
-            flash("Ternero actualizado correctamente")
+            flash(cad)
         else: 
             flash("El código ingresado no se encuentra registrado")
         return redirect(url_for("terneros"))
@@ -418,17 +466,25 @@ def add_engorde():
         cat = request.form["categoria"]
         salida = request.form["salida"]
         args = [cod, nombre, val, cat, new_cod_medico, salida]
+        cad="Engorde añadido correctamente."
         if not salida: 
             salida = 0
         if int(salida) != 0:
-            sal_arr = [salida, "Por llenar", today, 0, 0]
-            cur.execute("INSERT INTO salida (cod_registro, razon, fecha, venta, sacrificio_enfermedad) VALUES(?,?,?,?,?)", sal_arr)
-            conn.commit()
+            #Buscamos primero si el código de la salida ya existe
+            cur.execute("SELECT cod_registro FROM salida WHERE cod_registro = ? VALUES(?)", int(salida))
+            datos = cur.fetchall()
+            #Si la salida aún no existe se agrega
+            #Viendo si datos está vacío
+            if not(datos):
+                sal_arr = [salida, "Por llenar", today, 0, 0]
+                cur.execute("INSERT INTO salida (cod_registro, razon, fecha, venta, sacrificio_enfermedad) VALUES(?,?,?,?,?)", sal_arr)
+                conn.commit()
+                cad="Engorde añadido correctamente. No olvide registrar los datos de la salida"
         #Comando sql 
         cur.execute("INSERT INTO engorde (cod_engorde, nombre, valor_estimado, categoria, historial_medico, salida) VALUES(?,?,?,?,?,?)", args)
         #Confirmación del comando
         conn.commit()
-        flash("Engorde añadido correctamente")
+        flash(cad)
     return redirect(url_for("engordes"))
 
 @app.route("/delete_engorde", methods=["GET"])
@@ -449,18 +505,26 @@ def update_engorde():
         categoria = request.form["categoria"]
         salida = request.form["salida"]
         args = [nombre, valor_estimado, categoria, salida, cod]
+        cad="Engorde actualizado correctamente."
         cur.execute("SELECT * FROM engorde WHERE cod_engorde = ?", cod)
         dato = cur.fetchone()
         if dato:
             if not salida: 
                 salida = 0
             if int(salida) != 0:
-                today = datetime.date.today()
-                sal_arr = [salida, "Por llenar", today, 0, 0]
-                cur.execute("INSERT INTO salida (cod_registro, razon, fecha, venta, sacrificio_enfermedad) VALUES(?,?,?,?,?)", sal_arr)
-                conn.commit()
+                #Buscamos primero si el código de la salida ya existe
+                cur.execute("SELECT cod_registro FROM salida WHERE cod_registro = ? VALUES(?)", int(salida))
+                datos = cur.fetchall()
+                #Si la salida aún no existe se agrega
+                #Viendo si datos está vacío
+                if not(datos):
+                    today = datetime.date.today()
+                    sal_arr = [salida, "Por llenar", today, 0, 0]
+                    cur.execute("INSERT INTO salida (cod_registro, razon, fecha, venta, sacrificio_enfermedad) VALUES(?,?,?,?,?)", sal_arr)
+                    conn.commit()
+                    cad="Ternero actualizado correctamente. Recuerde registrar los datos de la salida."
             cur.execute("UPDATE engorde SET nombre = ?, valor_estimado = ?, categoria = ?, salida = ? WHERE cod_engorde = ?", args)
-            flash("Engorde actualizado correctamente")
+            flash(cad)
         else: 
             flash("El código ingresado no se encuentra registrado")
         return redirect(url_for("engordes"))
@@ -542,6 +606,25 @@ def add_pajilla():
         flash(cad)
     return redirect(url_for("pajillas"))
 
+@app.route("/update_pajilla", methods = ["POST"])
+def update_pajilla():
+    if request.method == "POST":    
+        id_pajilla = request.form["id_pajilla"]
+        fecha_embase= request.form["fecha_embase"]
+        toro= request.form["toro"]
+        empleado_en= request.form["empleado_en"]
+        vendido_en= request.form["vendido_en"]
+        args = [fecha_embase, toro, empleado_en, vendido_en, id_pajilla]
+        cad="Pajilla actualizada correctamente"
+        cur.execute("SELECT * FROM pajilla WHERE id_pajilla = ?", id_pajilla)
+        dato = cur.fetchone()
+        if dato:
+            cur.execute("UPDATE pajilla SET fecha_embase= ?, toro= ?, empleado_en= ?, vendido_en= ? WHERE id_pajilla = ?", args)
+            flash(cad)
+        else: 
+            flash("El código ingresado no se encuentra registrado")
+        return redirect(url_for("pajillas"))
+
 @app.route("/delete_pajilla", methods=["GET"])
 def delete_pajilla():
     try:
@@ -618,6 +701,33 @@ def consulta_2():
     datos=sorted(datos, key=lambda cod : cod[0])
     return render_template('consulta_2.html', datos = datos, datosVaca=datosVaca)
 
+@app.route("/update_inseminacion", methods = ["POST"])
+def update_inseminacion():
+    if request.method == "POST":    
+        cod_inseminacion = request.form["cod_inseminacion"]
+        fecha= request.form["fecha"]
+        exito= request.form["exito"]
+        veterinario= request.form["veterinario"]
+        vaca= request.form["vaca"]
+        args=[fecha, exito, int(veterinario), int(vaca), int(cod_inseminacion)]
+        cad="Registro de inseminación actualizado correctamente."
+        cur.execute("SELECT * FROM inseminacion WHERE cod_inseminacion = ?", cod_inseminacion)
+        dato = cur.fetchone()
+        if dato:
+            cur.execute("UPDATE inseminacion SET fecha= ?, exito= ?, veterinario= ?, vaca= ? WHERE cod_inseminacion = ?", args)
+            flash(cad)
+        else: 
+            flash("El código ingresado no se encuentra registrado")
+        #Mostramos la tabla
+        cur.execute('SELECT * FROM inseminacion')
+        datosVaca = []
+        datos = cur.fetchall()
+        datos=np.delete(datos, 0 , axis=0)
+        #Ordenamos la lista por código
+        datos=sorted(datos, key=lambda cod : cod[0])
+        return render_template('consulta_2.html', datos = datos, datosVaca=datosVaca)
+
+
 @app.route("/delete_inseminacion", methods=["GET"])
 def delete_inseminacion():
     try:
@@ -636,6 +746,14 @@ def delete_inseminacion():
         datos=np.delete(datos, 0 , axis=0)
     return render_template('consulta_2.html',datos = datos)
 
+@app.route("/estado_ins", methods=["GET"])
+def estado_ins():
+    id=request.args.get('id')
+    cur.execute('SELECT * FROM estado_inseminacion WHERE cod_inseminacion = ? VALUES(?)', id)
+    datos = cur.fetchall()
+    #Ordenamos la lista por código
+    datos=sorted(datos, key=lambda cod : cod[0])
+    return render_template('estado_ins.html', datos = datos, id=id)
 
 @app.route("/añadir_estado_inseminacion", methods=["POST", "GET"])
 def add_estado_inseminacion():
@@ -663,9 +781,41 @@ def add_estado_inseminacion():
         datos=sorted(datos, key=lambda cod : cod[0])
     return render_template('estado_ins.html', datos = datos, id=id)
 
-@app.route("/estado_ins", methods=["GET"])
-def estado_ins():
-    id=request.args.get('id')
+@app.route("/update_estado_inseminacion", methods = ["POST", "GET"])
+def update_estado_inseminacion():
+    if request.method == "POST":
+        id=request.args.get('id')
+        cod_registro = request.form["cod_registro"]
+        mes= request.form["mes"]
+        fecha= request.form["fecha"]
+        estado= request.form["estado"]
+        peso_vaca= request.form["peso_vaca"]
+        args=[ int(mes), fecha, estado, int(id), float(peso_vaca), int(cod_registro)]
+        cad="Registro de estado de inseminación actualizado correctamente."
+        cur.execute("SELECT * FROM estado_inseminacion WHERE cod_registro = ?", cod_registro)
+        dato = cur.fetchone()
+        if dato:
+            cur.execute("UPDATE estado_inseminacion SET mes= ?, fecha= ?, estado= ?, cod_inseminacion= ?, peso_vaca= ? WHERE cod_registro = ?", args)
+            flash(cad)
+        else: 
+            flash("El código ingresado no se encuentra registrado")
+        #Mostramos la tabla
+        cur.execute('SELECT * FROM estado_inseminacion WHERE cod_inseminacion = ? VALUES(?)', id)
+        datos = cur.fetchall()
+        #Ordenamos la lista por código
+        datos=sorted(datos, key=lambda cod : cod[0])
+        return render_template('estado_ins.html', datos = datos, id=id)
+
+@app.route("/delete_estado_inseminacion", methods=["GET"])
+def delete_estado_inseminacion():
+    try:
+        id=request.args.get('id')
+        cur.execute("DELETE FROM estado_inseminacion WHERE cod_registro= ? VALUES(?)", id)
+        conn.commit()
+        flash("El registro de estado de inseminación ha sido eliminado correctamente")
+    except:
+        flash("No se puede eliminar el registro")
+     #Mostramos la tabla
     cur.execute('SELECT * FROM estado_inseminacion WHERE cod_inseminacion = ? VALUES(?)', id)
     datos = cur.fetchall()
     #Ordenamos la lista por código

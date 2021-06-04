@@ -20,6 +20,9 @@
             <div class="card card-body">
                 <form method= 'POST'>
                     <div class="form-group">
+                        <input type="number" name = "cod_registro" placeholder="Código de estado de inseminación" class="form-control">
+                    </div>
+                    <div class="form-group">
                         <input type="number" name="mes" placeholder="Mes #" class="form-control">  
                     </div>
                     <div class="form-group">
@@ -33,7 +36,7 @@
                     </div>
                     <div class="form-group">
                         <button type="submit" formaction="/añadir_estado_inseminacion?id={{id}}" class="btn btn-primary">Insertar</button>
-                        <!--<button type="submit" formaction="/update_hijo" class="btn btn-primary">Actualizar</button>-->
+                        <button type="submit" formaction="/update_estado_inseminacion?id={{id}}" class="btn btn-primary">Actualizar</button>
                     </div>
                 </form>
             </div>
@@ -62,7 +65,9 @@
                         <td>{{data.2}}</td>
                         <td>{{data.3}}</td>
                         <td>{{data.5}}</td>
-                        
+                        <td>
+                            <a href="/delete_estado_inseminacion?id={{data.0}}" class="btn btn-danger btn-delete">Delete</a>
+                        </td>
                     </tr>
                     {% endfor%}
                 </tbody>
