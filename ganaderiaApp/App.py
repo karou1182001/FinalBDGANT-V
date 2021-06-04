@@ -82,6 +82,22 @@ def add_vaca():
         flash("Vaca añadida correctamente")
         return redirect(url_for("vacas"))   
 
+@app.route("/update_vaca", methods = ["POST"])
+def update_vaca():
+    if request.method == "POST":    
+        cod = request.form["cod"]
+        nombre = request.form["nombre"]
+        genetica = request.form["genetica"]
+        args = [nombre, genetica, cod]
+        cur.execute("SELECT * FROM vaca WHERE cod_vaca = ?", cod)
+        dato = cur.fetchone()
+        if dato:
+            cur.execute("UPDATE vaca SET nombre = ?, genetica_lechera = ? WHERE cod_vaca = ?", args)
+            flash("Vaca actualizada correctamente")
+        else: 
+            flash("El código ingresado no se encuentra registrado")
+        return redirect(url_for("vacas"))
+
 @app.route("/delete_vaca", methods=["GET"])
 def delete_vaca():
     id=request.args.get('id')
