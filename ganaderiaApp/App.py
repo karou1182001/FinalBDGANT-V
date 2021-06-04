@@ -110,7 +110,7 @@ def delete_vaca():
 @app.route("/toros")
 def toros():
     #Obtiene los datos
-    cur.execute("SELECT * FROM toro ORDER BY cod_toro ASC")
+    cur.execute("SELECT cod_toro, nombre, rating, COALESCE(historial_medico), COALESCE(salida) FROM toro ORDER BY cod_toro ASC")
     datos = cur.fetchall()
     #Eliminamos la fila 0 solo por cuestión de estética, ya que esta fila representa datos nulos
     #En axis se especifica que se quiere eliminar una fila o columna
