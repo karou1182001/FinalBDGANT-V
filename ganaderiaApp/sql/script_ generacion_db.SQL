@@ -112,7 +112,7 @@ CREATE TABLE salida(
 	cod_registro INTEGER PRIMARY KEY,
 	razon VARCHAR(40),
 	fecha DATE,
-	venta INTEGER FOREIGN KEY REFERENCES registro_venta(factura),
+	venta INTEGER FOREIGN KEY REFERENCES registro_venta(factura) ON DELETE RESTRICT,
 	--sacrificio_enfermedad INTEGER UNIQUE FOREIGN KEY REFERENCES defuncion(reg_defuncion)
 	sacrificio_enfermedad INTEGER FOREIGN KEY REFERENCES enfermedad(cod_enfermedad) ON DELETE RESTRICT
 
@@ -126,7 +126,7 @@ CREATE TABLE vaca (
 	nombre VARCHAR(20),
 	genetica_lechera VARCHAR(20),
 	--historial_medico INTEGER UNIQUE FOREIGN KEY REFERENCES  registro_medico(cod_medico) ,
-	historial_medico INTEGER UNIQUE FOREIGN KEY REFERENCES  registro_medico(cod_medico) ON DELETE SET NULL,
+	historial_medico INTEGER UNIQUE FOREIGN KEY REFERENCES  registro_medico(cod_medico),
 	--salida INTEGER UNIQUE FOREIGN KEY REFERENCES  salida(cod_registro)
 	salida INTEGER FOREIGN KEY REFERENCES  salida(cod_registro) ON DELETE RESTRICT
 
@@ -137,7 +137,7 @@ CREATE TABLE toro (
 	nombre VARCHAR(20),
 	rating FLOAT, -- cuantos de las pajillas que fueron usados de el han dado embarazos exitosos
 	--historial_medico INTEGER UNIQUE FOREIGN KEY REFERENCES  registro_medico(cod_medico) ,
-	historial_medico INTEGER UNIQUE FOREIGN KEY REFERENCES  registro_medico(cod_medico) ON DELETE SET NULL,
+	historial_medico INTEGER UNIQUE FOREIGN KEY REFERENCES  registro_medico(cod_medico) ,
 	--salida INTEGER UNIQUE FOREIGN KEY REFERENCES  salida(cod_registro)
 	salida INTEGER FOREIGN KEY REFERENCES  salida(cod_registro) ON DELETE RESTRICT
 
@@ -149,7 +149,7 @@ CREATE TABLE engorde (
 	valor_estimado FLOAT,
 	categoria VARCHAR(20),
 	--historial_medico INTEGER UNIQUE FOREIGN KEY REFERENCES  registro_medico(cod_medico) ,
-	historial_medico INTEGER UNIQUE FOREIGN KEY REFERENCES  registro_medico(cod_medico) ON DELETE SET NULL,
+	historial_medico INTEGER UNIQUE FOREIGN KEY REFERENCES  registro_medico(cod_medico) ,
 	--salida INTEGER UNIQUE FOREIGN KEY REFERENCES  salida(cod_registro)
 	salida INTEGER FOREIGN KEY REFERENCES  salida(cod_registro) ON DELETE RESTRICT
 
@@ -177,7 +177,7 @@ CREATE TABLE ternero (
 	peso_nacimiento FLOAT,
 	prospecto VARCHAR(20),
 	--historial_medico INTEGER UNIQUE FOREIGN KEY REFERENCES  registro_medico(cod_medico) ,
-	historial_medico INTEGER UNIQUE FOREIGN KEY REFERENCES  registro_medico(cod_medico) ON DELETE SET NULL,
+	historial_medico INTEGER UNIQUE FOREIGN KEY REFERENCES  registro_medico(cod_medico) ,
 	--salida INTEGER UNIQUE FOREIGN KEY REFERENCES  salida(cod_registro)
 	salida INTEGER FOREIGN KEY REFERENCES  salida(cod_registro) ON DELETE RESTRICT,
   nacido_de INTEGER FOREIGN KEY REFERENCES  inseminacion(cod_inseminacion) ON DELETE SET NULL

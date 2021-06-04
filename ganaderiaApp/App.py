@@ -253,15 +253,6 @@ def historial_medico():
         datos = cur.fetchall()
         return render_template("registro_medico.html",datos = datos)
 
-@app.route("/delete_registro_medico", methods=["GET"])
-def delete_registro_medico():
-    id=request.args.get('id')
-    iden = id
-    cur.execute("DELETE FROM registro_medico WHERE cod_medico = ? VALUES(?)", iden)
-    conn.commit()
-    flash("El registro medico ha sido eliminado correctamente")
-    return redirect(url_for("index")) 
-
 @app.route("/estuvo_enfermo", methods=["GET"])
 def estuvo_enfermo():
     id=request.args.get('id')
@@ -277,12 +268,49 @@ def estuvo_enfermo():
 #REGISTRO DE VENTA
 @app.route("/registro_ventas")
 def registro_ventas():
-    cur.execute('SELECT factura, COALESCE(cliente, 0),precio,fecha FROM registro_venta')
+    #cur.execute('SELECT factura, COALESCE(cliente, 0),precio,fecha FROM registro_venta')
+    cur.execute("SELECT factura, cliente, precio, fecha FROM registro_venta")
     datos = cur.fetchall()
     #Eliminamos la fila 0 solo por cuestión de estética, ya que esta fila representa datos nulos
     #En axis se especifica que se quiere eliminar una fila o columna
     datos=np.delete(datos, 0 , axis=0)
     return render_template("registro_ventas.html",datos = datos)
+
+@app.route("/añadir_venta", methods=["POST"])
+def add_venta():
+    if request.method == "POST":
+        #Determina el código del último 
+        cur.execute('SELECT * FROM registro_venta ORDER BY factura DESC LIMIT 1')
+        datos = cur.fetchone()
+        factura= int(datos[0]) + 1 
+        cliente= request.form["cliente"]
+        precio= request.form["precio"]
+        fecha= request.form["fecha"]
+        args=[int(factura), int(cliente), float(precio), fecha]
+        #Comando sql
+        cur.execute("INSERT INTO registro_venta (factura, cliente, precio, fecha) VALUES (?, ?, ?, ?)", args)
+        #Confirmar comando
+        conn.commit()
+        flash("Venta añadida correctamente")
+    return redirect(url_for("registro_ventas"))
+
+@app.route("/update_venta", methods = ["POST"])
+def update_venta():
+    if request.method == "POST":    
+        factura=request.form["factura"]
+        cliente= request.form["cliente"]
+        precio= request.form["precio"]
+        fecha= request.form["fecha"]
+        args=[int(cliente), precio, fecha, int(factura)]
+        cad="Venta actualizada correctamente"
+        cur.execute("SELECT * FROM registro_venta WHERE factura = ?", factura)
+        dato = cur.fetchone()
+        if dato:
+            cur.execute("UPDATE registro_venta SET cliente= ?, precio= ?, fecha = ? WHERE factura = ?", args)
+            flash(cad)
+        else: 
+            flash("El código ingresado no se encuentra registrado")    
+        return redirect(url_for("registro_ventas"))
 
 @app.route("/delete_registro_de_venta", methods=["GET"])
 def delete_registro_de_venta():
@@ -291,7 +319,7 @@ def delete_registro_de_venta():
     cur.execute("DELETE FROM registro_venta WHERE factura = ? VALUES(?)", iden)
     conn.commit()
     flash("El registro de venta ha sido eliminado correctamente")
-    return redirect(url_for("index")) 
+    return redirect(url_for("registro_ventas"))
 
 #TERNERO
 @app.route("/terneros")
@@ -407,29 +435,47 @@ def delete_ternero():
 def clientes():
     id=request.args.get('id')
     if(id == '1c'):
-        cur.execute("SELECT codigo,telefono,nombre,credito,calificacion FROM Cliente")
-        tmpdatos = cur.fetchall()
-        return render_template("clientes.html",datos = tmpdatos)
+        cur.execute("SELECT codigo, nombre, telefono, credito, calificacion FROM cliente")
     else:
-        cur.execute("SELECT codigo,telefono,nombre,credito,calificacion FROM Cliente WHERE codigo =  {0}".format(id))
-        tmpdatos = cur.fetchall()
-        return render_template("clientes.html",datos = tmpdatos)
+        cur.execute("SELECT codigo,nombre, telefono, credito, calificacion FROM cliente WHERE codigo =  {0}".format(id))
+    tmpdatos = cur.fetchall()
+    for dato in tmpdatos:
+        if dato[2]=="000":
+            dato[2]="No tiene"
+    #Eliminamos la fila 0 solo por cuestión de estética, ya que esta fila representa datos nulos
+    #En axis se especifica que se quiere eliminar una fila o columna
+    tmpdatos=np.delete(tmpdatos, 0 , axis=0)
+    return render_template("clientes.html",datos = tmpdatos)
 
 @app.route("/añadir_cliente", methods=["POST"])
 def add_cliente():
     if request.method == "POST":
-        cod= request.form["cod"]
+        #Determina el código del último 
+        cur.execute('SELECT * FROM cliente ORDER BY codigo DESC LIMIT 1')
+        datos = cur.fetchone()
+        cod= int(datos[0]) + 1 
         nombre= request.form["nombre"]
         tel= request.form["tel"]
         cre= request.form["cre"]
         cal= request.form["cal"]
-        args=[cod, nombre, tel, cre, cal]
+        if tel=="":
+            print("Entra")
+            tel="000"
+        args=[int(cod), nombre, tel, cre, int(cal)]
         #Comando sql
         cur.execute("INSERT INTO cliente (codigo, nombre, telefono, credito, calificacion) VALUES (?, ?, ?, ?, ?)", args)
         #Confirmar comando
         conn.commit()
+        cur.execute("SELECT codigo, nombre, telefono, credito, calificacion FROM cliente")
         flash("Cliente añadido correctamente")
-    return redirect(url_for("clientes"))
+        tmpdatos = cur.fetchall()
+        for dato in tmpdatos:
+            if dato[2]=="000":
+                dato[2]="No tiene"
+        #Eliminamos la fila 0 solo por cuestión de estética, ya que esta fila representa datos nulos
+        #En axis se especifica que se quiere eliminar una fila o columna
+        tmpdatos=np.delete(tmpdatos, 0 , axis=0)
+    return render_template("clientes.html",datos = tmpdatos)
 
 @app.route("/delete_cliente", methods=["GET"])
 def delete_cliente():
@@ -437,14 +483,58 @@ def delete_cliente():
     iden = id
     cur.execute("DELETE FROM cliente WHERE codigo = ? VALUES(?)", iden)
     conn.commit()
+    #Mostrar
+    cur.execute("SELECT codigo, nombre, telefono, credito, calificacion FROM cliente")
     flash("El cliente ha sido eliminado correctamente")
-    return redirect(url_for("clientes"))
+    tmpdatos = cur.fetchall()
+    for dato in tmpdatos:
+        if dato[2]=="000":
+            dato[2]="No tiene"
+    #Eliminamos la fila 0 solo por cuestión de estética, ya que esta fila representa datos nulos
+    #En axis se especifica que se quiere eliminar una fila o columna
+    tmpdatos=np.delete(tmpdatos, 0 , axis=0)
+    return render_template("clientes.html",datos = tmpdatos)
+
+@app.route("/update_cliente", methods = ["POST"])
+def update_cliente():
+    if request.method == "POST":    
+        cod= request.form["cod"]
+        nombre= request.form["nombre"]
+        tel= request.form["tel"]
+        cre= request.form["cre"]
+        cal= request.form["cal"]
+        args=[cod, nombre, tel, cre, cal]
+        if tel=="":
+            tel="000"
+        args=[nombre, tel, cre, cal, int(cod)]
+        cad="Cliente actualizado correctamente"
+        cur.execute("SELECT * FROM cliente WHERE codigo = ?", cod)
+        dato = cur.fetchone()
+        if dato:
+            cur.execute("UPDATE cliente SET nombre= ?, telefono= ?, credito = ?, calificacion= ? WHERE codigo = ?", args)
+            flash(cad)
+        else: 
+            flash("El código ingresado no se encuentra registrado")    
+        cur.execute("SELECT codigo, nombre, telefono, credito, calificacion FROM cliente")
+        tmpdatos = cur.fetchall()
+        for dato in tmpdatos:
+            if dato[2]=="000":
+                dato[2]="No tiene"
+        #Eliminamos la fila 0 solo por cuestión de estética, ya que esta fila representa datos nulos
+        #En axis se especifica que se quiere eliminar una fila o columna
+        tmpdatos=np.delete(tmpdatos, 0 , axis=0)
+        return render_template("clientes.html",datos = tmpdatos)
 
 #VETERINARIOS
 @app.route("/veterinarios")
 def veterinarios():
     cur.execute("SELECT * FROM veterinario ORDER BY cod_vet ASC")
     datos = cur.fetchall()
+    for dato in datos:
+        if dato[2]=="000":
+            dato[2]="No tiene"
+        if dato[5]=="000":
+            dato[5]="No tiene"
     #Eliminamos la fila 0 solo por cuestión de estética, ya que esta fila representa datos nulos
     #En axis se especifica que se quiere eliminar una fila o columna
     datos=np.delete(datos, 0 , axis=0)
@@ -453,13 +543,20 @@ def veterinarios():
 @app.route("/añadir_veterinario", methods=["POST"])
 def add_veterinario():
     if request.method == "POST":
-        cod= request.form["cod"]
+        #Determina el código del último 
+        cur.execute('SELECT * FROM veterinario ORDER BY cod_vet DESC LIMIT 1')
+        datos = cur.fetchone()
+        cod_vet= int(datos[0]) + 1 
         nombre= request.form["nombre"]
-        tel= request.form["tel"]
+        telefono= request.form["tel"]
         correo= request.form["correo"]
         empresa= request.form["empresa"]
-        emer_tel = request.form["emer_tel"]
-        args=[int(cod), nombre, tel, correo, empresa, emer_tel]
+        telefono_emergencia = request.form["emer_tel"]
+        if telefono=="":
+            telefono="000"
+        if telefono_emergencia=="":
+            telefono_emergencia="000"
+        args=[int(cod_vet), nombre, telefono, correo, empresa, telefono_emergencia]
         #Comando sql
         cur.execute("INSERT INTO veterinario (cod_vet, nombre, telefono, correo, empresa, telefono_emergencia) VALUES (?,?,?,?,?,?)", args)
         #Confirmar comando
@@ -475,6 +572,30 @@ def delete_vet():
     conn.commit()
     flash("El veterinario ha sido eliminado correctamente")
     return redirect(url_for("veterinarios")) 
+
+@app.route("/update_veterinario", methods = ["POST"])
+def update_veterinario():
+    if request.method == "POST":    
+        cod_vet= request.form["cod"]
+        nombre= request.form["nombre"]
+        telefono= request.form["tel"]
+        correo= request.form["correo"]
+        empresa= request.form["empresa"]
+        telefono_emergencia = request.form["emer_tel"]
+        if telefono=="":
+            telefono="000"
+        if telefono_emergencia=="":
+            telefono_emergencia="000"
+        args=[nombre, telefono, correo, empresa, telefono_emergencia, int(cod_vet)]
+        cad="Veterinario actualizado correctamente"
+        cur.execute("SELECT * FROM veterinario WHERE cod_vet = ?", cod_vet)
+        dato = cur.fetchone()
+        if dato:
+            cur.execute("UPDATE veterinario SET nombre= ?, telefono= ?, correo = ?, empresa= ? , telefono_emergencia= ? WHERE cod_vet = ?", args)
+            flash(cad)
+        else: 
+            flash("El código ingresado no se encuentra registrado")
+        return redirect(url_for("veterinarios"))
 
 #ENGORDES
 @app.route("/engordes")
@@ -885,6 +1006,30 @@ def delete_enfermedad():
         datos=np.delete(datos, 0 , axis=0)
     return render_template('enfermedad.html',datos = datos)
 
+@app.route("/update_enfermedad", methods = ["POST"])
+def update_enfermedad():
+    if request.method == "POST":    
+        cod_enfermedad = request.form["cod_enfermedad"]
+        nom_enfermedad= request.form["nom_enfermedad"]
+        duracion_promedio= request.form["duracion_promedio"]
+        indice_letalidad= request.form["indice_letalidad"]
+        tratamiento_estandar= request.form["tratamiento_estandar"]
+        args=[nom_enfermedad, float(duracion_promedio), int(indice_letalidad), tratamiento_estandar, int(cod_enfermedad)]
+        cad="Enfermedad actualizada correctamente"
+        cur.execute("SELECT * FROM enfermedad WHERE cod_enfermedad = ?", cod_enfermedad)
+        dato = cur.fetchone()
+        if dato:
+            cur.execute("UPDATE enfermedad SET nom_enfermedad= ?, duracion_promedio= ?, indice_letalidad= ?, tratamiento_estandar= ? WHERE cod_enfermedad = ?", args)
+            flash(cad)
+        else: 
+            flash("El código ingresado no se encuentra registrado")
+        cur.execute('SELECT * FROM enfermedad ORDER BY cod_enfermedad')
+        datos = cur.fetchall()
+        if datos[0][0]==0:
+           datos=np.delete(datos, 0 , axis=0)
+        datos=sorted(datos, key=lambda cod : cod[0])
+    return render_template('enfermedad.html', datos = datos)
+
 
 #SALIDA
 @app.route("/salidas", methods=["GET"])
@@ -961,6 +1106,38 @@ def delete_salida():
             dato[4]="No aplica"
     return render_template('salida.html',datos = datos)
 
+@app.route("/update_salida", methods = ["POST"])
+def update_salida():
+    if request.method == "POST":    
+        cod_registro = request.form["cod_registro"]
+        razon= request.form["razon"]
+        fecha= request.form["fecha"]
+        venta= request.form["venta"]
+        sacrificio_enfermedad= request.form["sacrificio_enfermedad"]
+        if venta=="":
+            venta=0
+        if sacrificio_enfermedad=="":
+            sacrificio_enfermedad=0
+        args=[razon, fecha, int(venta), int(sacrificio_enfermedad), int(cod_registro)]
+        cad="Salida actualizada correctamente"
+        cur.execute("SELECT * FROM salida WHERE cod_registro = ?", cod_registro)
+        dato = cur.fetchone()
+        if dato:
+            cur.execute("UPDATE salida SET razon= ?, fecha= ?, venta= ?, sacrificio_enfermedad= ? WHERE cod_registro = ?", args)
+            flash(cad)
+        else: 
+            flash("El código ingresado no se encuentra registrado")
+        cur.execute('SELECT * FROM salida ORDER BY cod_registro')
+        datos = cur.fetchall()
+        if datos[0][0]==0:
+           datos=np.delete(datos, 0 , axis=0)
+        for dato in datos:
+            if dato[3]==0:
+                dato[3]="No aplica"
+            if dato[4]==0:
+                dato[4]="No aplica"
+        datos=sorted(datos, key=lambda cod : cod[0])
+    return render_template('salida.html', datos = datos)
 
 #----------PONER AQUÍ LAS CONSULTAS---------
 
