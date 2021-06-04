@@ -44,6 +44,8 @@ def edad(naci):
 def index():
     return render_template('index.html')
 
+
+#VACA
 @app.route("/vacas")
 def vacas(): 
     #Obtiene los datos
@@ -144,6 +146,7 @@ def delete_vaca():
     flash("La vaca ha sido eliminada correctamente")
     return redirect(url_for("vacas")) 
 
+#TORO
 @app.route("/toros")
 def toros():
     #Obtiene los datos
@@ -237,6 +240,19 @@ def update_toro():
             flash("El código ingresado no se encuentra registrado")
         return redirect(url_for("toros"))
 
+#REGISTRO MÉDICO
+@app.route("/registro_medico", methods=["GET"])
+def historial_medico():
+    id=request.args.get('id')
+    if id=="1c":
+        cur.execute("SELECT cod_medico,estado,descripcion,fecha,COALESCE(emitido_por, 0) FROM registro_medico")
+        datos = cur.fetchall()
+        return render_template("registro_medico.html",datos = datos)
+    else:
+        cur.execute("SELECT cod_medico,estado,descripcion,fecha,COALESCE(emitido_por, 0) FROM registro_medico WHERE cod_medico = {0}".format(id))
+        datos = cur.fetchall()
+        return render_template("registro_medico.html",datos = datos)
+
 @app.route("/delete_registro_medico", methods=["GET"])
 def delete_registro_medico():
     id=request.args.get('id')
@@ -245,6 +261,28 @@ def delete_registro_medico():
     conn.commit()
     flash("El registro medico ha sido eliminado correctamente")
     return redirect(url_for("index")) 
+
+@app.route("/estuvo_enfermo", methods=["GET"])
+def estuvo_enfermo():
+    id=request.args.get('id')
+    if id=="1c":
+        cur.execute("SELECT ref_enfermo,paciente,duracion_enfermedad,fecha_de_diagnostico,enfemerdad FROM estuvo_enfermo")
+        datos = cur.fetchall()
+        return render_template("registro_medico.html",datos = datos)
+    else:
+        cur.execute("SELECT reg_enfermo,paciente,duracion_enfermedad,fecha_de_diagnostico,enfermedad FROM estuvo_enfermo WHERE paciente = {0}".format(id))
+        datos = cur.fetchall()
+        return render_template("estuvo_enfermo.html",datos = datos)
+
+#REGISTRO DE VENTA
+@app.route("/registro_ventas")
+def registro_ventas():
+    cur.execute('SELECT factura, COALESCE(cliente, 0),precio,fecha FROM registro_venta')
+    datos = cur.fetchall()
+    #Eliminamos la fila 0 solo por cuestión de estética, ya que esta fila representa datos nulos
+    #En axis se especifica que se quiere eliminar una fila o columna
+    datos=np.delete(datos, 0 , axis=0)
+    return render_template("registro_ventas.html",datos = datos)
 
 @app.route("/delete_registro_de_venta", methods=["GET"])
 def delete_registro_de_venta():
@@ -255,6 +293,7 @@ def delete_registro_de_venta():
     flash("El registro de venta ha sido eliminado correctamente")
     return redirect(url_for("index")) 
 
+#TERNERO
 @app.route("/terneros")
 def terneros():
     #Obtiene los datos
@@ -354,6 +393,16 @@ def update_ternero():
             flash("El código ingresado no se encuentra registrado")
         return redirect(url_for("terneros"))
 
+@app.route("/delete_ternero", methods=["GET"])
+def delete_ternero():
+    id=request.args.get('id')
+    iden = id
+    cur.execute("DELETE FROM ternero WHERE cod_ternero = ? VALUES(?)", iden)
+    conn.commit()
+    flash("El ternero ha sido eliminado correctamente")
+    return redirect(url_for("terneros")) 
+
+#CLIENTES
 @app.route("/clientes", methods=['GET'])
 def clientes():
     id=request.args.get('id')
@@ -365,15 +414,6 @@ def clientes():
         cur.execute("SELECT codigo,telefono,nombre,credito,calificacion FROM Cliente WHERE codigo =  {0}".format(id))
         tmpdatos = cur.fetchall()
         return render_template("clientes.html",datos = tmpdatos)
-
-@app.route("/delete_ternero", methods=["GET"])
-def delete_ternero():
-    id=request.args.get('id')
-    iden = id
-    cur.execute("DELETE FROM ternero WHERE cod_ternero = ? VALUES(?)", iden)
-    conn.commit()
-    flash("El ternero ha sido eliminado correctamente")
-    return redirect(url_for("terneros")) 
 
 @app.route("/añadir_cliente", methods=["POST"])
 def add_cliente():
@@ -400,6 +440,7 @@ def delete_cliente():
     flash("El cliente ha sido eliminado correctamente")
     return redirect(url_for("clientes"))
 
+#VETERINARIOS
 @app.route("/veterinarios")
 def veterinarios():
     cur.execute("SELECT * FROM veterinario ORDER BY cod_vet ASC")
@@ -435,6 +476,7 @@ def delete_vet():
     flash("El veterinario ha sido eliminado correctamente")
     return redirect(url_for("veterinarios")) 
 
+#ENGORDES
 @app.route("/engordes")
 def engordes():
     cur.execute("SELECT cod_engorde, nombre, valor_estimado, categoria, COALESCE(historial_medico, 0), COALESCE(salida, 0) FROM engorde ORDER BY cod_engorde ASC")
@@ -529,41 +571,7 @@ def update_engorde():
             flash("El código ingresado no se encuentra registrado")
         return redirect(url_for("engordes"))
 
-@app.route("/registro_medico", methods=["GET"])
-def historial_medico():
-    id=request.args.get('id')
-    if id=="1c":
-        cur.execute("SELECT cod_medico,estado,descripcion,fecha,COALESCE(emitido_por, 0) FROM registro_medico")
-        datos = cur.fetchall()
-        return render_template("registro_medico.html",datos = datos)
-    else:
-        cur.execute("SELECT cod_medico,estado,descripcion,fecha,COALESCE(emitido_por, 0) FROM registro_medico WHERE cod_medico = {0}".format(id))
-        datos = cur.fetchall()
-        return render_template("registro_medico.html",datos = datos)
-
-@app.route("/estuvo_enfermo", methods=["GET"])
-def estuvo_enfermo():
-    id=request.args.get('id')
-    if id=="1c":
-        cur.execute("SELECT ref_enfermo,paciente,duracion_enfermedad,fecha_de_diagnostico,enfemerdad FROM estuvo_enfermo")
-        datos = cur.fetchall()
-        return render_template("registro_medico.html",datos = datos)
-    else:
-        cur.execute("SELECT reg_enfermo,paciente,duracion_enfermedad,fecha_de_diagnostico,enfermedad FROM estuvo_enfermo WHERE paciente = {0}".format(id))
-        datos = cur.fetchall()
-        return render_template("estuvo_enfermo.html",datos = datos)
-
-
-@app.route("/registro_ventas")
-def registro_ventas():
-    cur.execute('SELECT factura, COALESCE(cliente, 0),precio,fecha FROM registro_venta')
-    datos = cur.fetchall()
-    #Eliminamos la fila 0 solo por cuestión de estética, ya que esta fila representa datos nulos
-    #En axis se especifica que se quiere eliminar una fila o columna
-    datos=np.delete(datos, 0 , axis=0)
-    return render_template("registro_ventas.html",datos = datos)
-
-#Consultas
+#PAJILLAS
 @app.route("/pajillas")
 def pajillas():
     #Consulta para listar las pajillas y ver el  código de las
@@ -746,6 +754,7 @@ def delete_inseminacion():
         datos=np.delete(datos, 0 , axis=0)
     return render_template('consulta_2.html',datos = datos)
 
+#ESTADO INSEMINACIÓN
 @app.route("/estado_ins", methods=["GET"])
 def estado_ins():
     id=request.args.get('id')
@@ -875,7 +884,6 @@ def delete_enfermedad():
     if datos[0][0]==0:
         datos=np.delete(datos, 0 , axis=0)
     return render_template('enfermedad.html',datos = datos)
-
 
 
 #SALIDA
