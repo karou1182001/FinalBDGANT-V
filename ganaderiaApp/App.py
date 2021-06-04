@@ -260,8 +260,15 @@ def add_ternero():
         age = edad(temp_age)  
         peso = request.form["peso"]
         prospecto = request.form["prospecto"]
+        salida = request.form["salida"]
         nacido_de = request.form["nacido_de"]
-        args2 = [cod, nombre, sex, fecha_nacimiento, age, peso, prospecto, new_cod_medico, 0, nacido_de]
+        args2 = [cod, nombre, sex, fecha_nacimiento, age, peso, prospecto, new_cod_medico, salida, nacido_de]
+        if not salida: 
+            salida = 0
+        if int(salida) != 0:
+            sal_arr = [salida, "Por llenar", today, 0, 0]
+            cur.execute("INSERT INTO salida (cod_registro, razon, fecha, venta, sacrificio_enfermedad) VALUES(?,?,?,?,?)", sal_arr)
+            conn.commit()
         #Comando sql
         cur.execute("INSERT INTO ternero (cod_ternero, nombre, sexo, fecha_nacimiento, edad, peso_nacimiento, prospecto, historial_medico, salida, nacido_de) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", args2)
         #Confirmamos comando
@@ -281,11 +288,19 @@ def update_ternero():
         peso = request.form["peso"]
         prospecto = request.form["prospecto"]
         nacido_de = request.form["nacido_de"]
-        args = [nombre, sex, fecha_nacimiento, age, peso, prospecto, nacido_de, cod]
+        salida = request.form["salida"]
+        args = [nombre, sex, fecha_nacimiento, age, peso, prospecto, salida, nacido_de, cod]
         cur.execute("SELECT * FROM ternero WHERE cod_ternero = ?", cod)
         dato = cur.fetchone()
         if dato:
-            cur.execute("UPDATE ternero SET nombre = ?, sexo = ?, fecha_nacimiento = ?, edad = ?, peso_nacimiento = ?, prospecto = ?, nacido_de = ? WHERE cod_ternero = ?", args)
+            if not salida: 
+                salida = 0
+            if int(salida) != 0:
+                today = datetime.date.today()
+                sal_arr = [salida, "Por llenar", today, 0, 0]
+                cur.execute("INSERT INTO salida (cod_registro, razon, fecha, venta, sacrificio_enfermedad) VALUES(?,?,?,?,?)", sal_arr)
+                conn.commit()
+            cur.execute("UPDATE ternero SET nombre = ?, sexo = ?, fecha_nacimiento = ?, edad = ?, peso_nacimiento = ?, prospecto = ?, salida = ?, nacido_de = ? WHERE cod_ternero = ?", args)
             flash("Ternero actualizado correctamente")
         else: 
             flash("El código ingresado no se encuentra registrado")
