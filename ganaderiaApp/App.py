@@ -74,11 +74,24 @@ def add_vaca():
         cod = request.form["cod"]
         nombre = request.form["nombre"]
         genetica = request.form["genetica"]
-        args2 = [cod, nombre, genetica, new_cod_medico, 0]
-        #Operación SQL en cuestión
-        cur.execute("INSERT INTO vaca (cod_vaca, nombre, genetica_lechera, historial_medico, salida) VALUES(?, ?, ?, ?, ?)", args2)
-        #Se ejecuta la operación
-        conn.commit()
+        salida = request.form["salida"]
+        if not salida:
+            salida = 0
+        if int(salida) == 0: 
+            args2 = [cod, nombre, genetica, new_cod_medico, salida]
+            #Operación SQL en cuestión
+            cur.execute("INSERT INTO vaca (cod_vaca, nombre, genetica_lechera, historial_medico, salida) VALUES(?, ?, ?, ?, ?)", args2)
+            #Se ejecuta la operación
+            conn.commit()
+        else: 
+            sal_arr = [salida, "Por llenar", today, 0, 0]
+            cur.execute("INSERT INTO salida (cod_registro, razon, fecha, venta, sacrificio_enfermedad) VALUES(?,?,?,?,?)", sal_arr)
+            conn.commit()
+            args2 = [cod, nombre, genetica, new_cod_medico, salida]
+            #Operación SQL en cuestión
+            cur.execute("INSERT INTO vaca (cod_vaca, nombre, genetica_lechera, historial_medico, salida) VALUES(?, ?, ?, ?, ?)", args2)
+            #Se ejecuta la operación
+            conn.commit()
         flash("Vaca añadida correctamente")
         return redirect(url_for("vacas"))   
 
