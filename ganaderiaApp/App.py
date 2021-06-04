@@ -154,6 +154,22 @@ def delete_toro():
     flash("El toro ha sido eliminado correctamente")
     return redirect(url_for("toros")) 
 
+@app.route("/update_toro", methods = ["POST"])
+def update_toro():
+    if request.method == "POST":    
+        cod = request.form["cod"]
+        nombre = request.form["nombre"]
+        rating = request.form["ex_pajilla"]
+        args = [nombre, rating, cod]
+        cur.execute("SELECT * FROM toro WHERE cod_toro = ?", cod)
+        dato = cur.fetchone()
+        if dato:
+            cur.execute("UPDATE toro SET nombre = ?, rating = ? WHERE cod_toro = ?", args)
+            flash("Toro actualizado correctamente")
+        else: 
+            flash("El código ingresado no se encuentra registrado")
+        return redirect(url_for("toros"))
+
 @app.route("/delete_registro_medico", methods=["GET"])
 def delete_registro_medico():
     id=request.args.get('id')
