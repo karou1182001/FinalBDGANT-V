@@ -27,7 +27,12 @@
                         <input type="text" name = "nombre" placeholder="Nombre de vaca" class="form-control">
                     </div>
                     <div class="form-group">
-                        <input type="text" name="genetica" placeholder="Genética lechera (Mala, Excelente, Sobresaliente, etc)" class="form-control">  
+                        <select name="genetica" id="geneticaid">
+                            <option value="mala">Mala</option>
+                            <option value="regular">Regular</option>
+                            <option value="sobresaliente">Sobresaliente</option>
+                            <option value="excelente">Excelente</option>
+                          </select>    
                     </div>
                     <div class="form-group">
                         <input type="number" name="salida" placeholder="Código de Salida (Si aplica)" class="form-control">  
