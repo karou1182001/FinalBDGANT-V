@@ -19,7 +19,7 @@
             {% endwith %} 
             <div class="card card-body">
                 <form method= 'POST'>
-                    <p>Ingresar Toros</p> 
+                    <p>Ingresar y actualizar toros</p> 
                     <div class="form-group">
                         <input type="number" name = "cod" placeholder="Código de toro" class="form-control">
                     </div>
@@ -31,6 +31,7 @@
                     </div>
                     <div class="form-group">
                         <button type="submit" formaction="/añadir_toro" class="btn btn-primary">Insertar</button>
+                        <button type="submit" formaction="/update_toro" class="btn btn-primary">Insertar</button>
                         <!--<button type="submit" formaction="/update_hijo" class="btn btn-primary">Actualizar</button>-->
                     </div>
                 </form>
